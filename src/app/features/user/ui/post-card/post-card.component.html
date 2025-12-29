@@ -1,0 +1,69 @@
+<!-- My post card template -->
+
+<mat-card class="post-card" role="article" [attr.aria-labelledby]="'post-title-' + post().id"
+  [attr.aria-describedby]="'post-content-' + post().id">
+
+  <!-- HEADER DEL POST -->
+  <mat-card-header>
+    <img mat-card-avatar [src]="post().author.profilePicture || '/assets/default-avatar.png'"
+      [alt]="'Avatar de ' + (post().author.firstName || 'Usuario')" class="author-avatar">
+
+    <mat-card-title [id]="'post-title-' + post().id">
+      {{ post().author.firstName }} {{ post().author.lastName }}
+    </mat-card-title>
+
+    <mat-card-subtitle [attr.aria-label]="'Fecha de publicación y privacidad'">
+      <time [attr.datetime]="post().creationDate" [attr.aria-label]="'Fecha de publicación: ' + (postDate() | dateFormat:'long')">
+        {{ postDate() | dateFormat:'long' }}
+      </time>
+
+      @if (isPrivate()) {
+      <mat-icon class="post-privacy-icon" aria-hidden="true" [attr.aria-label]="'Post privado'">
+        lock
+      </mat-icon>
+      }
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <!-- CONTENIDO DEL POST -->
+  <mat-card-content>
+    <div class="post-text-container" [class.expanded]="isContentExpanded()" role="region"
+      [attr.aria-label]="'Contenido del post de ' + (post().author.firstName || 'Usuario')">
+
+      <p class="post-content" [id]="'post-content-' + post().id" [attr.aria-label]="'Texto del post'">
+        {{ displayContent() }}
+      </p>
+
+      @if (needsTruncation()) {
+      <button class="read-more-btn" (click)="toggleTextExpansion()" type="button"
+        [attr.aria-label]="getExpansionButtonAriaLabel()" [attr.aria-expanded]="isContentExpanded()">
+        {{ getExpansionButtonText() }}
+      </button>
+      }
+    </div>
+
+    <!-- IMAGEN DEL POST -->
+    @if (hasImage()) {
+    <div class="post-image" role="img"
+      [attr.aria-label]="'Imagen del post de ' + (post().author.firstName || 'Usuario')">
+      <img [src]="post().imageUrl" [alt]="'Imagen del post'" class="post-image-content" loading="lazy">
+    </div>
+    }
+  </mat-card-content>
+
+  <!-- ACCIONES DEL POST -->
+  <mat-card-actions role="toolbar" [attr.aria-label]="'Acciones del post'">
+
+    <!-- BOTÓN EDITAR -->
+    <button mat-button (click)="onEditPost()" class="edit-button" type="button"
+      [attr.aria-label]="getEditButtonAriaLabel()" [attr.title]="'Editar post'">
+      <mat-icon aria-hidden="true">edit</mat-icon>
+    </button>
+
+    <!-- BOTÓN ELIMINAR -->
+    <button mat-button (click)="onDeletePost()" class="delete-button" type="button"
+      [attr.aria-label]="getDeleteButtonAriaLabel()" [attr.title]="'Eliminar post'">
+      <mat-icon aria-hidden="true">delete</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

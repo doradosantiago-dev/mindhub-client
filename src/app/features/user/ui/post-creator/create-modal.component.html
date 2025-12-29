@@ -1,0 +1,102 @@
+<!-- Create post modal template -->
+
+<!-- MODAL DE CREAR PUBLICACIÓN - Estructura y anotaciones similares al ejemplo proporcionado -->
+<div class="create-post-modal" role="dialog" aria-labelledby="create-post-title">
+
+  <!-- ENCABEZADO DEL MODAL -->
+  <div class="modal-header" role="banner">
+    <mat-icon aria-hidden="true">add</mat-icon>
+    <div class="header-content">
+      <h2 id="create-post-title" mat-dialog-title class="page-title">Crear Publicación</h2>
+      <p class="modal-subtitle">Comparte tus ideas, pensamientos o contenido con la comunidad</p>
+    </div>
+  </div>
+
+  <!-- ESTADO DE ERROR -->
+  @if (error()) {
+  <div class="error-message" role="alert" aria-live="polite">
+    <mat-icon class="error-icon" aria-hidden="true">error</mat-icon>
+    <span>{{ error() }}</span>
+  </div>
+  }
+
+  <!-- FORMULARIO DE CREACIÓN -->
+  <form [formGroup]="postForm" (ngSubmit)="onSubmit()" novalidate>
+    <mat-dialog-content>
+      <div class="form-content">
+
+        <!-- CAMPO: CONTENIDO -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>¿Qué estás pensando?</mat-label>
+          <textarea matInput formControlName="content" rows="4" maxlength="1000"
+            [attr.aria-describedby]="'content-hint'" [attr.aria-invalid]="hasFieldError('content')">
+          </textarea>
+
+          <!-- INDICADOR DE CARACTERES -->
+          <mat-hint align="end" id="content-hint">
+            {{ contentLength() }}/1000
+            @if (remainingChars() <= 100) { <span class="char-warning"> ({{ remainingChars() }} restantes)</span> }
+          </mat-hint>
+
+          <!-- MENSAJE DE ERROR DEL CAMPO CONTENIDO -->
+          @if (hasFieldError('content')) {
+          <mat-error>
+            {{ getFieldErrorMessage('content') }}
+          </mat-error>
+          }
+        </mat-form-field>
+
+        <!-- CAMPO: URL DE IMAGEN (OPCIONAL) -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>URL de imagen (opcional)</mat-label>
+          <input matInput formControlName="imageUrl" type="url" [attr.aria-describedby]="'image-hint'"
+            placeholder="https://ejemplo.com/imagen.jpg">
+          <mat-icon matSuffix aria-hidden="true">image</mat-icon>
+          <mat-hint id="image-hint">
+            Ingresa la URL directa de una imagen (debe terminar en .jpg, .png, .gif, etc.)
+          </mat-hint>
+        </mat-form-field>
+
+        <!-- GRUPO: PRIVACIDAD -->
+        <div class="form-group">
+          <label for="privacy" class="form-label">
+            Privacidad <span class="required-indicator" aria-label="Campo obligatorio">*</span>
+          </label>
+
+          <select id="privacy" formControlName="privacyType" class="form-select" aria-describedby="privacy-help"
+            aria-required="true">
+            @for (option of privacyOptions; track option.value) {
+            <option [value]="option.value">{{ option.label }}</option>
+            }
+          </select>
+
+          <div id="privacy-help" class="form-help">
+            Controla quién puede ver tu publicación
+          </div>
+        </div>
+
+      </div>
+    </mat-dialog-content>
+
+    <!-- ACCIONES DEL MODAL -->
+    <mat-dialog-actions align="end">
+      <button type="button" mat-button (click)="onCancel()" [disabled]="loading()"
+        aria-label="Cancelar creación de publicación">
+        Cancelar
+      </button>
+
+      <button type="submit" mat-raised-button color="primary" [disabled]="!postForm.valid || loading()"
+        aria-label="Publicar contenido">
+        <!-- ESTADO DE CARGA EN BOTÓN -->
+        @if (loading()) {
+        <mat-spinner diameter="20" aria-hidden="true"></mat-spinner>
+        <span>Creando...</span>
+        } @else {
+        <ng-container>
+          <span>Publicar</span>
+        </ng-container>
+        }
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>

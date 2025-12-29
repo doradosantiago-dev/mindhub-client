@@ -1,0 +1,126 @@
+<!-- My post edit modal template -->
+
+<div class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title"
+  aria-describedby="modal-description">
+
+  <div class="modal-container" role="document">
+
+    <!-- HEADER DEL MODAL -->
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <mat-icon class="header-icon" aria-hidden="true">edit</mat-icon>
+        <div class="header-title-wrap">
+          <h2 id="modal-title" class="modal-title">Editar Publicación</h2>
+          <p class="modal-subtitle">Edita el contenido, la imagen o la privacidad de tu publicación</p>
+        </div>
+      </div>
+
+      <button class="close-btn" (click)="onCancel()" type="button" aria-label="Cerrar modal de edición" title="Cerrar">
+
+        <svg class="close-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- DESCRIPCIÓN DEL MODAL -->
+    <div id="modal-description" class="sr-only">
+      Formulario para editar el contenido, imagen y privacidad de tu publicación
+    </div>
+
+    <!-- FORMULARIO DE EDICIÓN -->
+    <form [formGroup]="editForm" (ngSubmit)="onSave()" class="modal-form" role="form"
+      aria-label="Formulario de edición de publicación">
+
+      <!-- CAMPO CONTENIDO -->
+      <div class="form-group">
+        <label for="content" class="form-label">
+          Contenido <span class="required-indicator" aria-label="Campo obligatorio">*</span>
+        </label>
+
+        <textarea id="content" formControlName="content" class="form-textarea"
+          placeholder="Escribe el contenido de tu publicación..." rows="6" aria-describedby="content-error"
+          aria-required="true">
+        </textarea>
+
+        @if (contentControl?.invalid && contentControl?.touched) {
+        <div id="content-error" class="error-message" role="alert" aria-live="polite">
+          @if (contentControl?.errors?.['required']) {
+          <span>El contenido es obligatorio</span>
+          }
+        </div>
+        }
+      </div>
+
+      <!-- CAMPO URL DE IMAGEN -->
+      <div class="form-group">
+        <label for="imageUrl" class="form-label">
+          URL de la Imagen <span class="optional-indicator">(opcional)</span>
+        </label>
+
+        <input type="url" id="imageUrl" formControlName="imageUrl" class="form-input"
+          placeholder="https://ejemplo.com/imagen.jpg" aria-describedby="image-error image-help">
+
+        <div id="image-help" class="form-help">
+          Debe ser una URL válida que comience con http:// o https://
+        </div>
+
+        @if (imageControl?.invalid && imageControl?.touched) {
+        <div id="image-error" class="error-message" role="alert" aria-live="polite">
+          @if (imageControl?.errors?.['pattern']) {
+          <span>Ingresa una URL válida</span>
+          }
+        </div>
+        }
+      </div>
+
+      <!-- CAMPO PRIVACIDAD -->
+      <div class="form-group">
+        <label for="privacy" class="form-label">
+          Privacidad <span class="required-indicator" aria-label="Campo obligatorio">*</span>
+        </label>
+
+        <select id="privacy" formControlName="privacyType" class="form-select" aria-describedby="privacy-help"
+          aria-required="true">
+
+          @for (option of privacyOptions(); track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+          }
+        </select>
+
+        <div id="privacy-help" class="form-help">
+          Controla quién puede ver tu publicación
+        </div>
+      </div>
+
+      <!-- ACCIONES DEL MODAL -->
+      <div class="modal-actions" role="toolbar" aria-label="Acciones del modal">
+
+        <!-- BOTÓN CANCELAR -->
+        <button type="button" class="btn-secondary" (click)="onCancel()" [disabled]="loading()"
+          aria-label="Cancelar edición">
+          Cancelar
+        </button>
+
+        <!-- BOTÓN GUARDAR -->
+        <button type="submit" class="btn-primary" [disabled]="!isFormValid()"
+          aria-label="Guardar cambios en la publicación" title="Guardar" [attr.aria-describedby]="'submit-status'">
+
+          @if (loading()) {
+          <div class="loading-spinner-small" aria-hidden="true"></div>
+          <span class="btn-text">Guardando...</span>
+          } @else {
+          <span class="btn-text">Guardar</span>
+          }
+        </button>
+      </div>
+
+      <!-- ESTADO DEL ENVÍO -->
+      <div id="submit-status" class="sr-only" aria-live="polite">
+        {{ loading() ? 'Guardando cambios...' : 'Listo para guardar' }}
+      </div>
+    </form>
+  </div>
+</div>

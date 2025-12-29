@@ -1,0 +1,27 @@
+<!-- My posts list template -->
+
+<div class="posts-list-container" role="main" aria-label="Lista de mis publicaciones">
+
+  <!-- LISTA DE POSTS -->
+  @if (hasPosts()) {
+  <div class="posts-column" role="feed" aria-label="Lista de publicaciones personales">
+    @for (post of posts(); track post.id) {
+    <app-my-post-card [post]="post" (editPost)="onEditPost($event)" (deletePost)="onDeletePost($event)">
+    </app-my-post-card>
+    }
+  </div>
+  } @else {
+  <div class="empty-state" role="status" aria-label="No hay publicaciones">
+    <p class="empty-text">No tienes publicaciones aún</p>
+  </div>
+  }
+
+  <!-- CONTROLES DE PAGINACIÓN -->
+  <app-pagination
+    [currentPage]="currentPage() + 1"
+    [totalPages]="totalPages()"
+    (pageChange)="onPageChange($event - 1)"
+    (previous)="onPageChange(currentPage() - 1)"
+    (next)="onPageChange(currentPage() + 1)">
+  </app-pagination>
+</div>

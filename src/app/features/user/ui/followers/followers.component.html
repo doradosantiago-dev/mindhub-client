@@ -1,0 +1,145 @@
+<!-- Followers template -->
+
+<div class="followers-container" role="main" aria-labelledby="page-title">
+
+  <!-- HEADER DE LA PÁGINA -->
+  <div class="followers-header" role="banner">
+    <h1 id="page-title" class="page-title">Gestión de Seguidores</h1>
+    <p class="page-description">Administra tus conexiones en la red social</p>
+  </div>
+
+  <!-- ESTADO DE ERROR -->
+  @if (error()) {
+  <div class="error-container" role="alert" aria-live="polite">
+    <mat-icon class="error-icon" aria-hidden="true">error</mat-icon>
+    <h3 class="error-title">Error</h3>
+    <p class="error-message">{{ error() }}</p>
+    <button mat-raised-button color="primary" (click)="loadFollowing(); loadFollowers()"
+      aria-label="Reintentar cargar seguidores y seguidos">
+      Reintentar
+    </button>
+  </div>
+  }
+
+  <!-- PESTAÑAS PRINCIPALES -->
+  @else {
+  <mat-card class="followers-card" role="tabpanel" [attr.aria-labelledby]="'tab-' + selectedTab()">
+    <mat-tab-group (selectedTabChange)="onTabChange($event.index)" [selectedIndex]="selectedTab()" role="tablist"
+      aria-label="Navegación entre seguidores y seguidos">
+
+      <!-- ===== PESTAÑA: SIGUIENDO ===== -->
+      <mat-tab [label]="tabOptions()[0].label" id="tab-0" role="tab" [attr.aria-label]="tabOptions()[0].description">
+
+        <div class="tab-content" role="region" aria-labelledby="tab-0">
+
+          <!-- ESTADO DE CARGA -->
+          @if (loadingFollowing()) {
+          <div class="loading-container" role="status" aria-live="polite">
+            <mat-spinner diameter="40" aria-label="Cargando usuarios seguidos"></mat-spinner>
+            <p>Cargando usuarios que sigues...</p>
+          </div>
+          }
+
+          <!-- ESTADO VACÍO -->
+          @else if (!hasFollowing()) {
+          <div class="empty-container" role="status" aria-live="polite">
+            <mat-icon class="empty-icon" aria-hidden="true">people</mat-icon>
+            <h3 class="empty-title">No sigues a nadie aún</h3>
+            <p class="empty-message">Comienza a seguir usuarios para ver sus publicaciones en tu feed</p>
+          </div>
+          }
+
+          <!-- LISTA DE USUARIOS SEGUIDOS -->
+          @else {
+          <div class="users-grid" role="feed" aria-label="Lista de usuarios que sigues">
+            @for (follow of following(); track follow.id) {
+            <mat-card class="user-card" role="article" [attr.aria-labelledby]="'user-name-' + follow.id">
+              <div class="user-info">
+                <img [src]="follow.followedProfilePicture || '/assets/default-avatar.png'"
+                  [alt]="'Avatar de ' + getUserDisplayName(follow)" class="user-avatar" loading="lazy"
+                  (error)="onImageError($event)">
+
+                <div class="user-details">
+                  <h3 class="user-name" [id]="'user-name-' + follow.id">
+                    {{ getUserDisplayName(follow) }}
+                  </h3>
+                  <p class="user-username">@{{ follow.followedUsername }}</p>
+                </div>
+              </div>
+
+              <div class="user-actions" role="toolbar" aria-label="Acciones para {{ getUserDisplayName(follow) }}">
+                <button mat-stroked-button color="warn" (click)="unfollowUser(follow.followedId)"
+                  class="unfollow-button" [attr.aria-label]="'Dejar de seguir a ' + getUserDisplayName(follow)"
+                  type="button">
+                  <mat-icon aria-hidden="true">person_remove</mat-icon>
+                  <span>Dejar de seguir</span>
+                </button>
+              </div>
+            </mat-card>
+            }
+          </div>
+          }
+        </div>
+      </mat-tab>
+
+      <!-- ===== PESTAÑA: SEGUIDORES ===== -->
+      <mat-tab [label]="tabOptions()[1].label" id="tab-1" role="tab" [attr.aria-label]="tabOptions()[1].description">
+
+        <div class="tab-content" role="region" aria-labelledby="tab-1">
+
+          <!-- ESTADO DE CARGA -->
+          @if (loadingFollowers()) {
+          <div class="loading-container" role="status" aria-live="polite">
+            <mat-spinner diameter="40" aria-label="Cargando seguidores"></mat-spinner>
+            <p>Cargando seguidores...</p>
+          </div>
+          }
+
+          <!-- ESTADO VACÍO -->
+          @else if (!hasFollowers()) {
+          <div class="empty-container" role="status" aria-live="polite">
+            <mat-icon class="empty-icon" aria-hidden="true">people_outline</mat-icon>
+            <h3 class="empty-title">No tienes seguidores aún</h3>
+            <p class="empty-message">Comparte contenido interesante para atraer seguidores</p>
+          </div>
+          }
+
+          <!-- LISTA DE SEGUIDORES -->
+          @else {
+          <div class="users-grid" role="feed" aria-label="Lista de usuarios que te siguen">
+            @for (follow of followers(); track follow.id) {
+            <mat-card class="user-card" role="article" [attr.aria-labelledby]="'follower-name-' + follow.id">
+              <div class="user-info">
+                <img [src]="follow.followerProfilePicture || '/assets/default-avatar.png'"
+                  [alt]="'Avatar de ' + follow.followerName" class="user-avatar" loading="lazy"
+                  (error)="onImageError($event)">
+
+                <div class="user-details">
+                  <h3 class="user-name" [id]="'follower-name-' + follow.id">
+                    {{ follow.followerName }}
+                  </h3>
+                  <p class="user-username">@{{ follow.followerUsername }}</p>
+                </div>
+              </div>
+
+              <div class="user-actions" role="toolbar" aria-label="Acciones para {{ follow.followerName }}">
+                <button mat-raised-button color="primary" (click)="openProfile(follow.followerId)"
+                  class="view-profile-button" [attr.aria-label]="'Ver perfil de ' + follow.followerName" type="button">
+                  <mat-icon aria-hidden="true">visibility</mat-icon>
+                  <span>Ver perfil</span>
+                </button>
+              </div>
+            </mat-card>
+            }
+          </div>
+          }
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </mat-card>
+  }
+</div>
+
+<!-- FOOTER -->
+<app-footer role="contentinfo"></app-footer>

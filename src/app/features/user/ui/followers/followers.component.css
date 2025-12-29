@@ -1,0 +1,502 @@
+﻿/* Estilos de Followers */
+
+/* 
+   VARIABLES CSS
+    */
+
+:host {
+  /* Dimensiones */
+  --container-max-width: 700px;
+  --container-padding: 16px;
+  --container-padding-mobile: 12px;
+
+  /* Colores principales */
+  --primary-color: #10b981;
+  --primary-dark: #059669;
+  --danger-color: #dc2626;
+  --danger-light: #fef2f2;
+
+  /* Colores de texto */
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --text-light: #ffffff;
+
+  /* Colores de fondo */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f3f4f6;
+  --bg-hover: #f9fafb;
+
+  /* Colores de borde */
+  --border-color: #e5e7eb;
+  --border-light: #f3f4f6;
+  --border-focus: var(--primary-color);
+
+  /* Efectos */
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  --shadow-md: 0 2px 8px 0 rgb(0 0 0 / 0.08);
+  --shadow-lg: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --border-radius: 12px;
+  --border-radius-lg: 16px;
+  --border-radius-xl: 20px;
+
+  /* Transiciones */
+  --transition: all 0.2s ease;
+  --transition-fast: all 0.15s ease;
+
+  /* Espaciado */
+  --spacing-xs: 3px;
+  --spacing-sm: 6px;
+  --spacing-md: 12px;
+  --spacing-lg: 18px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 36px;
+  --spacing-3xl: 48px;
+
+  /* Tamaños de fuente */
+  --font-size-xs: 11px;
+  --font-size-sm: 13px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 20px;
+  --font-size-3xl: 24px;
+
+  /* Z-index */
+  --z-card: 1;
+  --z-hover: 2;
+}
+
+/* 
+   CONTENEDOR PRINCIPAL
+    */
+
+.followers-container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: var(--container-padding);
+  padding-bottom: 3rem;
+  min-height: calc(100vh - 240px);
+  display: flex;
+  flex-direction: column;
+}
+
+/* 
+   HEADER DE LA PÁGINA
+    */
+
+.followers-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  background: var(--bg-primary);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.page-title {
+  margin: 0 0 var(--spacing-sm) 0;
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.page-description {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-md);
+  line-height: 1.5;
+}
+
+/* 
+   TARJETA PRINCIPAL
+    */
+
+.followers-card {
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  margin-bottom: var(--spacing-lg);
+}
+
+/* 
+   CONTENIDO DE LAS PESTAÑAS
+    */
+
+.tab-content {
+  padding: var(--spacing-xl);
+  min-height: 400px;
+}
+
+/* 
+   ESTADOS DE CARGA, ERROR Y VACÍO
+    */
+
+.loading-container,
+.error-container,
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-3xl) var(--spacing-xl);
+  text-align: center;
+}
+
+.error-icon,
+.empty-icon {
+  font-size: var(--spacing-2xl);
+  width: var(--spacing-2xl);
+  height: var(--spacing-2xl);
+}
+
+.error-icon {
+  color: var(--danger-color);
+}
+
+.empty-icon {
+  color: #2196F3;
+}
+
+.error-title,
+.empty-title {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.error-message,
+.empty-message {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-md);
+  line-height: 1.5;
+  max-width: 400px;
+}
+
+/* 
+   GRID DE USUARIOS
+    */
+
+.users-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* 
+   TARJETAS DE USUARIO
+    */
+
+.user-card {
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  border: 1px solid var(--border-light);
+  position: relative;
+  z-index: var(--z-card);
+}
+
+.user-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-1px);
+  z-index: var(--z-hover);
+}
+
+/* 
+   INFORMACIÓN DEL USUARIO
+    */
+
+.user-info {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border-color);
+  flex-shrink: 0;
+  transition: var(--transition-fast);
+}
+
+.user-avatar:hover {
+  border-color: var(--border-focus);
+  transform: scale(1.05);
+}
+
+.user-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.user-name {
+  margin: 0 0 var(--spacing-xs) 0;
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.user-username {
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.4;
+}
+
+/* 
+   BIOGRAFÍA Y BADGES
+    */
+
+.user-bio {
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.privacy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+}
+
+.privacy-badge mat-icon {
+  font-size: var(--font-size-xs);
+  width: var(--font-size-xs);
+  height: var(--font-size-xs);
+}
+
+/* 
+   ACCIONES DEL USUARIO
+    */
+
+.user-actions {
+  padding: 0 var(--spacing-md) var(--spacing-md) var(--spacing-md);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.unfollow-button,
+.view-profile-button {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: var(--border-radius-xl);
+  min-width: 84px;
+  transition: var(--transition);
+}
+
+.unfollow-button {
+  background: linear-gradient(135deg, #fca5a5 0%, #f87171 100%);
+  color: var(--text-light);
+  border: none;
+  box-shadow: 0 1px 3px rgba(239, 68, 68, 0.14);
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.unfollow-button:hover {
+  background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+}
+
+.unfollow-button mat-icon {
+  color: var(--text-light);
+  font-size: 13px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+}
+
+
+.unfollow-button,
+.unfollow-button span,
+.unfollow-button mat-icon {
+  color: var(--text-light) !important;
+}
+
+.unfollow-button:focus-visible {
+  outline: 2px solid var(--danger-color);
+  outline-offset: 2px;
+}
+
+.view-profile-button {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  color: var(--text-light);
+  border: none;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.view-profile-button:hover {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, #047857 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+}
+
+.view-profile-button mat-icon {
+  color: var(--text-light);
+  font-size: 16px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+}
+
+.view-profile-button:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* 
+   RESPONSIVE DESIGN
+    */
+
+@media (max-width: 640px) {
+  :host {
+    --container-padding: var(--container-padding-mobile);
+    --spacing-lg: 20px;
+    --spacing-xl: 16px;
+    --spacing-2xl: 40px;
+  }
+
+  .followers-container {
+    margin-bottom: 96px;
+    min-height: 35vh;
+  }
+
+  .followers-header {
+    padding: var(--spacing-lg);
+  }
+
+  .page-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .tab-content {
+    padding: var(--spacing-xl);
+  }
+
+  .user-info {
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+
+  .user-avatar {
+    width: var(--spacing-2xl);
+    height: var(--spacing-2xl);
+  }
+
+  .user-name {
+    font-size: var(--font-size-md);
+  }
+
+  .user-actions {
+    padding: 0 var(--spacing-md) var(--spacing-md) var(--spacing-md);
+  }
+
+  .unfollow-button,
+  .view-profile-button {
+    min-width: 90px;
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  :host {
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+  }
+
+  .followers-container {
+    min-height: 30vh;
+    margin-bottom: 80px;
+  }
+
+  .page-title {
+    font-size: var(--font-size-xl);
+  }
+
+  .user-actions {
+    justify-content: center;
+  }
+
+  .unfollow-button,
+  .view-profile-button {
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+/* 
+   ACCESIBILIDAD
+    */
+
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    --transition: none;
+    --transition-fast: none;
+  }
+
+  .user-card:hover {
+    transform: none;
+  }
+
+  .user-avatar:hover {
+    transform: none;
+  }
+
+  .unfollow-button:hover,
+  .view-profile-button:hover {
+    transform: none;
+  }
+}
+
+/* 
+   FOCUS VISIBLE
+    */
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* 
+   UTILIDADES
+    */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

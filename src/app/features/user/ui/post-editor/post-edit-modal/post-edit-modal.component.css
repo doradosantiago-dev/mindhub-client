@@ -1,0 +1,513 @@
+﻿/* Estilos de My Post Edit Modal */
+
+/* 
+   VARIABLES CSS
+    */
+
+:host {
+  /* Dimensiones */
+  --modal-max-width: 500px;
+  --modal-max-height: 90vh;
+  --modal-padding: 24px;
+  --modal-padding-mobile: 16px;
+
+  /* Colores principales */
+  --primary-color: #1976d2;
+  --primary-light: #e3f2fd;
+  --primary-dark: #1565c0;
+  --danger-color: #d32f2f;
+
+  /* Colores de texto */
+  --text-primary: #000000;
+  --text-secondary: #000000;
+  --text-muted: #000000;
+  --text-light: #ffffff;
+
+  /* Colores de fondo */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-hover: #f0f0f0;
+
+  /* Colores de borde */
+  --border-color: #e0e0e0;
+  --border-light: #f0f0f0;
+  --border-focus: var(--primary-color);
+
+  /* Efectos */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --border-radius-sm: 4px;
+
+  /* Transiciones */
+  --transition: all 0.2s ease;
+  --transition-fast: all 0.15s ease;
+
+  /* Espaciado */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Tamaños de fuente */
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+
+  /* Z-index */
+  --z-modal: 1000;
+}
+
+/* 
+   BACKDROP DEL MODAL
+    */
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-modal);
+  padding: var(--spacing-md);
+  backdrop-filter: blur(2px);
+  padding-bottom: calc(var(--spacing-lg) + 140px);
+
+  /* 
+   CONTENEDOR DEL MODAL
+    */
+
+  .modal-container {
+    background: var(--bg-primary);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: var(--modal-max-width);
+    max-height: var(--modal-max-height);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    animation: modalSlideIn 0.3s ease-out;
+  }
+
+  /* 
+   HEADER DEL MODAL
+    */
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+    background: var(--gradient-footer);
+    color: var(--text-light);
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+  }
+
+  .modal-title {
+    margin: 0;
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--text-light);
+    line-height: 1.3;
+  }
+
+  .modal-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .header-title-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+    color: #81acf0 !important;
+    flex-shrink: 0;
+  }
+
+
+  .close-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.95);
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  .close-btn:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.95);
+    transform: scale(1.05);
+  }
+
+  .close-btn:focus-visible {
+    padding-bottom: calc(var(--spacing-lg) + 260px);
+    outline-offset: 2px;
+  }
+
+  .close-icon {
+    flex-shrink: 0;
+    transition: var(--transition-fast);
+  }
+
+  /* 
+   FORMULARIO DEL MODAL
+    */
+
+  .modal-form {
+    padding: var(--spacing-lg);
+    padding-bottom: calc(var(--spacing-lg) + 84px);
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    overflow: auto;
+  }
+
+  .form-group {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+  }
+
+  .required-indicator {
+    color: var(--danger-color);
+    font-weight: 600;
+  }
+
+  .optional-indicator {
+    color: var(--text-muted);
+    font-weight: 400;
+    font-size: var(--font-size-xs);
+  }
+
+  /* 
+   CAMPOS DEL FORMULARIO
+    */
+
+  .form-input,
+  .form-textarea,
+  .form-select {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    transition: var(--transition);
+    font-family: inherit;
+  }
+
+  .form-input:focus,
+  .form-textarea:focus,
+  .form-select:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.5;
+  }
+
+  .form-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right var(--spacing-sm) center;
+    background-repeat: no-repeat;
+    background-size: 16px 12px;
+    padding-right: var(--spacing-xl);
+  }
+
+  /* 
+   MENSAJES DE AYUDA
+    */
+
+  .form-help {
+    margin-top: var(--spacing-xs);
+    color: var(--text-muted);
+    font-size: var(--font-size-xs);
+    font-style: italic;
+  }
+
+  /* 
+   MENSAJES DE ERROR
+    */
+
+  .error-message {
+    margin-top: var(--spacing-sm);
+    color: var(--danger-color);
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-sm);
+    background: rgba(211, 47, 47, 0.1);
+    border-radius: var(--border-radius-sm);
+    border-left: 3px solid var(--danger-color);
+  }
+
+  .error-message span {
+    display: block;
+  }
+
+  /* 
+   ACCIONES DEL MODAL
+    */
+
+  .modal-actions {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: flex-end;
+    margin: 0;
+    padding: var(--spacing-lg);
+    box-sizing: border-box;
+    background: var(--gradient-footer);
+    border-top: none;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+  }
+
+  /* 
+   BOTONES
+    */
+
+  .btn-primary {
+    background: var(--primary-color);
+    color: #ffffff;
+    border: none !important;
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* 
+   SPINNER DE CARGA
+    */
+
+  .loading-spinner-small {
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    flex-shrink: 0;
+  }
+
+  .loading-spinner-small {
+    margin-right: 8px;
+  }
+
+  .modal-actions .btn-primary .btn-text {
+    display: inline-block;
+    color: inherit !important;
+    visibility: visible !important;
+  }
+
+  .modal-actions .btn-text {
+    display: inline-block !important;
+    color: #ffffff !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    text-indent: 0 !important;
+    font-size: 0.8125rem !important;
+    font-family: inherit !important;
+    line-height: 1 !important;
+  }
+
+  .modal-actions .btn-text {
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  .modal-actions .btn-primary::before,
+  .modal-actions .btn-primary::after,
+  .modal-actions .btn-secondary::before,
+  .modal-actions .btn-secondary::after {
+    display: none !important;
+    content: none !important;
+  }
+
+  .modal-actions .btn-primary,
+  .modal-actions .btn-secondary {
+    overflow: visible !important;
+    border: none !important;
+  }
+
+  .modal-actions button {
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* 
+   ANIMACIONES
+    */
+
+  @keyframes modalSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px) scale(0.95);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* 
+   RESPONSIVE DESIGN
+    */
+
+  @media (max-width: 768px) {
+    :host {
+      --modal-padding: var(--modal-padding-mobile);
+      padding-bottom: calc(var(--spacing-lg) + 28px);
+      --spacing-xl: 24px;
+    }
+
+    .modal-backdrop {
+      padding: var(--spacing-sm);
+    }
+
+    .modal-container {
+      max-width: 100%;
+      margin: var(--spacing-sm);
+    }
+
+    .modal-header {
+      padding: var(--spacing-md);
+    }
+
+    .modal-form {
+      padding: var(--spacing-md);
+    }
+
+    .modal-actions {
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    :host {
+      --spacing-md: 12px;
+      --spacing-lg: 16px;
+    }
+
+    .modal-title {
+      font-size: var(--font-size-lg);
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+      padding: var(--spacing-sm);
+    }
+  }
+
+  /* 
+   ACCESIBILIDAD
+    */
+
+  @media (prefers-reduced-motion: reduce) {
+    :host {
+      --transition: none;
+      --transition-fast: none;
+    }
+
+    .modal-container {
+      animation: none;
+    }
+
+    .close-btn:hover,
+    .btn-primary:hover:not(:disabled) {
+      transform: none;
+    }
+
+    .loading-spinner-small {
+      animation: none;
+    }
+  }
+
+  /* 
+   FOCUS VISIBLE
+    */
+
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+
+  /* 
+   UTILIDADES
+    */
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .modal-actions .btn-primary,
+  .modal-actions .btn-secondary {
+    color: #ffffff;
+  }
+}

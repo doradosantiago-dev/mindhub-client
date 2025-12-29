@@ -1,0 +1,231 @@
+<!-- UserFeed component template -->
+
+<div class="user-feed-container" role="main" aria-label="Feed de publicaciones del usuario">
+
+  <!-- ESTADO DE CARGA -->
+  @if (loading() && !user()) {
+  <div class="loading-container" role="status" aria-live="polite" aria-label="Cargando perfil del usuario">
+    <mat-spinner diameter="40" aria-hidden="true"></mat-spinner>
+    <p>Cargando perfil...</p>
+  </div>
+  }
+
+  <!-- ESTADO DE ERROR -->
+  @else if (error()) {
+  <div class="error-container" role="alert" aria-live="assertive" aria-label="Error al cargar el perfil">
+    <mat-icon class="error-icon" aria-hidden="true">error</mat-icon>
+    <h3>Error al cargar el perfil</h3>
+    <p>{{ error() }}</p>
+    <button mat-raised-button color="primary" (click)="loadUserData()" type="button"
+      aria-label="Reintentar cargar el perfil">
+      Reintentar
+    </button>
+  </div>
+  }
+
+  <!-- PERFIL DEL USUARIO -->
+  @else if (user()) {
+  <div class="user-profile" role="banner" aria-label="Perfil del usuario">
+    <div class="profile-header">
+
+      <!-- AVATAR DEL PERFIL -->
+      <div class="profile-avatar" role="img" [attr.aria-label]="'Avatar de ' + getUserDisplayName()">
+        <img [src]="user()?.profilePicture || '/assets/default-avatar.png'" [alt]="'Avatar de ' + getUserDisplayName()"
+          class="avatar-image" (error)="onImageError($event)">
+      </div>
+
+      <!-- INFORMACIÓN DEL PERFIL -->
+      <div class="profile-info" role="contentinfo" aria-label="Información del perfil">
+        <h1 class="profile-name" id="user-name">{{ getUserDisplayName() }}</h1>
+        <p class="profile-username" aria-label="Nombre de usuario">@{{ user()?.username }}</p>
+
+        @if (user()?.biography) {
+        <p class="profile-bio" aria-label="Biografía del usuario">{{ user()?.biography }}</p>
+        }
+
+        @if (user()?.privacyType === 'PRIVATE') {
+        <div class="privacy-badge" role="status" aria-label="Perfil privado">
+          <mat-icon aria-hidden="true">lock</mat-icon>
+          <span>Perfil privado</span>
+        </div>
+        }
+      </div>
+
+      <!-- ACCIONES DEL PERFIL -->
+      <div class="profile-actions" role="toolbar" aria-label="Acciones del perfil">
+        @if (!isCurrentUser()) {
+        @if (user()?.isFollowing) {
+        <button mat-stroked-button (click)="unfollowUser()" class="follow-button edit-profile-button" type="button"
+          aria-label="Dejar de seguir a {{ getUserDisplayName() }}">
+          <mat-icon aria-hidden="true">person_remove</mat-icon>
+          Dejar de seguir
+        </button>
+        } @else {
+        <button mat-raised-button color="primary" (click)="followUser()" class="follow-button edit-profile-button"
+          type="button" aria-label="Seguir a {{ getUserDisplayName() }}">
+          <mat-icon aria-hidden="true">person_add</mat-icon>
+          Seguir
+        </button>
+        }
+        } @else {
+        <button mat-raised-button color="primary" class="edit-profile-button" (click)="goToMyProfile()" type="button"
+          aria-label="Editar mi perfil">
+          <mat-icon aria-hidden="true">edit</mat-icon>
+          Editar perfil
+        </button>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN DE PUBLICACIONES -->
+  <div class="posts-section" role="region" aria-labelledby="posts-title">
+    <h2 id="posts-title">Publicaciones</h2>
+
+    <!-- ESTADO DE CARGA DE POSTS -->
+    @if (postsLoading()) {
+    <div class="posts-loading" role="status" aria-live="polite" aria-label="Cargando publicaciones">
+      <mat-spinner diameter="30" aria-hidden="true"></mat-spinner>
+      <span>Cargando publicaciones...</span>
+    </div>
+    }
+
+    <!-- ESTADO SIN POSTS -->
+    @else if (posts().length === 0) {
+    <div class="no-posts" role="status" aria-live="polite" aria-label="No hay publicaciones disponibles">
+      <mat-icon class="no-posts-icon" aria-hidden="true">article</mat-icon>
+      <h3>No hay publicaciones</h3>
+      <p>Este usuario aún no ha publicado nada</p>
+    </div>
+    }
+
+    <!-- LISTA DE POSTS -->
+    @else {
+    <div class="posts-grid" role="feed" aria-label="Lista de publicaciones">
+      @for (post of posts(); track post.id) {
+      <mat-card class="post-card" role="article" [attr.aria-labelledby]="'post-title-' + post.id">
+
+        <!-- HEADER DEL POST -->
+        <div class="post-header">
+          <div class="post-avatar">
+            <img [src]="post.author.profilePicture || '/assets/default-avatar.png'"
+              [alt]="'Avatar de ' + post.author.firstName + ' ' + post.author.lastName" (error)="onImageError($event)"
+              class="profile-image" loading="lazy">
+          </div>
+
+          <div class="post-user-info">
+            <div class="post-author-name" [id]="'post-title-' + post.id">
+              {{ getUserDisplayName() }}
+            </div>
+
+            <div class="post-meta">
+              <time class="post-date" [attr.datetime]="post.creationDate" aria-label="Fecha de publicación">
+                {{ post.creationDate | dateFormat }}
+              </time>
+              @if (post.privacyType === 'PRIVATE') {
+              <mat-icon class="post-privacy-icon" aria-hidden="true" aria-label="Post privado">lock</mat-icon>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTENIDO DEL POST -->
+        <mat-card-content class="post-content-section">
+          <p class="post-content" [class.truncated]="!expandedPosts.has(post.id) && shouldTruncatePost(post.content)"
+            aria-label="Contenido del post">{{ post.content }}</p>
+          @if (shouldTruncatePost(post.content)) {
+          <button mat-button class="see-more-btn" (click)="togglePostExpanded(post.id)" type="button">
+            {{ expandedPosts.has(post.id) ? 'Ver menos' : 'Ver más' }}
+          </button>
+          }
+          @if (post.imageUrl) {
+          <img [src]="post.imageUrl" [alt]="'Imagen del post de ' + getUserDisplayName()" class="post-image"
+            (error)="onImageError($event)">
+          }
+        </mat-card-content>
+
+        <!-- ACCIONES DE LA PUBLICACIÓN -->
+        <mat-card-actions class="post-actions" role="toolbar" aria-label="Acciones del post">
+
+          <!-- COMENTARIOS -->
+          <button mat-button (click)="toggleComments(post.id)" type="button"
+            [attr.aria-label]="'Ver comentarios del post (' + (post.commentCount || 0) + ' comentarios)'"
+            [attr.aria-expanded]="expandedComments.has(post.id)">
+            <mat-icon aria-hidden="true">comment</mat-icon>
+            <span aria-label="Número de comentarios">{{ post.commentCount || 0 }}</span>
+          </button>
+
+          <!-- LIKES -->
+          <button mat-button (click)="toggleLike(post.id)" type="button"
+            [class.liked]="post.userReaction?.reactionType === 'LIKE'"
+            [attr.aria-label]="post.userReaction?.reactionType === 'LIKE' ? 'Quitar like de la publicación' : 'Dar like de la publicación'"
+            [attr.aria-pressed]="post.userReaction?.reactionType === 'LIKE'">
+            <mat-icon aria-hidden="true">
+              {{ post.userReaction?.reactionType === 'LIKE' ? 'favorite' : 'favorite_border' }}
+            </mat-icon>
+            <span aria-label="Número de likes">{{ post.likeCount || 0 }}</span>
+          </button>
+
+          <!-- REPORTAR (solo visible si NO es el perfil del usuario actual) -->
+          @if (!isCurrentUser()) {
+          <button mat-button (click)="reportPost(post.id)" class="report-button" aria-label="Reportar este post"
+            type="button">
+            <mat-icon aria-hidden="true">report</mat-icon>
+            <span class="action-text">Reportar</span>
+          </button>
+          }
+        </mat-card-actions>
+
+        <!-- SECCIÓN DE COMENTARIOS -->
+        @if (expandedComments.has(post.id)) {
+        <mat-card-content class="comments-section" role="region" aria-label="Comentarios de la publicación"
+          (click)="$event.stopPropagation()" [attr.data-post-id]="post.id">
+          <h4 id="comments-title-{{ post.id }}">Comentarios</h4>
+
+          <!-- LISTA DE COMENTARIOS -->
+          <div class="comments-list" role="list" [attr.aria-labelledby]="'comments-title-' + post.id">
+            @for (comment of post.comments; track comment.id) {
+            <div class="comment" role="listitem" aria-label="Comentario de {{ comment.author.firstName }}">
+              <img [src]="comment.author.profilePicture || '/assets/default-avatar.png'"
+                [alt]="'Avatar de ' + comment.author.firstName" class="comment-avatar" (error)="onImageError($event)">
+              <div class="comment-content">
+                <div class="comment-header">
+                  <strong aria-label="Autor del comentario">
+                    {{ comment.author.firstName }} {{ comment.author.lastName }}
+                  </strong>
+                  @if (isCommentAuthor(comment)) {
+                  <button mat-icon-button class="delete-comment-btn" (click)="deleteComment(post.id, comment.id)"
+                    aria-label="Eliminar comentario" type="button">
+                    <mat-icon aria-hidden="true">close</mat-icon>
+                  </button>
+                  }
+                </div>
+                <p aria-label="Contenido del comentario">{{ comment.content }}</p>
+                <time [attr.datetime]="comment.creationDate" aria-label="Fecha del comentario">
+                  {{ comment.creationDate | dateFormat }}
+                </time>
+              </div>
+            </div>
+            }
+          </div>
+
+          <!-- FORMULARIO DE NUEVO COMENTARIO -->
+          <div class="new-comment" role="form" aria-label="Agregar nuevo comentario">
+            <input type="text" [placeholder]="'Escribe un comentario...'" [(ngModel)]="newCommentText[post.id]"
+              (keyup.enter)="addComment(post.id)" aria-label="Escribe tu comentario"
+              [attr.aria-describedby]="'comment-button-' + post.id">
+            <button mat-button (click)="addComment(post.id)"
+              [disabled]="!newCommentText[post.id] || !newCommentText[post.id].trim()"
+              [id]="'comment-button-' + post.id" type="submit" aria-label="Publicar comentario">
+              Comentar
+            </button>
+          </div>
+        </mat-card-content>
+        }
+      </mat-card>
+      }
+    </div>
+    }
+  </div>
+  }
+</div>

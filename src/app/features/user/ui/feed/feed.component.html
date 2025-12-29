@@ -1,0 +1,244 @@
+<!-- Feed template -->
+
+<div class="feed-container" role="main" aria-labelledby="feed-title">
+
+  <!-- HEADER DEL FEED -->
+  <div class="feed-header" role="banner">
+    <div class="feed-title">
+      <h1 id="feed-title" class="feed-title-text">Mi Feed</h1>
+      <p class="feed-description">Publicaciones propias y de usuarios que sigues</p>
+    </div>
+    <div class="header-controls">
+      <div class="action-group">
+        <button mat-raised-button (click)="openCreatePostModal()" class="create-post-button"
+          aria-label="Crear nueva publicación">
+          <mat-icon aria-hidden="true">add</mat-icon>
+          <span>Crear Publicación</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ESTADO DE CARGA -->
+  @if (loading()) {
+  <div class="loading-container" role="status" aria-live="polite">
+    <mat-spinner diameter="40" aria-label="Cargando feed"></mat-spinner>
+    <p>Cargando tu feed...</p>
+  </div>
+  }
+  @else if (error()) {
+  <div class="error-container" role="alert" aria-live="polite">
+    <mat-icon class="error-icon" aria-hidden="true">error</mat-icon>
+    <h3 class="error-title">Error al cargar el feed</h3>
+    <p class="error-message">{{ error() }}</p>
+    <button mat-raised-button color="primary" (click)="loadFeed()" aria-label="Reintentar cargar el feed">
+      Reintentar
+    </button>
+  </div>
+  }
+  @else if (isEmpty()) {
+  <div class="empty-container" role="status" aria-live="polite">
+    <mat-icon class="empty-icon" aria-hidden="true">article</mat-icon>
+    <h3 class="empty-title">Tu feed está vacío</h3>
+    <p class="empty-message">Comienza siguiendo usuarios o creando publicaciones para ver contenido aquí</p>
+  </div>
+  }
+  <!-- GRID DE PUBLICACIONES -->
+  @else {
+  <div class="posts-grid" role="feed" aria-label="Lista de posts del feed">
+    <mat-menu #postMenu="matMenu" panelClass="feed-post-menu-panel">
+      <button mat-menu-item (click)="openEditModal(currentMenuPost)" aria-label="Editar publicación">
+        <mat-icon class="menu-icon menu-icon-edit" aria-hidden="true">edit</mat-icon>
+        <span class="mat-mdc-menu-item-text">Editar Publicación</span>
+      </button>
+      <button mat-menu-item (click)="openDeleteModal(currentMenuPost)" aria-label="Eliminar publicación">
+        <mat-icon class="menu-icon menu-icon-delete" aria-hidden="true">delete</mat-icon>
+        <span class="mat-mdc-menu-item-text">Eliminar Publicación</span>
+      </button>
+    </mat-menu>
+    @for (post of posts(); track post.id) {
+    <mat-card class="post-card" role="article" [attr.aria-labelledby]="'post-title-' + post.id">
+
+      <!-- HEADER DE LA PUBLICACIÓN -->
+      <div class="post-header">
+        @if (post.author) {
+        <div class="post-avatar">
+          @if (post.author.profilePicture) {
+          <img [src]="post.author.profilePicture" [alt]="'Avatar de ' + getUserDisplayName(post.author)"
+            (error)="onImageError($event)" class="profile-image" loading="lazy">
+          } @else {
+          <mat-icon aria-hidden="true">person</mat-icon>
+          }
+        </div>
+        } @else {
+        <div class="post-avatar">
+          <mat-icon aria-hidden="true">person</mat-icon>
+        </div>
+        }
+
+        <div class="post-user-info">
+          @if (post.author) {
+          <div class="post-author-name" [id]="'post-title-' + post.id">
+            {{ getUserDisplayName(post.author) }}
+          </div>
+          } @else {
+          <div class="post-author-name">Usuario no disponible</div>
+          }
+
+          <div class="post-meta">
+            <time class="post-date" [attr.datetime]="post.creationDate" aria-label="Fecha de creación">
+              {{ post.creationDate | dateFormat:'long' }}
+            </time>
+            @if (post.privacyType === 'PRIVATE') {
+            <mat-icon class="post-privacy-icon" aria-label="Post privado" aria-hidden="true">
+              lock
+            </mat-icon>
+            }
+          </div>
+        </div>
+
+        @if (isOwnPost(post)) {
+        <div class="post-menu">
+          <button mat-icon-button [matMenuTriggerFor]="postMenu" (click)="currentMenuPost = post"
+            aria-label="Más acciones">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
+        }
+      </div>
+
+      <!-- CONTENIDO DEL POST -->
+      <mat-card-content class="post-content-section">
+        <p class="post-content" [class.truncated]="!expandedPosts.has(post.id) && shouldTruncatePost(post.content)">{{
+          post.content }}</p>
+        @if (shouldTruncatePost(post.content)) {
+        <button mat-button class="see-more-btn" (click)="togglePostExpanded(post.id)" type="button">
+          {{ expandedPosts.has(post.id) ? 'Ver menos' : 'Ver más' }}
+        </button>
+        }
+        @if (post.imageUrl) {
+        <img [src]="post.imageUrl" [alt]="'Imagen del post de ' + getUserDisplayName(post.author)" class="post-image"
+          loading="lazy">
+        }
+      </mat-card-content>
+
+      <!-- ACCIONES DE LA PUBLICACIÓN -->
+      <mat-card-actions class="post-actions" role="toolbar" aria-label="Acciones del post">
+
+        <!-- ===== COMENTARIOS ===== -->
+        <button mat-button (click)="toggleComments(post.id)"
+          [attr.aria-label]="'Ver comentarios del post (' + (post.commentCount || 0) + ' comentarios)'"
+          [attr.aria-expanded]="expandedComments.has(post.id)" type="button">
+          <mat-icon aria-hidden="true">comment</mat-icon>
+          <span class="action-text">{{ post.commentCount || 0 }}</span>
+        </button>
+
+        <!-- ===== LIKES ===== -->
+        <button mat-button (click)="toggleLike(post.id)" [class.liked]="post.userReaction?.reactionType === 'LIKE'"
+          [disabled]="post.isProcessingLike"
+          [attr.aria-label]="post.userReaction?.reactionType === 'LIKE' ? 'Quitar like de la publicación' : 'Dar like a la publicación'"
+          [attr.aria-pressed]="post.userReaction?.reactionType === 'LIKE'" type="button">
+          <mat-icon aria-hidden="true">
+            {{ post.userReaction?.reactionType === 'LIKE' ? 'favorite' : 'favorite_border' }}
+          </mat-icon>
+          <span class="action-text">{{ post.likeCount || 0 }}</span>
+        </button>
+
+        <!-- REPORTAR -->
+        @if (!isOwnPost(post)) {
+        <button mat-button (click)="reportPost(post.id)" class="report-button" aria-label="Reportar este post"
+          type="button">
+          <mat-icon aria-hidden="true">report</mat-icon>
+          <span class="action-text">Reportar</span>
+        </button>
+        }
+      </mat-card-actions>
+
+      <!-- SECCIÓN DE COMENTARIOS -->
+      @if (expandedComments.has(post.id)) {
+      <mat-card-content class="comments-section" role="region" aria-labelledby="'comments-title-' + post.id"
+        (click)="$event.stopPropagation()" [attr.data-post-id]="post.id">
+        <h4 [id]="'comments-title-' + post.id" class="comments-title">Comentarios</h4>
+
+        @for (comment of post.comments; track comment.id) {
+        <div class="comment" role="article" [attr.aria-labelledby]="'comment-author-' + comment.id">
+          @if (comment.author) {
+          <img [src]="comment.author.profilePicture || '/assets/default-avatar.png'"
+            [alt]="'Avatar de ' + comment.author.firstName" class="comment-avatar" loading="lazy">
+          <div class="comment-content">
+            <div class="comment-header">
+              <strong class="comment-author" [id]="'comment-author-' + comment.id">
+                {{ comment.author.firstName }} {{ comment.author.lastName }}
+              </strong>
+              @if (isCommentAuthor(comment)) {
+              <button mat-icon-button class="delete-comment-btn" (click)="deleteComment(post.id, comment.id)"
+                aria-label="Eliminar comentario" type="button">
+                <mat-icon aria-hidden="true">close</mat-icon>
+              </button>
+              }
+            </div>
+            <p class="comment-text">{{ comment.content }}</p>
+            <time class="comment-date" [attr.datetime]="comment.creationDate" aria-label="Fecha del comentario">
+              {{ comment.creationDate | dateFormat:'long' }}
+            </time>
+          </div>
+          } @else {
+          <img src="/assets/default-avatar.png" alt="Usuario no disponible" class="comment-avatar">
+          <div class="comment-content">
+            <strong class="comment-author">Usuario no disponible</strong>
+            <p class="comment-text">{{ comment.content }}</p>
+            <time class="comment-date" [attr.datetime]="comment.creationDate" aria-label="Fecha del comentario">
+              {{ comment.creationDate | dateFormat:'long' }}
+            </time>
+          </div>
+          }
+        </div>
+        }
+
+        <!-- FORMULARIO DE NUEVO COMENTARIO -->
+        <div class="new-comment" role="form" aria-label="Agregar nuevo comentario">
+          <input type="text" [placeholder]="'Escribe un comentario...'" [(ngModel)]="newCommentText[post.id]"
+            (keyup.enter)="addComment(post.id)" [disabled]="post.isAddingComment ?? false"
+            aria-label="Texto del comentario">
+          <button mat-button (click)="addComment(post.id)" [disabled]="post.isAddingComment ?? false"
+            aria-label="Publicar comentario" type="button">
+            @if (post.isAddingComment) {
+            <mat-spinner diameter="16" aria-label="Publicando comentario"></mat-spinner>
+            } @else {
+            <mat-icon aria-hidden="true">send</mat-icon>
+            }
+            <span>Comentar</span>
+          </button>
+        </div>
+      </mat-card-content>
+      }
+    </mat-card>
+    }
+  </div>
+
+  <!-- Inline delete modal reused from My Posts -->
+  @if (showDeleteModal()) {
+  <app-my-post-delete-modal [post]="selectedPost()!" (postDeleted)="onInlinePostDeleted()"
+    (modalClosed)="onInlineModalClosed()"></app-my-post-delete-modal>
+  }
+
+  <!-- CARGAR MÁS POSTS -->
+  @if (hasMore()) {
+  <div class="load-more-container" role="region" aria-label="Cargar más posts">
+    @if (loadingMore()) {
+    <div class="loading-more" role="status" aria-live="polite">
+      <mat-spinner diameter="30" aria-label="Cargando más publicaciones"></mat-spinner>
+      <span>Cargando más publicaciones...</span>
+    </div>
+    } @else {
+    <button mat-button (click)="loadMorePosts()" class="load-more-button" aria-label="Cargar más posts del feed">
+      Cargar más publicaciones
+    </button>
+    }
+  </div>
+  }
+  }
+</div>
+
+<!-- FOOTER -->
+<app-footer role="contentinfo"></app-footer>

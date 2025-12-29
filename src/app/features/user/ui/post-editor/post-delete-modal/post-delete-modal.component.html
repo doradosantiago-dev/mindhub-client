@@ -1,0 +1,107 @@
+<!-- My post delete modal template -->
+
+<div class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title"
+  aria-describedby="modal-description">
+
+  <div class="modal-container" role="document">
+
+    <!-- HEADER DEL MODAL -->
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <mat-icon class="header-icon" aria-hidden="true">delete</mat-icon>
+        <div class="header-title-wrap">
+          <h2 id="modal-title" class="modal-title">{{ modalTitle() }}</h2>
+          <p class="modal-subtitle">Confirma que deseas eliminar esta publicación. Esta acción no se puede deshacer.</p>
+        </div>
+      </div>
+
+      <button class="close-btn" (click)="onCancel()" type="button" aria-label="Cerrar modal de eliminación"
+        title="Cerrar">
+
+        <svg class="close-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- CONTENIDO DEL MODAL -->
+    <div class="modal-content" role="main">
+
+      <!-- ICONO DE ADVERTENCIA -->
+      <div class="warning-icon" aria-hidden="true">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="15" y1="9" x2="9" y2="15"></line>
+          <line x1="9" y1="9" x2="15" y2="15"></line>
+        </svg>
+      </div>
+
+      <!-- TÍTULO DE CONFIRMACIÓN -->
+      <h3 class="confirmation-title">¿Estás seguro?</h3>
+
+      <!-- MENSAJE DE ADVERTENCIA -->
+      <div id="modal-description" class="warning-message" role="alert">
+        <p>
+          Esta acción eliminará permanentemente tu publicación.
+          <strong>Esta acción no se puede deshacer.</strong>
+        </p>
+      </div>
+
+      <!-- VISTA PREVIA DEL POST -->
+      <div class="post-preview" role="region" aria-labelledby="preview-title">
+        <h4 id="preview-title" class="preview-title">Publicación a eliminar:</h4>
+
+        <div class="preview-content">
+
+          <!-- IMAGEN DEL POST -->
+          @if (post().imageUrl) {
+          <div class="preview-image">
+            <img [src]="post().imageUrl" [alt]="'Imagen del post a eliminar'" class="preview-image-content"
+              loading="lazy" (error)="onImageError($event)" (load)="onImageLoad($event)">
+          </div>
+          }
+
+          <!-- CONTENIDO DEL POST -->
+          <div class="preview-text">
+            <p class="preview-text-content">
+              {{ post().content.length > 100 ? post().content.substring(0, 100) + '...' : post().content }}
+            </p>
+            <time class="preview-date" [attr.datetime]="post().creationDate" aria-label="Fecha de creación">
+              Creada el {{ postDate() | dateFormat:'date-only' }}
+            </time>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACCIONES DEL MODAL -->
+    <div class="modal-actions" role="toolbar" aria-label="Acciones del modal">
+
+      <!-- BOTÓN CANCELAR -->
+      <button type="button" class="btn-secondary" (click)="onCancel()" [disabled]="loading()"
+        aria-label="Cancelar eliminación" title="{{ confirmationOptions().cancelText }}">
+        <span class="btn-text">{{ confirmationOptions().cancelText }}</span>
+      </button>
+
+      <!-- BOTÓN ELIMINAR -->
+      <button type="button" [class]="confirmationOptions().confirmClass" (click)="onConfirmDelete()"
+        [disabled]="loading()" aria-label="Confirmar eliminación de la publicación"
+        title="{{ confirmationOptions().confirmText }}" [attr.aria-describedby]="'delete-status'">
+
+        @if (loading()) {
+        <div class="loading-spinner-small" aria-hidden="true"></div>
+        <span class="btn-text">Eliminando...</span>
+        } @else {
+        <span class="btn-text">{{ confirmationOptions().confirmText }}</span>
+        }
+      </button>
+    </div>
+
+    <!-- ESTADO DE ELIMINACIÓN -->
+    <div id="delete-status" class="sr-only" aria-live="polite">
+      {{ loading() ? 'Eliminando publicación...' : 'Listo para eliminar' }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<!-- Report modal template -->
+
+<div class="report-modal" role="dialog" aria-labelledby="report-modal-title">
+
+<div class="modal-header">
+    <mat-icon>report</mat-icon>
+    <div class="header-content">
+        <h2 mat-dialog-title id="report-modal-title" role="heading" aria-level="2">
+            Reportar Publicación
+        </h2>
+        <p class="modal-description">Ayúdanos a mantener un ambiente seguro y respetuoso</p>
+    </div>
+</div>
+
+<mat-dialog-content role="main" aria-labelledby="report-modal-title">
+
+    <!-- CONTENIDO DEL POST A REPORTAR -->
+    <div class="report-content">
+        <p class="content-label">
+            <strong>Contenido de la publicación:</strong>
+        </p>
+
+        <div class="post-content" role="region" aria-label="Contenido del post reportado">
+            {{ data.postContent }}
+        </div>
+
+        <!-- FORMULARIO DE REPORTE -->
+        <div class="report-form" role="form" aria-label="Formulario de reporte">
+
+            <!-- CAMPO MOTIVO -->
+            <mat-form-field appearance="outline" class="full-width" [attr.aria-describedby]="'reason-hint'">
+                <mat-label>Motivo del reporte</mat-label>
+                <input matInput [ngModel]="reason()" (ngModelChange)="updateReason($event)"
+                    placeholder="Escribe el motivo del reporte..." required maxlength="500"
+                    aria-label="Motivo del reporte" aria-required="true">
+                <mat-hint id="reason-hint" aria-live="polite">
+                    {{ reasonLength() }}/500 caracteres
+                </mat-hint>
+            </mat-form-field>
+
+            <!-- CAMPO DESCRIPCIÓN -->
+            <mat-form-field appearance="outline" class="full-width" [attr.aria-describedby]="'description-hint'">
+                <mat-label>Descripción (opcional)</mat-label>
+                <textarea matInput [ngModel]="description()" (ngModelChange)="updateDescription($event)"
+                    placeholder="Proporciona más detalles sobre el motivo del reporte..." rows="3" maxlength="1000"
+                    aria-label="Descripción adicional del reporte">
+        </textarea>
+                <mat-hint id="description-hint" aria-live="polite">
+                    {{ descriptionLength() }}/1000 caracteres
+                </mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<!-- ACCIONES DEL MODAL -->
+<mat-dialog-actions align="end" role="toolbar" aria-label="Acciones del modal de reporte">
+
+    <!-- BOTÓN CANCELAR -->
+    <button mat-button (click)="onCancel()" type="button" aria-label="Cancelar reporte">
+        Cancelar
+    </button>
+
+    <!-- BOTÓN REPORTAR -->
+    <button mat-raised-button color="warn" (click)="onSubmit()" [disabled]="!canSubmit()" type="submit"
+        aria-label="Enviar reporte" [attr.aria-describedby]="'submit-status'">
+        {{ isSubmitting() ? 'Reportando...' : 'Reportar' }}
+    </button>
+
+    <!-- ESTADO DEL ENVÍO -->
+    <div id="submit-status" class="sr-only" aria-live="polite">
+        {{ isSubmitting() ? 'Enviando reporte...' : 'Listo para enviar' }}
+    </div>
+</mat-dialog-actions>
+
+</div>
