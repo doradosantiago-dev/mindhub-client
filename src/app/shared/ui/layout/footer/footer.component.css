@@ -1,0 +1,316 @@
+﻿/** Footer: estilos — continuidad visual, accesibilidad y tokens de diseño. */
+
+/* Variables CSS */
+
+:host {
+  /* Colores principales - Mismos del header y sidebar */
+  --primary-color: #60a5fa;
+  --secondary-color: #3b82f6;
+  --accent-color: #6ee7b7;
+
+  /* Colores de texto - Blanco para contraste */
+  --text-color: #ffffff;
+  --text-light: #e0e7ff;
+  --text-lighter: #c7d2fe;
+
+  /* Colores de fondo - Azul degradado */
+  --bg-light: rgba(255, 255, 255, 0.05);
+
+  /* Bordes y sombras */
+  --border-color: rgba(255, 255, 255, 0.2);
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+
+  /* Espaciado y dimensiones */
+  --border-radius: 12px;
+  --border-radius-sm: 8px;
+
+  /* Transiciones */
+  --transition: all 0.2s ease;
+}
+
+/* Footer principal */
+.app-footer {
+  background: var(--gradient-footer);
+  border-top: 1px solid var(--border-color);
+  padding: 4rem 0 2.5rem;
+  margin-top: auto;
+  box-shadow: var(--shadow);
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer-content {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 4rem 0 1.5rem;
+}
+
+/* Contenido principal */
+.footer-main {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 3rem;
+  margin-bottom: 1rem;
+}
+
+/* Marca del footer */
+.footer-brand {
+  max-width: 300px;
+}
+
+.footer-logo {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+  overflow: visible;
+}
+
+.footer-logo .logo-mind {
+  color: var(--text-color);
+  display: inline-block;
+}
+
+.footer-logo .logo-hub {
+  color: var(--accent-color);
+  display: inline-block;
+}
+
+.footer-description {
+  margin: 0 0 1.5rem 0;
+  color: var(--text-light);
+  line-height: 1.6;
+  font-size: 0.875rem;
+}
+
+/* Icono del logo en el footer: tamaño reducido para apariencia limpia */
+.footer-logo-icon {
+  width: 32px;
+  height: 32px;
+  margin-right: 0.5rem;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+/* Enlaces sociales */
+.social-links {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background: var(--bg-light);
+  color: var(--text-light);
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.social-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--social-color);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.social-link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  border-color: var(--social-color);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.social-link:hover::before {
+  opacity: 0.1;
+}
+
+.social-link:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.social-link svg {
+  position: relative;
+  z-index: 1;
+  transition: var(--transition);
+}
+
+.social-link:hover svg {
+  color: var(--social-color);
+}
+
+/* Colores específicos por red social */
+.social-link.facebook:hover {
+  border-color: #3b7fd8;
+}
+
+.social-link.linkedin:hover {
+  border-color: #05679c;
+}
+
+.social-link.github:hover {
+  border-color: #000000;
+}
+
+/* Navegación del footer */
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.footer-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.section-title {
+  margin: 0 0 1rem 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.section-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-link {
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: var(--transition);
+  display: inline-block;
+  padding: 0.25rem 0;
+}
+
+.footer-link:hover {
+  color: var(--accent-color);
+  transform: translateX(4px);
+}
+
+.footer-link:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+  border-radius: var(--border-radius-sm);
+}
+
+/* Pie del footer */
+.footer-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  flex-wrap: wrap;
+  gap: 1rem;
+  background: inherit;
+  backdrop-filter: blur(10px);
+  margin: 0 -1.5rem -1.5rem -1.5rem;
+  padding-bottom: 1rem;
+}
+
+.footer-legal {
+  color: var(--text-lighter);
+  font-size: 0.875rem;
+}
+
+.footer-legal .logo-mind {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.footer-legal .logo-hub {
+  color: var(--accent-color);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.footer-version {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-main {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .footer-brand {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .footer-links {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-footer {
+    padding: 2rem 0 1rem 0;
+  }
+
+  .footer-content {
+    padding: 0 1rem;
+  }
+
+  .footer-bottom {
+    margin: 0 -1rem -1rem -1rem;
+    padding-bottom: 0;
+  }
+
+  .footer-links {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+}
+
+/* Accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+
+  .social-link:hover,
+  .footer-link:hover {
+    transform: none;
+  }
+}

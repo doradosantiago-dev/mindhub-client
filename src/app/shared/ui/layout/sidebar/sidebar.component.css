@@ -1,0 +1,254 @@
+﻿/**
+ * Estilos del componente Sidebar
+ * 
+ * Estilos optimizados para el componente de sidebar principal.
+ * Implementa el mismo estilo azul degradado del header
+ * para crear continuidad visual sin saltos.
+ * 
+ */
+
+/* VARIABLES CSS */
+:host {
+  /* Dimensiones */
+  --sidebar-width: 280px;
+  --sidebar-collapsed-width: 56px;
+
+  /* Colores principales - Mismos del header */
+  --primary-color: #60a5fa;
+  --secondary-color: #3b82f6;
+  --accent-color: #6ee7b7;
+
+  /* Colores de texto - Blanco para contraste */
+  --text-color: #ffffff;
+  --text-light: #e0e7ff;
+
+  /* Colores de fondo - Azul degradado */
+  --hover-bg: rgba(255, 255, 255, 0.15);
+  --active-bg: rgba(255, 255, 255, 0.2);
+  --active-color: #ffffff;
+
+  /* Colores de estado */
+  --border-color: rgba(255, 255, 255, 0.2);
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --border-radius: 8px;
+  --transition: all 0.2s ease;
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  height: calc(100vh - var(--header-height));
+  background: var(--gradient-footer);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: none;
+  border-left: none;
+  border-bottom: none;
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: var(--header-height);
+  margin-top: 3px;
+  z-index: 50;
+  transition: var(--transition);
+  padding-bottom: 1.5rem;
+}
+
+.sidebar-footer {
+  padding: 0 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-menu {
+  flex: 1;
+  list-style: none;
+  margin: 0;
+  padding: 3rem 0 1.5rem 0;
+  overflow-y: auto;
+}
+
+.menu-item {
+  margin: 0.5rem 0;
+}
+
+.menu-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  color: var(--text-light);
+  text-decoration: none;
+  transition: var(--transition);
+  border-radius: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.menu-link:hover {
+  background: var(--hover-bg);
+  color: var(--text-color);
+  padding-left: calc(1.5rem + 4px);
+}
+
+.menu-link:focus {
+  outline: none;
+  outline-offset: 0;
+  box-shadow: inset 3px 0 0 var(--accent-color);
+}
+
+.menu-link.active:focus,
+.menu-link.active:focus-visible,
+.menu-link:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.menu-link.active {
+  background: var(--active-bg);
+  color: var(--active-color);
+  border-right: 3px solid var(--accent-color);
+}
+
+.menu-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--accent-color);
+}
+
+.menu-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.menu-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+.menu-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+}
+
+.logout-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: auto;
+  max-width: 160px;
+  padding: 0.375rem 0.75rem;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.12s ease;
+  align-self: center;
+}
+
+.logout-button:hover {
+  background: rgba(239, 68, 68, 0.82);
+  border-color: rgba(239, 68, 68, 0.8);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.logout-button:focus {
+  outline: 3px solid rgba(239, 68, 68, 0.3);
+  outline-offset: 2px;
+}
+
+.logout-button svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  display: inline-block;
+}
+
+/* Estado colapsado */
+.sidebar.collapsed {
+  width: var(--sidebar-collapsed-width);
+}
+
+.sidebar.collapsed .menu-label,
+.sidebar.collapsed .logout-button span {
+  display: none;
+}
+
+.sidebar.collapsed .menu-link,
+.sidebar.collapsed .logout-button {
+  justify-content: center;
+  padding: 0.375rem;
+}
+
+/* En la versión colapsada mostramos el icono y ocultamos el texto */
+.sidebar.collapsed .logout-button svg {
+  display: inline-block;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+}
+
+/* SCROLLBAR PERSONALIZADO */
+.sidebar-menu::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-menu::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+/* BARRA DE DESPLAZAMIENTO DEL SIDEBAR */
+.sidebar-menu::-webkit-scrollbar-thumb:hover {
+
+  background: rgba(255, 255, 255, 0.5);
+}

@@ -1,0 +1,101 @@
+<!-- Header: plantilla del header — búsqueda, navegación, notificaciones y chatbot -->
+
+<header class="app-header" role="banner" aria-label="Header principal de la aplicación">
+
+  <!-- Lado izquierdo del header - logo y búsqueda -->
+  <div class="header-left">
+
+    <!-- Logo y marca principal -->
+    <div class="logo" (click)="goToDashboard()" (keydown.enter)="goToDashboard()" (keydown.space)="goToDashboard()"
+      role="button" tabindex="0" aria-label="Ir al Dashboard principal">
+      <h1>
+        <span class="logo-mind">MIND</span>
+        <span class="logo-hub">HUB</span>
+      </h1>
+    </div>
+
+    <!-- Búsqueda de usuarios -->
+    @if (showSearch()) {
+    <div class="search-container" role="search" aria-label="Búsqueda de usuarios">
+      <div class="search-input-wrapper">
+        <input type="text" placeholder="Buscar usuarios..." class="search-input" [value]="searchQuery()"
+          (input)="onSearchChange($event)" (focus)="onSearchFocus()" (blur)="onSearchBlur()"
+          (keyup.enter)="performSearch()" [attr.aria-describedby]="'search-results'"
+          aria-label="Buscar usuarios en la plataforma" autocomplete="off" />
+
+        <button class="search-button" (click)="performSearch()" [disabled]="!searchQuery().trim()"
+          aria-label="Ejecutar búsqueda" type="button">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            aria-hidden="true">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Resultados de búsqueda -->
+      @if (canShowResults()) {
+      <div id="search-results" class="search-results-container" role="region"
+        aria-label="Resultados de búsqueda de usuarios">
+        <app-user-search-results [searchResults]="searchResults()" [isSearching]="isSearching()"
+          [searchQuery]="searchQuery()" [showResults]="showResults()" (userSelected)="onUserSelected($event)">
+        </app-user-search-results>
+      </div>
+      }
+    </div>
+    }
+  </div>
+
+  <!-- Lado derecho del header - chatbot y notificaciones -->
+  <div class="header-right">
+
+    <!-- Chatbot AI integrado -->
+    <div class="chatbot" (click)="openChatbot()" (keydown.enter)="openChatbot()" (keydown.space)="openChatbot()"
+      role="button" tabindex="0" [attr.aria-label]="isChatbotOpen() ? 'Cerrar asistente AI' : 'Abrir asistente AI'"
+      [attr.aria-pressed]="isChatbotOpen()" title="Asistente AI">
+
+      <!-- Icono del chatbot -->
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path
+          d="M20 9V7c0-1.1-.9-2-2-2h-3c0-1.66-1.34-3-3-3S9 3.34 9 5H6c-1.1 0-2 .9-2 2v2c-1.66 0-3 1.34-3 3s1.34 3 3 3v4c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4c1.66 0 3-1.34 3-3s-1.34-3-3-3zM7.5 11.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5S9.83 13 9 13s-1.5-.67-1.5-1.5zM16 17H8v-2h8v2zm-1-4c-.83 0-1.5-.67-1.5-1.5S14.17 10 15 10s1.5.67 1.5 1.5S15.83 13 15 13z" />
+      </svg>
+
+      <!-- Indicador visual de estado activo -->
+      @if (isChatbotOpen()) {
+      <div class="chatbot-indicator" aria-hidden="true"></div>
+      }
+    </div>
+
+    <!-- Sistema de notificaciones -->
+    <div class="notifications" (click)="toggleNotifications()" (keydown.enter)="toggleNotifications()"
+      (keydown.space)="toggleNotifications()" role="button" tabindex="0"
+      [attr.aria-label]="showNotifications() ? 'Cerrar notificaciones' : 'Abrir notificaciones'"
+      [attr.aria-expanded]="showNotifications()" [attr.aria-describedby]="'notification-count'"
+      title="Notificaciones del sistema">
+
+      <!-- Icono de notificaciones -->
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        aria-hidden="true">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+      </svg>
+
+      <!-- Badge de notificaciones no leídas -->
+      @if (notificationCount() > 0) {
+      <div class="notification-badge" aria-hidden="true">
+        <span class="badge-number" id="notification-count" aria-label="Notificaciones no leídas">
+          {{ notificationCount() }}
+        </span>
+      </div>
+      }
+    </div>
+  </div>
+</header>
+
+<!-- Componentes integrados del header -->
+<!-- Chatbot AI - Componente principal -->
+<app-chatbot></app-chatbot>
+
+<!-- Panel de notificaciones - Componente desplegable -->
+<app-notifications [isOpen]="showNotifications()" (closed)="closeNotifications()">
+</app-notifications>
