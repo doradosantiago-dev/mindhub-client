@@ -1,0 +1,67 @@
+<!-- User Search Results: plantilla — carga, resultados y estados vacíos -->
+
+@if (showResults()) {
+<div class="search-results-container" role="region" aria-label="Resultados de búsqueda de usuarios">
+
+  <!-- ESTADO DE CARGA -->
+  @if (isSearching()) {
+  <div class="search-loading" role="status" aria-live="polite">
+    <mat-spinner diameter="20" aria-label="Buscando usuarios"></mat-spinner>
+    <span>Buscando usuarios...</span>
+  </div>
+  }
+
+  <!-- RESULTADOS ENCONTRADOS -->
+  @else if (hasResults()) {
+  <div class="search-results" role="list" aria-label="Usuarios encontrados">
+    @for (user of searchResults(); track user.id) {
+    <div class="user-result" role="listitem" (click)="selectUser(user)" (keydown.enter)="selectUser(user)"
+      (keydown.space)="selectUser(user)" tabindex="0"
+      [attr.aria-label]="'Seleccionar usuario ' + user.firstName + ' ' + user.lastName">
+
+      <!-- Avatar del usuario -->
+      <div class="user-avatar">
+        <img [src]="user.profilePicture || '/assets/default-avatar.png'"
+          [alt]="'Foto de perfil de ' + user.firstName + ' ' + user.lastName" class="avatar-image"
+          (error)="onImageError($event)" loading="lazy">
+      </div>
+
+      <!-- Información del usuario -->
+      <div class="user-info">
+        <div class="user-name">
+          <span>{{ user.firstName }} {{ user.lastName }}</span>
+          @if (user.privacyType === 'PRIVATE') {
+          <mat-icon class="privacy-icon" title="Usuario privado" aria-label="Usuario privado">
+            lock
+          </mat-icon>
+          }
+        </div>
+        <div class="user-username" aria-label="Nombre de usuario">@{{ user.username }}</div>
+      </div>
+
+      <!-- Indicador de acción -->
+      <div class="user-action" aria-hidden="true">
+        <mat-icon class="action-icon">arrow_forward_ios</mat-icon>
+      </div>
+    </div>
+    }
+  </div>
+  }
+
+  <!-- SIN RESULTADOS -->
+  @else if (shouldShowNoResults()) {
+  <div class="no-results" role="status" aria-live="polite">
+    <mat-icon class="no-results-icon" aria-hidden="true">search_off</mat-icon>
+    <span>No se encontraron usuarios</span>
+  </div>
+  }
+
+  <!-- ESTADO VACÍO -->
+  @else if (shouldShowEmptyState()) {
+  <div class="empty-state" role="status" aria-live="polite">
+    <mat-icon class="empty-icon" aria-hidden="true">search</mat-icon>
+    <span>Busca usuarios para empezar</span>
+  </div>
+  }
+</div>
+}

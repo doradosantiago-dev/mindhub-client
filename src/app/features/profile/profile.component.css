@@ -1,0 +1,1732 @@
+﻿/* Estilos del componente Profile */
+
+/* 
+  VARIABLES CSS DEL COMPONENTE
+   */
+
+/* Variables de diseño */
+:host {
+  --header-height: 56px;
+  --sidebar-width: 240px;
+
+  /* Paleta de colores */
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+  --secondary-color: #1e40af;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  --success-color: #10b981;
+
+  /* Colores de texto */
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --text-white: #ffffff;
+
+  /* Colores de fondo */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-tertiary: #f3f4f6;
+
+  /* Borde y sombra */
+  --border-color: #e5e7eb;
+  --border-hover: #d1d5db;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+
+  /* Radio de borde */
+  --radius-sm: 6px;
+  --radius: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  /* Transiciones */
+  --transition-fast: all 0.15s ease;
+  --transition: all 0.2s ease;
+  --transition-slow: all 0.3s ease;
+
+  /* Espaciado */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+}
+
+/* 
+   LAYOUT PRINCIPAL
+    */
+
+/**
+ * Layout principal del componente de perfil
+ * Organiza la estructura general con flexbox
+ */
+.profile-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-secondary);
+}
+
+/**
+ * Contenido principal del perfil
+ * Se posiciona considerando header y sidebar
+ */
+.profile-main {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  margin-top: var(--header-height);
+  padding: var(--spacing-xl);
+  min-height: calc(100vh - var(--header-height));
+}
+
+/**
+ * Contenedor del perfil con ancho máximo
+ * Centra el contenido y establece espaciado
+ */
+.profile-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+/* 
+   HEADER DEL PERFIL
+    */
+
+/**
+ * Header principal del perfil con gradiente
+ * Contiene avatar, información del usuario y botones de acción
+ */
+.profile-header {
+  background: var(--gradient-footer);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-xl);
+  color: var(--text-white);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+/**
+ * Efecto de overlay sutil sobre el header
+ * Añade profundidad visual sin interferir con el contenido
+ */
+.profile-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  pointer-events: none;
+}
+
+/**
+ * Contenido del header organizado horizontalmente
+ * Distribuye avatar/info y botones de acción
+ */
+.profile-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-xl);
+  position: relative;
+  z-index: 1;
+}
+
+/**
+ * Contenedor de información del usuario
+ * Agrupa avatar y detalles personales
+ */
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xl);
+}
+
+/* 
+   AVATAR DEL USUARIO
+    */
+
+/**
+ * Contenedor del avatar con posicionamiento relativo
+ * Permite efectos de hover y fallback
+ */
+.profile-avatar {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/**
+ * Imagen del avatar del usuario
+ * Incluye efectos de hover y transiciones suaves
+ */
+.avatar-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow-md);
+  background: rgba(255, 255, 255, 0.95);
+  transition: var(--transition);
+}
+
+/**
+ * Efecto hover del avatar
+ * Escala ligeramente y mejora la sombra
+ */
+.avatar-image:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Controles de carga de avatar: ocultar input nativo y mostrar botón circular de edición superpuesto */
+.avatar-upload-controls input[type="file"] {
+  display: none;
+  /* ocultar el input de archivo nativo */
+}
+
+.avatar-edit-btn {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  box-sizing: border-box;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 4px rgba(2, 6, 23, 0.06);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.avatar-edit-btn mat-icon {
+  font-size: 0.75rem;
+  color: var(--text-primary);
+  line-height: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-edit-btn:hover {
+  transform: translateY(-2px);
+}
+
+.avatar-remove-btn {
+  position: absolute;
+  right: 30px;
+  bottom: -2px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  box-sizing: border-box;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 4px rgba(2, 6, 23, 0.06);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.avatar-remove-btn mat-icon {
+  font-size: 0.75rem;
+  color: var(--error-color);
+  line-height: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-remove-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Preview card shown when a new avatar is selected */
+.avatar-preview {
+  margin-top: 8px;
+  background: var(--bg-primary);
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.avatar-preview img {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid var(--border-color);
+}
+
+.preview-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.preview-actions .action-button.primary {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+}
+
+.preview-actions .action-button.secondary {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+}
+
+/* Small spinner overlay for avatar while uploading */
+.avatar-upload-spinner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+}
+
+/**
+ * Placeholder del avatar cuando no hay imagen
+ * Mantiene el mismo tamaño y estilo que la imagen real
+ */
+.avatar-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow-md);
+  background: rgba(255, 255, 255, 0.95);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: var(--transition);
+}
+
+/**
+ * Icono del placeholder del avatar
+ * Tamaño apropiado y color sutil
+ */
+.avatar-placeholder mat-icon {
+  font-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+  color: var(--text-muted);
+}
+
+/* 
+   INFORMACIÓN DEL USUARIO
+    */
+
+/**
+ * Contenedor del nombre y badge de administrador
+ * Organiza horizontalmente los elementos
+ */
+.name-badge-container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing);
+  flex-wrap: wrap;
+}
+
+/**
+ * Badge de administrador
+ * Estilo distintivo con colores de advertencia
+ */
+.admin-badge {
+  background: var(--warning-color);
+  color: #111827;
+  padding: var(--spacing-sm) var(--spacing);
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+}
+
+/**
+ * Contenedor de detalles del usuario
+ * Organiza nombre, username y biografía verticalmente
+ */
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+/**
+ * Nombre principal del usuario
+ * Tipografía destacada y legible
+ */
+.profile-name {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/**
+ * Username del usuario
+ * Estilo secundario con opacidad reducida
+ */
+.profile-username {
+  margin: 0;
+  font-size: 1.125rem;
+  opacity: 0.9;
+}
+
+/**
+ * Biografía del usuario
+ * Texto descriptivo con ancho máximo
+ */
+.profile-bio {
+  margin: 0;
+  font-size: 1rem;
+  opacity: 0.8;
+  max-width: 400px;
+}
+
+/* 
+   BOTONES DE ACCIÓN
+    */
+
+/**
+ * Contenedor de botones de acción
+ * Organiza horizontalmente los botones
+ */
+.profile-actions {
+  display: flex;
+  gap: var(--spacing);
+}
+
+/* Hacer los botones de acción del header en forma de píldora y coherentes con el estilo del header */
+.profile-actions .action-button {
+  border-radius: 999px;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.9rem;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-white);
+  box-shadow: none;
+  transition: var(--transition);
+}
+
+/* Ocultar iconos dentro de los botones del header por defecto (se puede sobreescribir en móviles) */
+.profile-header .profile-actions .action-button mat-icon {
+  display: none;
+}
+
+/* En pantallas pequeñas, mostrar iconos y ajustar anchura para accesibilidad */
+@media (max-width: 768px) {
+  .profile-actions .action-button {
+    min-width: 120px;
+    padding: var(--spacing) var(--spacing-lg);
+    justify-content: center;
+  }
+
+  .profile-actions .action-button mat-icon {
+    display: inline-flex;
+    margin-right: var(--spacing-xs);
+  }
+}
+
+.profile-actions .action-button {
+  border-radius: 999px;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.9rem;
+}
+
+/* Mostrar solo texto por defecto en los botones del header; mostrar fondo/borde al hover/focus */
+.profile-actions .action-button {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-white);
+  box-shadow: none;
+}
+
+/* ocultar el icono dentro de los botones del header para mostrar solo el texto */
+.profile-actions .action-button mat-icon {
+  display: none;
+}
+
+/* Primario: mostrar gradiente al pasar el ratón */
+.profile-actions .action-button.primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+}
+
+/* Secundario: mostrar fondo sutil y borde al pasar el ratón */
+.profile-actions .action-button.secondary {
+  border: 1px solid transparent;
+}
+
+.profile-actions .action-button.secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+/* Peligro: mostrar fondo rojo y borde al pasar el ratón */
+.profile-actions .action-button.danger {
+  border: 1px solid transparent;
+}
+
+.profile-actions .action-button.danger:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.95) 0%, #dc2626 100%);
+  border-color: rgba(220, 38, 38, 0.9);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Estado de foco accesible para los botones del header del perfil */
+.profile-actions .action-button:focus {
+  outline: 3px solid rgba(255, 255, 255, 0.12);
+  outline-offset: 2px;
+}
+
+/**
+ * Estilo base para todos los botones de acción
+ * Incluye efectos de hover y transiciones
+ */
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing);
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+/**
+ * Efecto de brillo deslizante en botones
+ * Añade interactividad visual sutil
+ */
+.action-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+/**
+ * Animación del efecto de brillo en hover
+ */
+.action-button:hover::before {
+  left: 100%;
+}
+
+/**
+ * Icono dentro de los botones
+ * Tamaño consistente y alineación
+ */
+.action-button mat-icon {
+  font-size: 1.125rem;
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+/**
+ * Botón primario (editar perfil)
+ * Estilo destacado con verde esmeralda
+ */
+.action-button.primary {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: var(--text-white);
+  border: none;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+}
+
+.action-button.primary mat-icon {
+  color: var(--text-white) !important;
+}
+
+/**
+ * Hover del botón primario
+ * Intensifica el verde esmeralda
+ */
+.action-button.primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+}
+
+/**
+ * Botón secundario (volver al dashboard)
+ * Estilo transparente con bordes
+ */
+.action-button.secondary {
+  background: transparent;
+  color: var(--text-white);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+/**
+ * Hover del botón secundario
+ * Añade fondo sutil y mejora el borde
+ */
+.action-button.secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/**
+ * Botón de peligro (eliminar cuenta)
+ * Estilo distintivo con colores de error
+ */
+.action-button.danger {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.95) 0%, #dc2626 100%);
+  color: var(--text-white);
+  border: 1px solid rgba(220, 38, 38, 0.9);
+}
+
+.action-button.danger mat-icon {
+  color: var(--text-white) !important;
+}
+
+/**
+ * Hover del botón de peligro
+ * Intensifica el color y añade elevación
+ */
+.action-button.danger:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 1);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Forzar color blanco específicamente en el icono "volver" y otros íconos dentro
+   de botones secundarios del perfil para evitar que reglas globales lo sobrescriban. */
+.profile-actions .action-button.secondary mat-icon,
+.profile-actions-footer .action-button.secondary mat-icon {
+  color: var(--text-white) !important;
+}
+
+/**
+ * Estado deshabilitado de botones
+ * Reduce opacidad y desactiva transformaciones
+ */
+.action-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* 
+   ESTADOS DE CARGA Y ERROR
+    */
+
+/**
+ * Sección de carga del perfil
+ * Centra el spinner y mensaje de carga
+ */
+.loading-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-2xl) var(--spacing-xl);
+  background: var(--bg-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+}
+
+/**
+ * Spinner de carga animado
+ * Borde circular con animación de rotación
+ */
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--border-color);
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: var(--spacing-lg);
+}
+
+/**
+ * Animación de rotación del spinner
+ * Define el movimiento circular continuo
+ */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/**
+ * Texto de carga
+ * Estilo secundario y centrado
+ */
+.loading-text {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/**
+ * Sección de error
+ * Estilo distintivo con borde izquierdo de error
+ */
+.error-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-2xl) var(--spacing-xl);
+  background: var(--bg-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow);
+  border-left: 4px solid var(--error-color);
+  border: 1px solid var(--border-color);
+}
+
+/**
+ * Icono de error
+ * Tamaño grande y color de error
+ */
+.error-icon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-lg);
+  color: var(--error-color);
+}
+
+/**
+ * Mensaje de error principal
+ * Texto destacado y centrado
+ */
+.error-text {
+  margin: 0 0 var(--spacing-lg) 0;
+  color: var(--text-primary);
+  font-size: 1rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+/**
+ * Botón de reintento
+ * Estilo primario con efectos de hover
+ */
+.retry-button {
+  padding: var(--spacing-sm) var(--spacing);
+  background: var(--primary-color);
+  color: var(--text-white);
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+/**
+ * Hover del botón de reintento
+ * Mejora el color y añade elevación
+ */
+.retry-button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 
+   CONTENIDO DEL PERFIL
+    */
+
+/**
+ * Contenedor del contenido del perfil
+ * Organiza las secciones verticalmente
+ */
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+/**
+ * Sección individual del perfil
+ * Tarjeta con sombra y efectos de hover
+ * Altura fija para evitar cambios al editar
+ */
+.profile-section {
+  background: var(--bg-primary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+  min-height: fit-content;
+}
+
+/**
+ * Hover de las secciones del perfil
+ * Sin transformaciones para mantener tamaño constante
+ */
+.profile-section:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/**
+ * Header de cada sección
+ * Organiza icono y título horizontalmente
+ */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing);
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing);
+  border-bottom: 1px solid var(--border-color);
+}
+
+/**
+ * Icono de la sección
+ * Contenedor circular con fondo sutil
+ */
+.section-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  border-radius: var(--radius);
+  transition: var(--transition);
+}
+
+/**
+ * Hover del icono de sección
+ * Cambia el fondo y escala ligeramente
+ */
+.section-icon:hover {
+  transform: scale(1.05);
+}
+
+/**
+ * Icono Material Design dentro de la sección
+ * Tamaño apropiado con color por defecto
+ */
+.section-icon mat-icon {
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Colores específicos para cada sección del perfil */
+.profile-section:nth-child(1) .section-icon {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+}
+
+.profile-section:nth-child(1) .section-icon mat-icon {
+  color: #3b82f6;
+}
+
+.profile-section:nth-child(2) .section-icon {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+}
+
+.profile-section:nth-child(2) .section-icon mat-icon {
+  color: #f59e0b;
+}
+
+.profile-section:nth-child(3) .section-icon {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+}
+
+.profile-section:nth-child(3) .section-icon mat-icon {
+  color: #10b981;
+}
+
+.profile-section:nth-child(4) .section-icon {
+  background: linear-gradient(135deg, #e9d5ff 0%, #d8b4fe 100%);
+}
+
+.profile-section:nth-child(4) .section-icon mat-icon {
+  color: #a855f7;
+}
+
+/**
+ * Título de la sección
+ * Tipografía destacada y legible
+ */
+.section-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Colores específicos para títulos de cada sección */
+.profile-section:nth-child(1) .section-title {
+  color: #3b82f6;
+}
+
+.profile-section:nth-child(2) .section-title {
+  color: #f59e0b;
+}
+
+.profile-section:nth-child(3) .section-title {
+  color: #10b981;
+}
+
+.profile-section:nth-child(4) .section-title {
+  color: #a855f7;
+}
+
+/**
+ * Contenido de la sección
+ * Grid responsivo para los campos con mejor organización
+ */
+.section-content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-lg);
+  row-gap: var(--spacing);
+}
+
+/* Campos de tipo textarea ocupan todo el ancho para mejor lectura */
+.field-group:has(.field-textarea),
+.field-group:has(textarea) {
+  grid-column: 1 / -1;
+}
+
+/* 
+   CAMPOS DEL FORMULARIO
+    */
+
+/**
+ * Grupo de campos del formulario
+ * Organiza label, input y errores verticalmente
+ * Altura mínima para consistencia
+ */
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  min-height: 78px;
+}
+
+/**
+ * Label de los campos
+ * Estilo consistente con indicador de requerido
+ */
+.field-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+/**
+ * Marcador de campo requerido
+ * Color de error y peso destacado
+ */
+.required-mark {
+  color: var(--error-color);
+  font-weight: 600;
+}
+
+/**
+ * Inputs, textareas y selects del formulario
+ * Estilo base con transiciones y estados
+ */
+.field-input,
+.field-textarea,
+.field-select {
+  padding: var(--spacing);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-family: inherit;
+  font-weight: 400;
+  line-height: 1.5;
+  min-height: 44px;
+  transition: var(--transition);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/**
+ * Focus de inputs, textareas y selects
+ * Borde primario, sombra y elevación sutil
+ */
+.field-input:focus,
+.field-textarea:focus,
+.field-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  transform: translateY(-1px);
+}
+
+/**
+ * Estado de error de inputs, textareas y selects
+ * Borde de error y sombra roja
+ */
+.field-input.error,
+.field-textarea.error,
+.field-select.error {
+  border-color: var(--error-color);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/**
+ * Textarea específico
+ * Altura mínima y redimensionamiento vertical
+ */
+.field-textarea {
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+/**
+ * Valor de campo en modo visualización
+ * Fondo sutil con hover y transiciones
+ * Mantiene el mismo tamaño que los inputs editables
+ */
+.field-value {
+  padding: var(--spacing);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-family: inherit;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-primary);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  transition: var(--transition);
+}
+
+/**
+ * Hover de los valores de campo
+ * Cambia el fondo para indicar interactividad
+ */
+.field-value:hover {
+  background: var(--bg-tertiary);
+}
+
+/**
+ * Estado vacío de los valores
+ * Color más sutil para campos sin información
+ */
+.field-value.empty {
+  color: var(--text-muted);
+}
+
+/**
+ * Texto para campos vacíos
+ * Estilo con color sutil
+ */
+.empty-text {
+  color: var(--text-muted);
+}
+
+/**
+ * Mensajes de error de validación
+ * Texto pequeño con color de error
+ */
+.field-error {
+  font-size: 0.75rem;
+  color: var(--error-color);
+  margin-top: var(--spacing-xs);
+  font-weight: 500;
+}
+
+/* 
+   FOOTER DE ACCIONES DEL FORMULARARIO
+    */
+
+/**
+ * Footer de acciones del formulario
+ * Solo visible en modo edición
+ */
+.profile-actions-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing);
+  padding: var(--spacing-xl);
+  background: var(--bg-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-color);
+}
+
+/**
+ * Botón primario en el footer
+ * Estilo destacado para guardar cambios
+ */
+.profile-actions-footer .action-button.primary {
+  background: var(--primary-color);
+  color: var(--text-white);
+  border: 1px solid var(--primary-color);
+  padding: var(--spacing-sm) var(--spacing);
+  font-size: 0.875rem;
+}
+
+/**
+ * Hover del botón primario del footer
+ * Mejora el color y añade elevación
+ */
+.profile-actions-footer .action-button.primary:hover:not(:disabled) {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/**
+ * Botón secundario en el footer
+ * Estilo transparente para cancelar
+ */
+.profile-actions-footer .action-button.secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+/**
+ * Hover del botón secundario del footer
+ * Fondo sutil y mejora del borde
+ */
+.profile-actions-footer .action-button.secondary:hover:not(:disabled) {
+  background: var(--bg-secondary);
+  border-color: var(--border-hover);
+}
+
+/* 
+   SPINNER PEQUEÑO
+    */
+
+/**
+ * Spinner pequeño para botones
+ * Versión reducida del spinner principal
+ */
+.spinner-small {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* 
+   MODAL DE CONFIRMACIÓN
+    */
+
+/**
+ * Overlay del modal
+ * Fondo oscuro con blur y animación de entrada
+ */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--spacing);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease;
+}
+
+/**
+ * Animación de entrada del overlay
+ * Fade in suave
+ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/**
+ * Contenido del modal
+ * Tarjeta centrada con animación de entrada
+ */
+.modal-content {
+  background: var(--bg-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideIn 0.3s ease;
+  border: none;
+  /* remove outer border to avoid white stroke on rounded corners */
+}
+
+/**
+ * Animación de entrada del contenido del modal
+ * Slide in desde arriba con escala
+ */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/**
+ * Header del modal
+ * Organiza ícono, título y descripción
+ */
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 1.5rem 1rem;
+  background: var(--gradient-footer);
+  color: var(--text-white);
+  border-bottom: none;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.modal-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  background: transparent;
+  border: none;
+}
+
+.modal-icon mat-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  transition: all 0.2s ease;
+  color: #f87171;
+}
+
+.modal-icon.icon-danger {
+  background: transparent;
+  box-shadow: none;
+}
+
+.modal-icon.icon-danger mat-icon {
+  color: #f87171 !important;
+  filter: none !important;
+}
+
+.modal-header .header-content {
+  flex: 1;
+}
+
+/**
+ * Título del modal
+ * Tipografía destacada y legible
+ */
+.modal-title {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  line-height: 1.4;
+}
+
+.modal-subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/**
+ * Cuerpo del modal
+ * Contenido centrado
+ */
+.modal-body {
+  padding: 1.5rem;
+  text-align: center;
+  background: #ffffff;
+  color: #0f172a;
+}
+
+/**
+ * Mensaje principal del modal
+ * Texto destacado y centrado
+ */
+.modal-message {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #0f172a;
+  line-height: 1.6;
+}
+
+/**
+ * Mensaje de advertencia del modal
+ * Texto secundario con información adicional
+ */
+.modal-warning {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/**
+ * Footer del modal
+ */
+.modal-footer {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1.3rem 1.5rem 1.75rem;
+  justify-content: flex-end;
+  background: var(--gradient-footer);
+  color: var(--text-white);
+  border-top: none;
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+}
+
+/**
+ * Botones del modal - Removidos para usar estilos globales
+ * Los estilos de .modal-button.secondary ahora vienen de styles.css
+ */
+
+.modal-button.danger {
+  background: #ec6e6e !important;
+  color: white !important;
+  border: none !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/**
+ * Hover del botón de peligro del modal
+ */
+.modal-button.danger:hover:not(:disabled) {
+  background: #b91c1c !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.15);
+}
+
+/**
+ * Estado deshabilitado de botones del modal
+ */
+.modal-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* 
+   MEDIA QUERIES PARA RESPONSIVIDAD
+    */
+
+/* Tablet y Laptop pequeño */
+@media (max-width: 1200px) {
+  .profile-main {
+    margin-left: 0;
+    padding: var(--spacing-lg);
+  }
+
+  .profile-container {
+    max-width: 100%;
+    padding: 0 var(--spacing);
+  }
+}
+
+/* Estilos para tabletas */
+@media (max-width: 1024px) {
+  .profile-main {
+    margin-left: 0;
+    padding: var(--spacing);
+  }
+
+  .profile-header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-lg);
+  }
+
+  .profile-actions {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .action-button {
+    min-width: 120px;
+    justify-content: center;
+  }
+
+  .section-content {
+    grid-template-columns: 1fr;
+    gap: var(--spacing);
+  }
+}
+
+/* Móvil grande: estilos para dispositivos móviles de tamaño grande */
+@media (max-width: 768px) {
+  .profile-main {
+    margin-top: calc(var(--header-height) + var(--spacing-sm));
+    padding: var(--spacing-sm);
+  }
+
+  .profile-container {
+    gap: var(--spacing);
+    padding: 0;
+  }
+
+  .profile-header {
+    padding: var(--spacing-lg);
+  }
+
+  .profile-info {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--spacing);
+  }
+
+  .profile-details {
+    align-items: center;
+  }
+
+  .name-badge-container {
+    justify-content: center;
+    gap: var(--spacing-sm);
+  }
+
+  .avatar-image,
+  .avatar-placeholder {
+    width: 100px;
+    height: 100px;
+  }
+
+  .admin-badge {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.65rem;
+  }
+
+  .profile-name {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .profile-username {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .profile-bio {
+    text-align: center;
+    max-width: none;
+  }
+
+  .profile-actions {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    width: 100%;
+  }
+
+  .action-button {
+    width: 100%;
+    justify-content: center;
+    padding: var(--spacing) var(--spacing-lg);
+  }
+
+  .profile-actions-footer {
+    flex-direction: column-reverse;
+    gap: var(--spacing-sm);
+  }
+
+  .profile-actions-footer .action-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .profile-section {
+    padding: var(--spacing-lg);
+  }
+
+  .section-header {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing);
+  }
+
+  .section-content {
+    grid-template-columns: 1fr;
+    gap: var(--spacing);
+  }
+
+  .modal-content {
+    margin: var(--spacing-sm);
+    max-width: calc(100% - var(--spacing));
+  }
+
+  .modal-header {
+    padding: var(--spacing) var(--spacing-lg);
+  }
+
+  .modal-body {
+    padding: var(--spacing-lg) var(--spacing);
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+    padding: var(--spacing) var(--spacing-lg) var(--spacing-lg);
+    gap: var(--spacing-sm);
+  }
+
+  .modal-button {
+    width: 100%;
+    justify-content: center;
+    padding: var(--spacing) var(--spacing-lg);
+  }
+}
+
+/* Small Mobile Styles */
+@media (max-width: 480px) {
+  .profile-main {
+    margin-top: calc(var(--header-height) + var(--spacing-xs));
+    padding: var(--spacing-xs);
+  }
+
+  .profile-container {
+    gap: var(--spacing-sm);
+  }
+
+  .profile-header {
+    padding: var(--spacing);
+  }
+
+  .profile-header-content {
+    gap: var(--spacing);
+  }
+
+  .avatar-image,
+  .avatar-placeholder {
+    width: 80px;
+    height: 80px;
+  }
+
+  .admin-badge {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.6rem;
+    letter-spacing: 0.3px;
+  }
+
+  .profile-name {
+    font-size: 1.25rem;
+    line-height: 1.3;
+  }
+
+  .profile-username {
+    font-size: 0.9rem;
+  }
+
+  .profile-bio {
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+
+  .action-button {
+    padding: var(--spacing-sm) var(--spacing);
+    font-size: 0.8rem;
+    min-height: 44px;
+  }
+
+  .profile-section {
+    padding: var(--spacing);
+    margin: var(--spacing-xs);
+  }
+
+  .section-header {
+    margin-bottom: var(--spacing);
+    padding-bottom: var(--spacing-sm);
+  }
+
+  .section-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .section-icon mat-icon {
+    font-size: 1.25rem;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .section-title {
+    font-size: 1.125rem;
+  }
+
+  .section-content {
+    gap: var(--spacing-sm);
+  }
+
+  .field-group {
+    gap: var(--spacing-xs);
+  }
+
+  .field-input,
+  .field-textarea,
+  .field-select,
+  .field-value {
+    padding: var(--spacing-sm);
+    font-size: 0.8rem;
+    min-height: 44px;
+  }
+
+  .field-textarea {
+    min-height: 80px;
+  }
+
+  /* Modal más pequeño en móviles */
+  .modal-overlay {
+    padding: var(--spacing-xs);
+  }
+
+  .modal-content {
+    margin: var(--spacing-xs);
+    max-width: calc(100vw - var(--spacing));
+  }
+
+  .modal-header {
+    padding: var(--spacing-sm) var(--spacing);
+  }
+
+  .modal-title {
+    font-size: 1.125rem;
+  }
+
+  .modal-body {
+    padding: var(--spacing) var(--spacing-sm);
+  }
+
+  .warning-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing);
+  }
+
+  .modal-message {
+    font-size: 1rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .modal-warning {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+
+  .modal-footer {
+    padding: var(--spacing-sm) var(--spacing) var(--spacing);
+  }
+
+  .modal-button {
+    min-height: 44px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Extra Small Mobile (iPhones pequeños, etc.) */
+@media (max-width: 360px) {
+  .profile-header {
+    padding: var(--spacing-sm);
+  }
+
+  .profile-name {
+    font-size: 1.125rem;
+  }
+
+  .profile-section {
+    padding: var(--spacing-sm);
+  }
+
+  .section-content {
+    grid-template-columns: 1fr;
+  }
+
+  .field-input,
+  .field-textarea,
+  .field-select,
+  .field-value {
+    font-size: 0.75rem;
+  }
+
+  .modal-content {
+    border-radius: var(--radius-sm);
+  }
+
+  .modal-title {
+    font-size: 1rem;
+  }
+
+  .modal-message {
+    font-size: 0.9rem;
+  }
+}

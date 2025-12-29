@@ -1,0 +1,315 @@
+<!-- Profile component template -->
+<!-- Layout principal del perfil -->
+<div class="profile-layout">
+  <!-- Componente de header de la aplicación -->
+  <app-header></app-header>
+
+  <!-- Componente de sidebar de navegación -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Contenido principal del perfil -->
+  <main class="profile-main" role="main">
+    <div class="profile-container">
+
+      <!-- Header del perfil con información del usuario -->
+      <header class="profile-header">
+        <div class="profile-header-content">
+
+          <!-- Información del usuario (avatar, nombre, badge) -->
+          <div class="profile-info">
+            <!-- Avatar del usuario con fallback a avatar de admin -->
+            <div class="profile-avatar">
+              @if (userAvatar(); as avatarUrl) {
+              <img [src]="avatarUrl"
+                [alt]="'Foto de perfil de ' + (currentUser()?.firstName || '') + ' ' + (currentUser()?.lastName || '')"
+                class="avatar-image" loading="lazy" (error)="onImageError($event)">
+              }
+              <!-- Placeholder del avatar cuando no hay imagen -->
+              <div class="avatar-placeholder" [style.display]="!userAvatar() ? 'flex' : 'none'">
+                <mat-icon aria-hidden="true">account_circle</mat-icon>
+              </div>
+            </div>
+
+            <!-- Detalles del usuario (nombre, username, biografía) -->
+            <div class="profile-details">
+              <div class="name-badge-container">
+                <!-- Nombre completo del usuario -->
+                <h1 class="profile-name">
+                  {{ currentUser()?.firstName }} {{ currentUser()?.lastName }}
+                </h1>
+                <!-- Badge de administrador si aplica -->
+                @if (isAdmin()) {
+                <div class="admin-badge" role="badge" aria-label="Administrador">
+                  ADMINISTRADOR
+                </div>
+                }
+              </div>
+              <!-- Username (solo para usuarios no admin) -->
+              @if (!isAdmin() && currentUser()?.username; as username) {
+              <p class="profile-username">@{{ username }}</p>
+              }
+              <!-- Biografía del usuario si existe -->
+              @if (currentUser()?.biography; as biography) {
+              <p class="profile-bio">{{ biography }}</p>
+              }
+            </div>
+          </div>
+
+          <!-- Botones de acción del perfil -->
+          <div class="profile-actions">
+            <!-- Botón para volver al dashboard -->
+            <button type="button" class="action-button secondary" (click)="goToDashboard()" [disabled]="isLoading()"
+              [attr.aria-label]="isAdmin() ? 'Volver al Dashboard de Administrador' : 'Volver al Dashboard'">
+              <mat-icon aria-hidden="true">arrow_back</mat-icon>
+              {{ isAdmin() ? 'Volver al Dashboard' : 'Volver al Dashboard' }}
+            </button>
+
+            <!-- Botón para alternar modo edición -->
+            <button type="button" class="action-button primary" (click)="toggleEditMode()" [disabled]="isLoading()"
+              [attr.aria-label]="isEditing() ? 'Cancelar edición' : 'Editar perfil'">
+              @if (isEditing()) {
+              <mat-icon aria-hidden="true">close</mat-icon>
+              Cancelar
+              } @else {
+              <mat-icon aria-hidden="true">edit</mat-icon>
+              Editar Perfil
+              }
+            </button>
+
+            <!-- Botón para eliminar cuenta -->
+            <button type="button" class="action-button danger" (click)="showDeleteConfirmation()"
+              [disabled]="isLoading()" aria-label="Eliminar cuenta permanentemente">
+              <mat-icon aria-hidden="true">delete_forever</mat-icon>
+              Eliminar Cuenta
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Sección de carga del perfil -->
+      @if (isLoading()) {
+      <div class="loading-section" role="status" aria-live="polite">
+        <div class="loading-spinner" aria-hidden="true"></div>
+        <p class="loading-text">Cargando perfil...</p>
+      </div>
+      }
+
+      <!-- Sección de error si ocurre algún problema -->
+      @if (errorMessage(); as error) {
+      <div class="error-section" role="alert" aria-live="assertive">
+        <div class="error-icon" aria-hidden="true">⚠️</div>
+        <p class="error-text">{{ error }}</p>
+        <button type="button" class="retry-button" (click)="reloadProfile()" aria-label="Reintentar cargar el perfil">
+          Volver al perfil
+        </button>
+      </div>
+      }
+
+      <!-- Contenido principal del perfil (formulario o vista) -->
+      @if (!isLoading() && !errorMessage()) {
+      <!-- Formulario reactivo para edición del perfil -->
+      <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="profile-content" novalidate>
+
+        <!-- Iteración sobre las secciones del perfil -->
+        @for (section of profileSections(); track section.title) {
+        <!-- Sección individual del perfil -->
+        <section class="profile-section" [attr.aria-labelledby]="'section-' + section.title">
+
+          <!-- Header de la sección con icono y título -->
+          <div class="section-header">
+            <div class="section-icon" aria-hidden="true">
+              <mat-icon>{{ section.icon }}</mat-icon>
+            </div>
+            <h2 class="section-title" [id]="'section-' + section.title">
+              {{ section.title }}
+            </h2>
+          </div>
+
+          <!-- Contenido de la sección con campos -->
+          <div class="section-content">
+            <!-- Iteración sobre los campos de la sección -->
+            @for (field of section.fields; track field.key) {
+            <div class="field-group">
+
+              <!-- Label del campo con indicador de requerido -->
+              <label [for]="field.key" class="field-label">
+                {{ field.label }}
+                @if (field.required) {
+                <span class="required-mark" aria-label="Campo requerido">*</span>
+                }
+              </label>
+
+              <!-- Campo editable en modo edición -->
+              @if (isEditing() && field.editable) {
+              <!-- Switch para diferentes tipos de campos -->
+              @switch (field.type) {
+              <!-- Campo de email -->
+              @case ('email') {
+              <input [id]="field.key" type="email" [formControlName]="field.key" class="field-input"
+                [class.error]="isFieldInvalid(field.key)" [placeholder]="'Ingresa tu ' + field.label.toLowerCase()"
+                [attr.aria-describedby]="isFieldInvalid(field.key) ? field.key + '-error' : null" autocomplete="email">
+              }
+
+              <!-- Campo de teléfono -->
+              @case ('phone') {
+              <input [id]="field.key" type="tel" [formControlName]="field.key" class="field-input"
+                [class.error]="isFieldInvalid(field.key)" [placeholder]="'Ingresa tu ' + field.label.toLowerCase()"
+                [attr.aria-describedby]="isFieldInvalid(field.key) ? field.key + '-error' : null" autocomplete="tel">
+              }
+
+              <!-- Campo de fecha -->
+              @case ('date') {
+              <input [id]="field.key" type="date" [formControlName]="field.key" class="field-input"
+                [class.error]="isFieldInvalid(field.key)"
+                [attr.aria-describedby]="isFieldInvalid(field.key) ? field.key + '-error' : null">
+              }
+
+              <!-- Campo de URL -->
+              @case ('url') {
+              <input [id]="field.key" type="url" [formControlName]="field.key" class="field-input"
+                [class.error]="isFieldInvalid(field.key)" placeholder="https://ejemplo.com"
+                [attr.aria-describedby]="isFieldInvalid(field.key) ? field.key + '-error' : null">
+              }
+
+              <!-- Campo de texto largo -->
+              @case ('textarea') {
+              <textarea [id]="field.key" [formControlName]="field.key" class="field-textarea"
+                [class.error]="isFieldInvalid(field.key)" [placeholder]="'Describe tus ' + field.label.toLowerCase()"
+                [attr.aria-describedby]="isFieldInvalid(field.key) ? field.key + '-error' : null" rows="3"></textarea>
+              }
+
+              <!-- Campo de selección -->
+              @case ('select') {
+              <select [id]="field.key" [formControlName]="field.key" class="field-select"
+                [class.error]="isFieldInvalid(field.key)"
+                [attr.aria-describedby]="isFieldInvalid(field.key) ? field.key + '-error' : null">
+                @for (option of field.options; track option.value) {
+                <option [value]="option.value">{{ option.label }}</option>
+                }
+              </select>
+              }
+
+              <!-- Campo de texto por defecto -->
+              @default {
+              <input [id]="field.key" type="text" [formControlName]="field.key" class="field-input"
+                [class.error]="isFieldInvalid(field.key)" [placeholder]="'Ingresa tu ' + field.label.toLowerCase()"
+                [attr.aria-describedby]="isFieldInvalid(field.key) ? field.key + '-error' : null"
+                [autocomplete]="field.key === 'firstName' ? 'given-name' : field.key === 'lastName' ? 'family-name' : 'off'">
+              }
+              }
+
+              <!-- Mensajes de error de validación -->
+              @if (isFieldInvalid(field.key)) {
+              <div class="field-error" [id]="field.key + '-error'" role="alert">
+                @if (profileForm.get(field.key)?.errors?.['required']) {
+                <span>Este campo es requerido</span>
+                }
+                @if (profileForm.get(field.key)?.errors?.['email']) {
+                <span>Ingresa un email válido</span>
+                }
+                @if (profileForm.get(field.key)?.errors?.['minlength']) {
+                <span>Mínimo {{ profileForm.get(field.key)?.errors?.['minlength'].requiredLength }} caracteres</span>
+                }
+              </div>
+              }
+              }
+              <!-- Campo de solo lectura en modo visualización -->
+              @else {
+              <div class="field-value" [class.empty]="!getFieldValue(field)">
+                @if (getFieldValue(field); as value) {
+                @if (field.key === 'registrationDate' || field.key === 'lastActivityDate') {
+                {{ value | dateFormat:'date-only' }}
+                } @else if (field.key === 'privacyType') {
+                {{ value === 'PUBLIC' ? 'Público' : 'Privado' }}
+                } @else {
+                {{ value }}
+                }
+                } @else {
+                <span class="empty-text">No especificado</span>
+                }
+              </div>
+              }
+            </div>
+            }
+          </div>
+        </section>
+        }
+
+        <!-- Footer de acciones del formulario (solo en modo edición) -->
+        @if (isEditing()) {
+        <div class="profile-actions-footer">
+          <!-- Botón para cancelar edición -->
+          <button type="button" class="action-button secondary" (click)="toggleEditMode()" [disabled]="isLoading()"
+            aria-label="Cancelar edición">
+            Cancelar
+          </button>
+
+          <!-- Botón para guardar cambios -->
+          <button type="submit" class="action-button primary" [disabled]="profileForm.invalid || isLoading()"
+            [attr.aria-label]="isLoading() ? 'Guardando cambios...' : 'Guardar cambios'">
+            @if (isLoading()) {
+            <div class="spinner-small" aria-hidden="true"></div>
+            Guardando...
+            } @else {
+            Guardar Cambios
+            }
+          </button>
+        </div>
+        }
+      </form>
+      }
+    </div>
+  </main>
+
+  <!-- Componente de footer de la aplicación -->
+  <app-footer></app-footer>
+</div>
+
+<!-- Modal de confirmación para eliminación de cuenta -->
+@if (showDeleteConfirm()) {
+<div class="modal-overlay" (click)="cancelDelete()" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+
+    <!-- Header del modal -->
+    <div class="modal-header">
+      <div class="modal-icon icon-danger">
+        <mat-icon aria-hidden="true">error</mat-icon>
+      </div>
+      <div class="header-content">
+        <h2 class="modal-title" id="modal-title">Confirmar Eliminación</h2>
+        <p class="modal-subtitle">Vas a eliminar al administrador. Esta acción no se puede deshacer.</p>
+      </div>
+    </div>
+
+    <!-- Cuerpo del modal con mensaje de advertencia -->
+    <div class="modal-body">
+      <p class="modal-message">
+        ¿Estás seguro de que quieres eliminar tu cuenta permanentemente?
+      </p>
+      <p class="modal-warning">
+        Esta acción no se puede deshacer. Se eliminarán todos tus datos, publicaciones y configuraciones.
+      </p>
+    </div>
+
+    <!-- Footer del modal con botones de acción -->
+    <div class="modal-footer">
+      <!-- Botón para cancelar eliminación -->
+      <button type="button" class="cancel-btn" (click)="cancelDelete()" [disabled]="isLoading()"
+        aria-label="Cancelar eliminación">
+        Cancelar
+      </button>
+
+      <!-- Botón para confirmar eliminación -->
+      <button type="button" class="modal-button danger" (click)="deleteAccount()" [disabled]="isLoading()"
+        [attr.aria-label]="isLoading() ? 'Eliminando cuenta...' : 'Eliminar cuenta permanentemente'">
+        @if (isLoading()) {
+        <div class="spinner-small" aria-hidden="true"></div>
+        Eliminando...
+        } @else {
+        Eliminar Permanentemente
+        }
+      </button>
+    </div>
+  </div>
+</div>
+}

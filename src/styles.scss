@@ -1,1 +1,744 @@
+
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+body {
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+
+  // Reset the user agent margin.
+  margin: 0;
+  height: 100%;
+}
 /* You can add global styles to this file, and also import other style files */
+
+/* Imports externos */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+:root {
+  /* Altura del header compartida para alinear elementos fijados */
+  --header-height: 80px;
+  /* Variables CSS globales */
+  /* Paleta de colores */
+  --emerald-500: #10b981;
+  --emerald-600: #059669;
+  --emerald-700: #047857;
+  --emerald-800: #065f46;
+
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+
+  /* Gradientes */
+  --gradient-primary: linear-gradient(135deg, var(--emerald-500) 0%, var(--blue-600) 100%);
+  /* Gradiente landing/footer */
+  --gradient-footer: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #2563eb 100%);
+
+  /* Tipografía */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-size-sm: 0.75rem;
+  --font-size-base: 0.875rem;
+  --font-size-lg: 1rem;
+  --font-size-xl: 1.125rem;
+  --font-size-2xl: 1.25rem;
+  --font-size-3xl: 1.5rem;
+
+  /* Espaciado */
+  --spacing-2: 0.375rem;
+  --spacing-4: 0.75rem;
+  --spacing-6: 1.125rem;
+  --spacing-8: 1.5rem;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  /* Bordes */
+  --border-radius: 0.5rem;
+  --border-radius-lg: 1rem;
+
+  /* Transiciones */
+  --transition-normal: 0.3s ease;
+
+  /* Z-index */
+  --z-modal: 1050;
+  --z-popover: 1060;
+}
+
+/* Reset y estilos base */
+/* Reset global: margen, padding y box-sizing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Tipografía base y tamaño */
+html {
+  font-family: var(--font-family);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Body: colores y espacio para header fijo */
+body {
+  font-family: var(--font-family);
+  line-height: 1.5;
+  color: var(--gray-800);
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0;
+  padding-top: var(--header-height);
+}
+
+/* Layout principal: contenedor y responsive */
+.main-content {
+  margin-left: 240px;
+  min-height: calc(100vh - 56px);
+  background: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+  }
+}
+
+/* Angular Material: formularios */
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.mat-mdc-form-field-appearance-outline .mat-mdc-form-field-infix {
+  padding: 0.75rem 0;
+  min-height: 3rem;
+}
+
+.mat-mdc-form-field-appearance-outline .mat-mdc-text-field-wrapper {
+  padding: 0 0.75rem;
+}
+
+.mat-mdc-form-field-appearance-outline .mat-mdc-form-field-outline {
+  color: var(--gray-300);
+  border-width: 2px;
+}
+
+.mat-mdc-form-field-appearance-outline.mat-focused .mat-mdc-form-field-outline-thick {
+  color: var(--emerald-600);
+  border-width: 2px;
+}
+
+.mat-mdc-form-field-label {
+  color: var(--gray-600);
+  font-weight: 500;
+  font-size: var(--font-size-base);
+}
+
+.mat-mdc-form-field.mat-focused .mat-mdc-form-field-label {
+  color: var(--emerald-600);
+  font-weight: 600;
+}
+
+.mat-mdc-input-element {
+  color: var(--gray-900);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+}
+
+.mat-mdc-input-element::placeholder {
+  color: var(--gray-400);
+  opacity: 1;
+  font-weight: 400;
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+.mat-mdc-form-field-error {
+  color: #dc2626;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  margin-top: var(--spacing-2);
+}
+
+/* Angular Material: botones */
+.mat-mdc-raised-button.mat-primary {
+  background: var(--gradient-primary);
+  color: white;
+  font-weight: 600;
+  font-size: var(--font-size-base);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-2) var(--spacing-6);
+  transition: all var(--transition-normal);
+  box-shadow: var(--shadow-md);
+}
+
+.mat-mdc-raised-button.mat-primary:hover {
+  background: linear-gradient(135deg, var(--emerald-700) 0%, var(--blue-600) 100%);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.mat-mdc-raised-button:disabled {
+  background: var(--gray-300);
+  color: var(--gray-500);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Estilos globales para botones de modales */
+.modal-actions button,
+.modal-footer button,
+button.cancel-btn,
+button.confirm-btn,
+button.btn-primary,
+button.btn-secondary,
+button.btn-danger,
+button.action-btn,
+mat-dialog-actions button {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.4rem !important;
+  padding: 10px 20px !important;
+  border-radius: 8px !important;
+  font-size: 0.8125rem !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  min-width: 110px !important;
+  min-height: 40px !important;
+  font-family: var(--font-family) !important;
+  box-sizing: border-box !important;
+}
+
+/* Botones Cancelar en modales */
+button.cancel-btn,
+button.btn-secondary,
+mat-dialog-actions button[mat-button] {
+  background: #6f91c4 !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+button.cancel-btn:hover:not(:disabled),
+button.btn-secondary:hover:not(:disabled),
+mat-dialog-actions button[mat-button]:hover:not(:disabled) {
+  background: #4678c4 !important;
+}
+
+/* Spinner de carga en botones */
+.loading-spinner-small {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin-small 1s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin-small {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Angular Material: cards */
+.mat-mdc-card {
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  background: white;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.mat-mdc-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.mat-mdc-card-header {
+  padding: var(--spacing-8) var(--spacing-8) var(--spacing-6);
+  text-align: center;
+}
+
+.mat-mdc-card-content {
+  padding: 0 var(--spacing-8) var(--spacing-8);
+}
+
+.mat-mdc-card-actions {
+  padding: var(--spacing-6) var(--spacing-8) var(--spacing-8);
+}
+
+/* Iconos, divider y snackbar */
+.mat-icon {
+  color: var(--gray-600);
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.mat-mdc-form-field.mat-focused .mat-icon {
+  color: var(--emerald-600);
+}
+
+.mat-divider {
+  border-color: var(--gray-200);
+  margin: var(--spacing-6) 0;
+  border-width: 1px;
+}
+
+.mat-mdc-snack-bar-container {
+  border-radius: var(--border-radius-lg);
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  background: var(--gray-900);
+  color: white;
+  border-radius: var(--border-radius-lg);
+}
+
+/* Títulos de cards */
+mat-card-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-bottom: var(--spacing-2);
+  background: var(--gradient-primary);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+
+mat-card-subtitle {
+  color: var(--gray-600);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: var(--spacing-2);
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gray-100);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: 4px;
+  transition: background-color var(--transition-normal);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-400);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--gray-100);
+}
+
+.feed-post-menu-panel {
+  border-radius: 6px;
+  padding: 2px 0;
+}
+
+.feed-post-menu-panel .mat-mdc-list-item,
+.feed-post-menu-panel .mat-mdc-menu-item {
+  padding: 2px 4px !important;
+  font-size: 10px !important;
+  min-width: 72px !important;
+}
+
+.feed-post-menu-panel .mat-icon {
+  font-size: 11px !important;
+  width: 12px !important;
+  height: 12px !important;
+  margin-right: 6px !important;
+}
+
+.feed-post-menu-panel .mat-mdc-list-item__text,
+.feed-post-menu-panel .mat-mdc-menu-item .mat-mdc-list-item__text {
+  line-height: 1;
+}
+
+.cdk-overlay-container .feed-post-menu-panel .mat-mdc-menu-item,
+.cdk-overlay-container .feed-post-menu-panel .mat-mdc-list-item {
+  padding: 2px 4px !important;
+  font-size: 10px !important;
+  min-width: 72px !important;
+}
+
+.cdk-overlay-container .feed-post-menu-panel .mat-icon {
+  font-size: 11px !important;
+  width: 12px !important;
+  height: 12px !important;
+}
+
+/* Subtítulo de modales */
+.modal-subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.cdk-overlay-container .compact-menu-item {
+  padding: 2px 4px !important;
+  font-size: 10px !important;
+  min-width: 72px !important;
+}
+
+.cdk-overlay-container .compact-menu-item .mat-icon {
+  font-size: 11px !important;
+  width: 12px !important;
+  height: 12px !important;
+}
+
+.cdk-overlay-container .compact-menu-item .mat-mdc-list-item__text,
+.cdk-overlay-container .compact-menu-item .mat-mdc-menu-item .mat-mdc-list-item__text {
+  font-size: 10px !important;
+}
+
+.cdk-overlay-container .feed-post-menu-panel .mat-mdc-list-item__text,
+.cdk-overlay-container .feed-post-menu-panel .mat-mdc-menu-item .mat-mdc-list-item__text,
+.cdk-overlay-container .compact-menu-item .mat-mdc-list-item__text {
+  font-size: 9px !important;
+  line-height: 1 !important;
+  padding: 2px 4px !important;
+}
+
+.cdk-overlay-container .feed-post-menu-panel .mat-icon,
+.cdk-overlay-container .compact-menu-item .mat-icon {
+  font-size: 11px !important;
+  width: 12px !important;
+  height: 12px !important;
+}
+
+.cdk-overlay-container .feed-post-menu-panel,
+.cdk-overlay-container .feed-post-menu-panel .mat-mdc-list-item__text,
+.cdk-overlay-container .feed-post-menu-panel .mat-mdc-menu-item .mat-mdc-list-item__text,
+.cdk-overlay-container .compact-menu-item .mat-mdc-list-item__text {
+  font-size: 9px !important;
+  line-height: 1 !important;
+}
+
+.cdk-overlay-container .feed-post-menu-panel .mat-mdc-list-item,
+.cdk-overlay-container .feed-post-menu-panel .mat-mdc-menu-item,
+.cdk-overlay-container .compact-menu-item {
+  padding: 2px 4px !important;
+}
+
+/* Accesibilidad: focus-visible */
+*:focus-visible {
+  outline: 2px solid var(--emerald-500);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--emerald-500);
+  color: white;
+}
+
+::-moz-selection {
+  background: var(--emerald-500);
+  color: white;
+}
+
+/* Utilidades globales */
+.full-height {
+  min-height: 100vh;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Responsive: ajustes de tipografía y layout */
+@media (min-width: 1200px) {
+  html {
+    font-size: 13px;
+  }
+
+  .main-content {
+    margin-left: 240px;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+/* Estado de carga inicial */
+.app-loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: var(--gradient-primary);
+  color: white;
+  font-family: var(--font-family);
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: var(--spacing-6);
+}
+
+.app-loading p {
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+  margin: 0;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/* Reservar espacio para scrollbar vertical */
+html {
+  overflow-y: scroll;
+}
+
+/* 
+   ESTILOS GLOBALES PARA MENÚ DE POST (THREE DOTS)
+*/
+
+.feed-post-menu-panel {
+  border-radius: 12px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
+  overflow: hidden !important;
+}
+
+.feed-post-menu-panel .mat-mdc-menu-content {
+  padding: 8px !important;
+}
+
+.feed-post-menu-panel .mat-mdc-menu-item {
+  padding: 12px 16px !important;
+  min-height: 48px !important;
+  border-radius: 8px !important;
+  margin-bottom: 4px !important;
+  transition: all 0.2s ease !important;
+}
+
+.feed-post-menu-panel .mat-mdc-menu-item:last-child {
+  margin-bottom: 0 !important;
+}
+
+.feed-post-menu-panel .mat-mdc-menu-item:hover {
+  background-color: #f3f4f6 !important;
+}
+
+.feed-post-menu-panel .mat-mdc-menu-item .mat-mdc-menu-item-text {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  font-weight: 500 !important;
+  color: #374151 !important;
+}
+
+.feed-post-menu-panel .mat-icon {
+  font-size: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+  margin-right: 12px !important;
+  color: #6b7280 !important;
+}
+
+.feed-post-menu-panel .mat-mdc-menu-item:last-child:hover {
+  background-color: #fee2e2 !important;
+}
+
+.feed-post-menu-panel .mat-mdc-menu-item:last-child:hover .mat-icon {
+  color: #ef4444 !important;
+}
+
+.feed-post-menu-panel .mat-mdc-menu-item:last-child:hover .mat-mdc-menu-item-text {
+  color: #ef4444 !important;
+}
+
+/* Colores de iconos del menú - selectores globales */
+mat-icon.menu-icon-edit {
+  color: #81acf0 !important;
+}
+
+mat-icon.menu-icon-delete {
+  color: #ef4444 !important;
+}
+
+mat-icon.menu-icon-edit svg,
+mat-icon.menu-icon-edit svg path {
+  fill: #3b82f6 !important;
+}
+
+mat-icon.menu-icon-delete svg,
+mat-icon.menu-icon-delete svg path {
+  fill: #ef4444 !important;
+}
+
+/* Estilos personalizados para snackbar de reportes */
+.custom-report-snackbar {
+  --mdc-snackbar-container-color: #ffffff !important;
+  --mat-snack-bar-button-color: #1e40af !important;
+  margin-top: 16px !important;
+}
+
+.custom-report-snackbar .mdc-snackbar__surface {
+  background-color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  border: none !important;
+  border-radius: 8px !important;
+}
+
+.custom-report-snackbar .mdc-snackbar__label {
+  color: #1e40af !important;
+  font-weight: 500 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.custom-report-snackbar .mat-mdc-snack-bar-label {
+  color: #1e40af !important;
+}
+
+.custom-report-snackbar .mat-mdc-button {
+  color: #1e40af !important;
+  font-weight: 600 !important;
+  margin-left: 16px !important;
+}
+
+/* 
+   ESTILOS GLOBALES PARA MODALES
+ */
+
+/* Contenedor principal del diálogo - fondo transparente sin sombra */
+.mat-mdc-dialog-surface,
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  border-radius: 0 !important;
+}
+
+/* Eliminar pseudo-elementos que causan bordes blancos */
+.mat-mdc-dialog-surface::before,
+.mat-mdc-dialog-container .mdc-dialog__surface::before {
+  display: none !important;
+}
+
+/* Estilos para los contenedores internos de modales */
+.modal-container,
+.modal-content,
+.create-post-modal,
+.report-modal,
+:host .modal-container,
+:host .modal-content {
+  border-radius: 10px !important;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+/* Headers de modales con gradiente - esquinas superiores redondeadas */
+.modal-header {
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+}
+
+/* Footers de modales con gradiente - esquinas inferiores redondeadas */
+.modal-footer,
+mat-dialog-actions {
+  border-bottom-left-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+}

@@ -1,13 +1,43 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
+
 <head>
+  <!-- HTML principal: metadatos, favicon y fuentes -->
+
   <meta charset="utf-8">
-  <title>MindhubClient</title>
-  <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <title>MindHub - Tu Red Social Inteligente</title>
+  <meta name="description"
+    content="MindHub - Conecta, Comparte, Crece. Tu red social inteligente donde las ideas cobran vida.">
+  <meta name="theme-color" content="#10b981">
+
+  <base href="/">
+  <!-- Favicon: Logo de MindHub (variantes para distintos tamaños) -->
+  <link rel="icon" type="image/png" sizes="16x16" href="/mindhub-logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/mindhub-logo.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/mindhub-logo.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/mindhub-logo.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/mindhub-logo.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/mindhub-logo.png">
+
+  <!-- Fuentes externas: Inter, Roboto, Material Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
+
 <body>
-  <app-root></app-root>
+  <!-- Raíz de la aplicación Angular -->
+  <app-root>
+    <!-- Indicador de carga inicial -->
+    <div class="app-loading">
+      <div class="loading-spinner"></div>
+      <p>Cargando MindHub...</p>
+    </div>
+  </app-root>
 </body>
+
 </html>
