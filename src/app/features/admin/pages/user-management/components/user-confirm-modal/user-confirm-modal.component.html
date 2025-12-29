@@ -1,0 +1,54 @@
+<!-- USER CONFIRM MODAL: plantilla del componente -->
+
+@if (isOpen()) {
+<div class="modal-backdrop" tabindex="0" role="dialog" aria-modal="true" [attr.aria-labelledby]="'modal-title'"
+  [attr.aria-describedby]="'modal-message'" [attr.aria-busy]="isDisabled()">
+  <div class="modal-container" [ngClass]="modalClass()">
+    <!-- HEADER DEL MODAL -->
+    <div class="modal-header">
+      <div class="modal-icon" [ngClass]="iconClass()">
+        <mat-icon [attr.aria-hidden]="true">{{ modalIcon() }}</mat-icon>
+      </div>
+      <div class="header-content">
+        <h2 id="modal-title" class="modal-title">{{ data().title }}</h2>
+        <p class="modal-subtitle">
+          @if (data().type === 'danger') {
+          Vas a eliminar al usuario. Esta acción no se puede deshacer.
+          } @else {
+          Esta acción requiere tu confirmación.
+          }
+        </p>
+      </div>
+    </div>
+
+    <!-- CUERPO DEL MODAL -->
+    <div class="modal-body">
+      <p id="modal-message" class="modal-message">{{ data().message }}</p>
+    </div>
+
+    <!-- FOOTER DEL MODAL -->
+    <div class="modal-footer">
+      <button type="button" class="cancel-btn" (click)="onCancel()" [disabled]="isDisabled()"
+        aria-label="Cancelar acción" [attr.aria-describedby]="'cancel-description'">
+        {{ data().cancelText }}
+      </button>
+
+      <button type="button" [class]="confirmButtonClass()" (click)="onConfirm()" [disabled]="isDisabled()"
+        aria-label="Confirmar acción" [attr.aria-describedby]="'confirm-description'">
+        @if (isDisabled()) {
+        <div class="loading-spinner" aria-hidden="true"></div>
+        }
+        {{ data().confirmText }}
+      </button>
+    </div>
+
+    <!-- DESCRIPCIONES ARIA -->
+    <div class="sr-only" id="cancel-description">
+      Presiona para cancelar la acción actual
+    </div>
+    <div class="sr-only" id="confirm-description">
+      Presiona para confirmar la acción actual
+    </div>
+  </div>
+</div>
+}

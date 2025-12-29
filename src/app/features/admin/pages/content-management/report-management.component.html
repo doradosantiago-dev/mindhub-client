@@ -1,0 +1,212 @@
+<!-- GESTIÓN DE CONTENIDO: plantilla del componente -->
+
+<div class="content-management-container">
+  <!-- HEADER -->
+  <header class="management-header">
+    <div class="header-content">
+      <h1 class="page-title">Gestión de Reportes</h1>
+      <p class="page-subtitle">Administra reportes de contenido inapropiado</p>
+    </div>
+  </header>
+
+  <!-- SECCIÓN DE FILTROS -->
+  <section class="filters-section">
+    <div class="filters-container">
+      <div class="filters-row">
+        <!-- Filtro por estado -->
+        <div class="filter-group">
+          <label for="statusFilter" class="filter-label">Estado</label>
+          <select id="statusFilter" class="filter-select" [value]="statusFilter()"
+            (change)="handleStatusFilterChange($event)">
+            @for (option of statusOptions; track option.value) {
+            <option [value]="option.value">{{ option.label }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Filtro de búsqueda -->
+        <div class="filter-group">
+          <label for="searchFilter" class="filter-label">Buscar</label>
+          <input id="searchFilter" type="text" class="filter-input" placeholder="Buscar por motivo o reporter..."
+            [value]="searchFilter()" (input)="onSearchFilterChange($any($event.target).value)">
+        </div>
+
+        <!-- Botón limpiar filtros -->
+        <div class="filter-group">
+          <button class="clear-filters-btn" (click)="clearFilters()">
+            Limpiar Filtros
+          </button>
+        </div>
+      </div>
+
+      <!-- ESTADÍSTICAS RÁPIDAS -->
+      <div class="stats-row">
+        <div class="stat-item">
+          <span class="stat-label">Total:</span>
+          <span class="stat-value total">{{ totalCount() }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Pendientes:</span>
+          <span class="stat-value pending">{{ pendingCount() }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Resueltos:</span>
+          <span class="stat-value resolved">{{ resolvedCount() }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Rechazados:</span>
+          <span class="stat-value rejected">{{ rejectedCount() }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE CONTENIDO PRINCIPAL -->
+  <section class="content-section">
+    @if (isLoading()) {
+    <!-- ESTADO DE CARGA -->
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Cargando reportes...</p>
+    </div>
+    } @else if (error()) {
+    <!-- ESTADO DE ERROR -->
+    <div class="error-container">
+      <p class="error-text">{{ error() }}</p>
+      <button class="retry-btn" (click)="loadReports()">
+        Reintentar
+      </button>
+    </div>
+    } @else if (reports().length === 0) {
+    <!-- ESTADO VACÍO -->
+    <div class="empty-container">
+      <p class="empty-text">No se encontraron reportes</p>
+    </div>
+    } @else {
+    <!-- LISTA DE REPORTES -->
+    <div class="reports-container">
+      <table class="reports-table">
+        <thead class="table-header">
+          <tr>
+            <th class="header-cell">ID</th>
+            <th class="header-cell">Motivo</th>
+            <th class="header-cell">Estado</th>
+            <th class="header-cell">Fecha</th>
+            <th class="header-cell">Reportador</th>
+            <th class="header-cell">Publicaciones</th>
+            <th class="header-cell">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="table-body">
+          @for (report of reports(); track report.id) {
+          <tr class="table-row" [class.pending]="report.status === 'PENDING'"
+            [class.resolved]="report.status === 'RESOLVED'" [class.rejected]="report.status === 'REJECTED'">
+            <td class="table-cell">{{ report.id }}</td>
+            <td class="table-cell">
+              <div class="report-reason">
+                <span class="reason-text">{{ report.reason }}</span>
+                @if (report.description) {
+                <span class="reason-description">{{ report.description }}</span>
+                }
+              </div>
+            </td>
+            <td class="table-cell">
+              <span class="status-badge" [class]="'status-' + report.status.toLowerCase()">
+                {{ report.status === 'PENDING' ? 'Pendiente' :
+                report.status === 'RESOLVED' ? 'Resuelto' : 'Rechazado' }}
+              </span>
+            </td>
+            <td class="table-cell">
+              <time class="report-date" [attr.datetime]="report.reportDate"
+                aria-label="Fecha del reporte: {{ report.reportDate | date:'longDate' }}, {{ report.reportDate | date:'HH:mm' }}">
+                {{ report.reportDate | date:'longDate' }}, {{ report.reportDate | date:'HH:mm' }}
+              </time>
+            </td>
+            <td class="table-cell">
+              <span class="reporter-name">{{ report.reporter.username }}</span>
+            </td>
+            <td class="table-cell">
+              @if (report.post) {
+              <div class="post-preview">
+                <p class="post-content">{{ report.post.content | slice:0:50 }}{{ report.post.content.length > 50 ? '...'
+                  : '' }}</p>
+                @if (report.post.author) {
+                <span class="post-author">por @{{ report.post.author.username }}</span>
+                } @else {
+                <span class="post-author">Perfil del usuario eliminado</span>
+                }
+              </div>
+              } @else {
+              <span class="post-deleted">Post eliminado</span>
+              }
+            </td>
+            <td class="table-cell">
+              <div class="actions-container">
+                <button class="action-btn detail-btn" (click)="openDetailModal(report)" title="Ver detalles">
+                  <mat-icon aria-hidden="true">visibility</mat-icon>
+                  <span class="btn-text">Ver Detalles</span>
+                </button>
+                @if (report.status === 'PENDING') {
+                <app-report-actions [report]="report" [loading]="isLoading()" (onResolve)="resolveReport($event)"
+                  (onReject)="rejectReport($event)">
+                </app-report-actions>
+                }
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+
+      <!-- PAGINACIÓN -->
+      @if (totalPages() > 1) {
+      <div class="pagination-container">
+        <div class="pagination-info">
+          <span class="pagination-text">
+            Página {{ currentPage() + 1 }} de {{ totalPages() }}
+          </span>
+          <span class="pagination-count">
+            Total: {{ totalElements() }} reportes
+          </span>
+        </div>
+
+        <div class="pagination-controls">
+          <!-- Botón anterior -->
+          <button class="pagination-btn" [disabled]="!hasPreviousPage()" (click)="previousPage()">
+            Anterior
+          </button>
+
+          <!-- Números de página -->
+          <div class="page-numbers">
+            @for (page of getPageNumbers(); track page) {
+            @if (page === -1) {
+            <span class="page-separator">...</span>
+            } @else {
+            <button class="page-btn" [class.active]="page === currentPage()" (click)="goToPage(page)">
+              {{ page + 1 }}
+            </button>
+            }
+            }
+          </div>
+
+          <!-- Botón siguiente -->
+          <button class="pagination-btn" [disabled]="!hasNextPage()" (click)="nextPage()">
+            Siguiente
+          </button>
+        </div>
+      </div>
+      }
+    </div>
+    }
+  </section>
+
+  <!-- MODAL DE DETALLES -->
+  @if (showModal() && selectedReport()) {
+  <app-report-detail-modal [report]="selectedReport()!" [visible]="showModal()" (onConfirm)="onConfirmAction($event)"
+    (onClose)="closeModal()">
+  </app-report-detail-modal>
+  }
+</div>
+
+<!-- FOOTER -->
+<app-footer></app-footer>

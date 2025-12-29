@@ -1,0 +1,119 @@
+<!-- USER LIST: plantilla del componente -->
+
+<div class="user-list-container">
+  <!-- Loading State -->
+  @if (loading()) {
+  <div class="loading-section">
+    <div class="loading-spinner"></div>
+    <p>Cargando usuarios...</p>
+  </div>
+  }
+
+  <!-- Tabla usuarios -->
+  @if (hasUsers()) {
+  <!-- Contenedor de la tabla de usuarios -->
+  <div class="table-container" [class.loading]="isLoadingPage() || isTransitioning()">
+    <!-- Encabezado de la tabla -->
+    <table class="users-table">
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Email</th>
+          <th>Rol</th>
+          <th>Privacidad</th>
+          <th>Estado</th>
+          <th>Fecha Registro</th>
+          <th>Última Actividad</th>
+          <th class="actions-cell">Acciones</th>
+        </tr>
+      </thead>
+      <!-- Cuerpo con las filas de usuarios -->
+      <tbody [class.transitioning]="isTransitioning()">
+        @for (user of users(); track user.id) {
+        <tr>
+          <!-- Información del usuario: avatar, nombre y username -->
+          <td class="user-cell">
+            <div class="user-info">
+              <img [src]="getUserAvatar(user)" [alt]="getUserDisplayName(user)" class="user-avatar" loading="lazy">
+              <div class="user-details">
+                <span class="user-name">{{ getUserDisplayName(user) }}</span>
+                <span class="user-username">@{{ user.username }}</span>
+              </div>
+            </div>
+          </td>
+          <td>{{ user.email }}</td>
+          <!-- Badge que muestra el rol (resalta ADMIN) -->
+          <td>
+            <span class="role-badge" [class.admin-role]="user.role.name === 'ADMIN'">
+              {{ user.role.name }}
+            </span>
+          </td>
+          <!-- Badge de privacidad con icono y etiqueta -->
+          <td>
+            <span class="privacy-badge" [class.private-privacy]="user.privacyType === 'PRIVATE'"
+              [class.public-privacy]="user.privacyType === 'PUBLIC'">
+              <mat-icon class="privacy-icon">{{ getPrivacyIcon(user.privacyType) }}</mat-icon>
+              {{ getPrivacyLabel(user.privacyType) }}
+            </span>
+          </td>
+          <!-- Estado activo/inactivo -->
+          <td>
+            <span class="status-badge" [class.active-status]="user.active" [class.inactive-status]="!user.active">
+              {{ user.active ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+          <td>{{ user.registrationDate | dateFormat }}</td>
+          <td>{{ user.lastActivityDate | dateFormat }}</td>
+          <!-- Columnas de acciones disponibles por fila -->
+          <td class="actions-cell">
+            <div class="action-buttons">
+              <!-- Mostrar desactivar si está activo y se puede desactivar -->
+              @if (user.active && canDeactivateUser(user)) {
+              <button class="action-btn deactivate-btn" (click)="deactivateUser(user.id)" title="Desactivar usuario"
+                aria-label="Desactivar usuario" [disabled]="!canDeactivateUser(user)">
+                <mat-icon>block</mat-icon>
+              </button>
+              } @else if (!user.active) {
+              <!-- Mostrar activar si está inactivo -->
+              <button class="action-btn activate-btn" (click)="activateUser(user.id)" title="Activar usuario"
+                aria-label="Activar usuario">
+                <mat-icon>check_circle</mat-icon>
+              </button>
+              }
+
+              <!-- Si es el usuario actual mostrar botón para ver perfil -->
+              @if (isCurrentUser(user)) {
+              <button class="action-btn view-profile-btn" (click)="viewProfile()" title="Ver mi perfil"
+                aria-label="Ver mi perfil">
+                <mat-icon>account_circle</mat-icon>
+              </button>
+              } @else {
+              <!-- Para otros usuarios: editar y eliminar si está permitido -->
+              <button class="action-btn edit-btn" (click)="editUser(user)" title="Editar usuario"
+                aria-label="Editar usuario">
+                <mat-icon>edit</mat-icon>
+              </button>
+
+              <button class="action-btn delete-btn" (click)="deleteUser(user.id)" [title]="getDeleteTooltip(user)"
+                aria-label="Eliminar usuario" [disabled]="!canDeleteUser(user)">
+                <mat-icon>delete</mat-icon>
+              </button>
+              }
+            </div>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  }
+
+  <!-- Estado vacío -->
+  @if (!loading() && !hasUsers()) {
+  <div class="empty-state">
+    <mat-icon class="empty-icon">people</mat-icon>
+    <h3>No hay usuarios</h3>
+    <p>No se encontraron usuarios que coincidan con los criterios de búsqueda.</p>
+  </div>
+  }
+</div>

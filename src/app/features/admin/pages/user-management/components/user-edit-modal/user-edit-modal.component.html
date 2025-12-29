@@ -1,0 +1,180 @@
+<!-- USER EDIT MODAL: plantilla del componente -->
+
+@if (isOpen() && hasUser()) {
+<div class="modal-backdrop" tabindex="0" role="dialog"
+  aria-modal="true" aria-labelledby="edit-modal-title" aria-describedby="edit-modal-description">
+  <div class="modal-container" [ngClass]="modalClass()">
+
+    <!-- HEADER DEL MODAL -->
+    <div class="modal-header">
+      <div class="modal-icon">
+        <mat-icon aria-hidden="true">edit</mat-icon>
+      </div>
+      <div class="header-content">
+        <h2 id="edit-modal-title" class="modal-title">Editar Usuario</h2>
+        <p id="edit-modal-description" class="modal-subtitle">
+          Modifica la información del usuario seleccionado
+        </p>
+      </div>
+    </div>
+
+    <!-- FORMULARIO PRINCIPAL -->
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="modal-form" novalidate>
+      <div class="modal-body">
+        <div class="form-grid">
+
+          <!-- CAMPOS BÁSICOS -->
+
+          <!-- Nombre de usuario -->
+          <div class="form-field">
+            <label for="username" class="form-label">
+              Nombre de usuario <span class="required">*</span>
+            </label>
+            <input id="username" type="text" formControlName="username" class="form-input"
+              [class.error]="username?.invalid && username?.touched" placeholder="Nombre de usuario del sistema"
+              aria-describedby="username-error" autocomplete="username" (blur)="validateField('username')">
+            @if (formErrors()['username']) {
+            <div id="username-error" class="error-message" role="alert">
+              {{ formErrors()['username'] }}
+            </div>
+            }
+          </div>
+
+          <!-- Email -->
+          <div class="form-field">
+            <label for="email" class="form-label">
+              Email <span class="required">*</span>
+            </label>
+            <input id="email" type="email" formControlName="email" class="form-input"
+              [class.error]="email?.invalid && email?.touched" placeholder="usuario@ejemplo.com"
+              aria-describedby="email-error" autocomplete="email" (blur)="validateField('email')">
+            @if (formErrors()['email']) {
+            <div id="email-error" class="error-message" role="alert">
+              {{ formErrors()['email'] }}
+            </div>
+            }
+          </div>
+
+          <!-- Nombre -->
+          <div class="form-field">
+            <label for="firstName" class="form-label">
+              Nombre <span class="required">*</span>
+            </label>
+            <input id="firstName" type="text" formControlName="firstName" class="form-input"
+              [class.error]="firstName?.invalid && firstName?.touched" placeholder="Ingresa el nombre"
+              aria-describedby="firstName-error" autocomplete="given-name" (blur)="validateField('firstName')">
+            @if (formErrors()['firstName']) {
+            <div id="firstName-error" class="error-message" role="alert">
+              {{ formErrors()['firstName'] }}
+            </div>
+            }
+          </div>
+
+          <!-- Apellido -->
+          <div class="form-field">
+            <label for="lastName" class="form-label">
+              Apellido <span class="required">*</span>
+            </label>
+            <input id="lastName" type="text" formControlName="lastName" class="form-input"
+              [class.error]="lastName?.invalid && lastName?.touched" placeholder="Ingresa el apellido"
+              aria-describedby="lastName-error" autocomplete="family-name" (blur)="validateField('lastName')">
+            @if (formErrors()['lastName']) {
+            <div id="lastName-error" class="error-message" role="alert">
+              {{ formErrors()['lastName'] }}
+            </div>
+            }
+          </div>
+
+          <!-- CAMPOS OPCIONALES -->
+
+          <!-- Teléfono -->
+          <div class="form-field">
+            <label for="phone" class="form-label">Teléfono</label>
+            <input id="phone" type="tel" formControlName="phone" class="form-input" placeholder="+34 600 000 000"
+              autocomplete="tel" (blur)="validateField('phone')">
+          </div>
+
+          <!-- URL de Imagen de Perfil -->
+          <div class="form-field">
+            <label for="profilePicture" class="form-label">URL de Imagen de Perfil</label>
+            <input id="profilePicture" type="url" formControlName="profilePicture" class="form-input"
+              placeholder="https://ejemplo.com/imagen.jpg" autocomplete="photo"
+              (blur)="validateField('profilePicture')">
+          </div>
+
+          <!-- CAMPOS DE CONFIGURACIÓN -->
+
+          <!-- Rol -->
+          @if (!isCurrentUserAdmin()) {
+          <div class="form-field">
+            <label for="role" class="form-label">
+              Rol <span class="required">*</span>
+            </label>
+            <select id="role" formControlName="role" class="form-select" [class.error]="role?.invalid && role?.touched"
+              aria-describedby="role-error" (blur)="validateField('role')">
+              <option value="USER">Usuario</option>
+              <option value="ADMIN">Administrador</option>
+            </select>
+            @if (formErrors()['role']) {
+            <div id="role-error" class="error-message" role="alert">
+              {{ formErrors()['role'] }}
+            </div>
+            }
+          </div>
+          }
+
+          <!-- Tipo de Privacidad -->
+          <div class="form-field">
+            <label for="privacyType" class="form-label">
+              Tipo de Privacidad
+            </label>
+            <select id="privacyType" formControlName="privacyType" class="form-select"
+              [disabled]="roleModel() === 'ADMIN'" aria-describedby="privacyType-error">
+              <option value="PUBLIC">Público</option>
+              <option value="PRIVATE">Privado</option>
+            </select>
+            @if (roleModel() === 'ADMIN') {
+            <div class="field-info">Los administradores deben tener perfil privado</div>
+            }
+          </div>
+
+          <!-- CAMPOS DE TEXTO LARGO -->
+
+          <!-- Dirección -->
+          <div class="form-field full-width">
+            <label for="address" class="form-label">Dirección</label>
+            <input id="address" type="text" formControlName="address" class="form-input"
+              placeholder="Ingresa la dirección completa" autocomplete="street-address"
+              (blur)="validateField('address')">
+          </div>
+
+          <!-- Biografía -->
+          <div class="form-field full-width">
+            <label for="biography" class="form-label">Biografía</label>
+            <textarea id="biography" formControlName="biography" class="form-textarea"
+              placeholder="Cuéntanos sobre el usuario..." rows="3" (blur)="validateField('biography')"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER DEL MODAL -->
+      <div class="modal-footer">
+        <button type="button" class="cancel-btn" (click)="onCancel()" [disabled]="loading() || isSubmitting()"
+          aria-label="Cancelar edición">
+          Cancelar
+        </button>
+        <button type="submit" class="confirm-btn" [disabled]="!isFormValid() || loading() || isSubmitting()"
+          aria-label="Guardar cambios del usuario">
+          @if (isSubmitting()) {
+          <div class="loading-spinner" aria-hidden="true"></div>
+          <span>Guardando...</span>
+          } @else {
+          <mat-icon aria-hidden="true">save</mat-icon>
+          <span>Guardar Cambios</span>
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+}

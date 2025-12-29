@@ -1,0 +1,179 @@
+<!-- Report Detail Modal: plantilla del componente -->
+<!-- Overlay del modal -->
+@if (visible()) {
+<div class="modal-overlay" (click)="closeModal()">
+  <!-- Contenido del modal -->
+  <div class="modal-content" (click)="stopPropagation($event)">
+    <!-- Header del modal -->
+    <div class="modal-header">
+      <div class="header-icon">
+        <mat-icon>flag</mat-icon>
+      </div>
+      <div class="header-content">
+        <h2 class="modal-title">Detalles del Reporte</h2>
+        <p class="modal-subtitle">Revisa la información completa del reporte</p>
+      </div>
+      <button class="close-btn" (click)="closeModal()" title="Cerrar">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <!-- Contenido del modal -->
+    <div class="modal-body">
+      <!-- Información del reporte -->
+      <section class="report-info">
+        <h3 class="section-title">Información del Reporte</h3>
+        <div class="info-grid">
+          <div class="info-item">
+            <label class="info-label">Estado:</label>
+            <span class="status-badge" [class]="'status-' + report().status.toLowerCase()">
+              {{ report().status }}
+            </span>
+          </div>
+          <div class="info-item">
+            <label class="info-label">Fecha de Reporte:</label>
+            <span class="info-value">{{ report().reportDate | dateFormat:'short' }}</span>
+          </div>
+          @if (report().reviewDate) {
+          <div class="info-item">
+            <label class="info-label">Fecha de Revisión:</label>
+            <span class="info-value">{{ report().reviewDate | dateFormat:'short' }}</span>
+          </div>
+          }
+        </div>
+      </section>
+
+      <!-- Motivo del reporte -->
+      <section class="report-reason">
+        <h3 class="section-title">Motivo del Reporte</h3>
+        <div class="reason-content">
+          <h4 class="reason-title">{{ report().reason }}</h4>
+          @if (report().description) {
+          <p class="reason-description">{{ report().description }}</p>
+          }
+        </div>
+      </section>
+
+      <!-- Información del reporter -->
+      <section class="reporter-info">
+        <h3 class="section-title">Usuario que Reportó</h3>
+        @if (report().reporter) {
+        <div class="user-card">
+          <div class="user-avatar">
+            <img [src]="report().reporter.profilePicture || '/images/avatars/default-avatar.png'"
+              [alt]="report().reporter.username" (error)="$event.target.src = '/images/avatars/default-avatar.png'">
+          </div>
+          <div class="user-details">
+            <h4 class="user-name">{{ report().reporter.firstName }} {{ report().reporter.lastName }}</h4>
+            <p class="user-username">@{{ report().reporter.username }}</p>
+            <p class="user-email">{{ report().reporter.email }}</p>
+          </div>
+        </div>
+        } @else {
+        <div class="user-deleted">
+          <mat-icon>person_off</mat-icon>
+          <p>Usuario eliminado</p>
+        </div>
+        }
+      </section>
+
+      <!-- Contenido reportado -->
+      <section class="reported-content">
+        <h3 class="section-title">Contenido Reportado</h3>
+        @if (report().post) {
+        <div class="post-card">
+          <div class="post-header">
+            <div class="post-author">
+              @if (report().post.author; as author) {
+              <img [src]="author.profilePicture || '/favicon.ico'" [alt]="author.username"
+                (error)="$event.target.src = '/favicon.ico'">
+              <div class="author-info">
+                <h4 class="author-name">{{ author.firstName }} {{ author.lastName }}</h4>
+                <p class="author-username">@{{ author.username }}</p>
+                <p class="author-email">{{ author.email }}</p>
+              </div>
+              } @else {
+              <div class="author-info">
+                <h4 class="author-name">Usuario eliminado</h4>
+                <p class="author-username">Perfil no disponible</p>
+                <p class="author-email">Información eliminada</p>
+              </div>
+              }
+            </div>
+          </div>
+          <div class="post-content">
+            <p>{{ report().post.content || 'Contenido no disponible' }}</p>
+          </div>
+        </div>
+        } @else {
+        <div class="post-deleted">
+          <mat-icon>delete_forever</mat-icon>
+          <p>El post ha sido eliminado</p>
+        </div>
+        }
+      </section>
+    </div>
+
+    <!-- Footer del modal -->
+    <div class="modal-footer">
+      @if (canResolve() || canReject()) {
+      <div class="action-buttons">
+        @if (canResolve()) {
+        <button class="action-btn resolve-btn" (click)="confirmResolve()">
+          <mat-icon>check_circle</mat-icon>
+          Resolver Reporte
+        </button>
+        }
+        @if (canReject()) {
+        <button class="action-btn reject-btn" (click)="confirmReject()">
+          <mat-icon>cancel</mat-icon>
+          Rechazar Reporte
+        </button>
+        }
+      </div>
+      } @else {
+      <div class="status-message">
+        <mat-icon>info</mat-icon>
+        <span>Este reporte ya ha sido procesado</span>
+      </div>
+      }
+      <button class="cancel-btn" (click)="closeModal()">
+        Cerrar
+      </button>
+    </div>
+  </div>
+</div>
+}
+
+<!-- Diálogo de confirmación -->
+@if (showConfirmDialog()) {
+<div class="confirm-overlay" (click)="cancelAction()">
+  <div class="confirm-dialog" (click)="stopPropagation($event)">
+    <div class="confirm-header">
+      <mat-icon [class]="'confirm-icon ' + getActionColor()">
+        {{ getActionColor() === 'success' ? 'check_circle' : 'warning' }}
+      </mat-icon>
+      <h3 class="confirm-title">Confirmar Acción</h3>
+    </div>
+    <div class="confirm-body">
+      <p class="confirm-message">
+        ¿Estás seguro de que quieres <strong>{{ getActionText() }}</strong> este reporte?
+      </p>
+      @if (getActionColor() === 'success') {
+      <p class="confirm-warning">
+        <mat-icon>warning</mat-icon>
+        Esta acción eliminará el post reportado permanentemente.
+      </p>
+      }
+    </div>
+    <div class="confirm-footer">
+      <button class="confirm-btn cancel" (click)="cancelAction()">
+        Cancelar
+      </button>
+      <button class="confirm-btn confirm" [class]="getActionColor()" (click)="confirmAction()">
+        Confirmar
+      </button>
+    </div>
+  </div>
+</div>
+}

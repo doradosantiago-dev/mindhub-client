@@ -1,0 +1,54 @@
+<!-- Report Actions: plantilla del componente -->
+
+<div class="actions-container">
+  <!-- BOTÓN RESOLVER -->
+  @if (canResolve()) {
+  <button class="action-btn resolve-btn" [disabled]="resolving() || rejecting() || loading()" (click)="handleResolve()"
+    title="Resolver reporte y eliminar post" aria-label="Resolver reporte">
+    @if (resolving()) {
+    <div class="btn-spinner" aria-hidden="true"></div>
+    } @else {
+    <mat-icon aria-hidden="true">check_circle</mat-icon>
+    }
+    <span class="btn-text">
+      @if (resolving()) {
+      Resolviendo...
+      } @else {
+      Resolver
+      }
+    </span>
+  </button>
+  }
+
+  <!-- BOTÓN RECHAZAR -->
+  @if (canReject()) {
+  <button class="action-btn reject-btn" [disabled]="resolving() || rejecting() || loading()" (click)="handleReject()"
+    title="Rechazar reporte" aria-label="Rechazar reporte">
+    @if (rejecting()) {
+    <div class="btn-spinner" aria-hidden="true"></div>
+    } @else {
+    <mat-icon aria-hidden="true">cancel</mat-icon>
+    }
+    <span class="btn-text">
+      @if (rejecting()) {
+      Rechazando...
+      } @else {
+      Rechazar
+      }
+    </span>
+  </button>
+  }
+
+  <!-- INDICADOR DE ESTADO -->
+  @if (!canResolve() && !canReject()) {
+  <span class="status-indicator" [class]="'status-' + report().status.toLowerCase()">
+    @if (report().status === 'RESOLVED') {
+    <mat-icon aria-hidden="true">task_alt</mat-icon>
+    Resuelto
+    } @else if (report().status === 'REJECTED') {
+    <mat-icon aria-hidden="true">cancel</mat-icon>
+    Rechazado
+    }
+  </span>
+  }
+</div>

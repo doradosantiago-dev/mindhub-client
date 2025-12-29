@@ -1,0 +1,158 @@
+<!-- USER CREATE MODAL: plantilla del componente -->
+
+@if (isOpen()) {
+<div class="modal-backdrop" tabindex="0" role="dialog"
+  aria-modal="true" aria-labelledby="create-modal-title">
+  <div class="modal-container" [ngClass]="modalClass()">
+    <div class="modal-header">
+      <div class="modal-icon icon-info">
+        <mat-icon>person_add</mat-icon>
+      </div>
+      <div class="header-content">
+        <h2 id="create-modal-title" class="modal-title">Crear Nuevo Administrador</h2>
+        <p class="modal-subtitle">Se creará un administrador con permisos elevados.</p>
+      </div>
+    </div>
+
+    <form [formGroup]="createForm" (ngSubmit)="onSubmit()" class="modal-form">
+      <div class="modal-body">
+        <!-- Mensaje de información -->
+        <div class="info-message">
+          <strong>Información:</strong> Se creará un nuevo administrador con privacidad privada por defecto.
+        </div>
+        <div class="form-grid">
+          <!-- Nombre de usuario -->
+          <div class="form-field">
+            <label for="username" class="form-label">Nombre de usuario *</label>
+            <input id="username" type="text" formControlName="username" class="form-input"
+              [class.error]="username?.invalid && username?.touched" placeholder="Ingresa el nombre de usuario"
+              aria-describedby="username-error">
+            @if (username?.invalid && username?.touched) {
+            <div id="username-error" class="error-message">
+              @if (username?.errors?.['required']) {
+              El nombre de usuario es requerido
+              } @else if (username?.errors?.['minlength']) {
+              El nombre de usuario debe tener al menos 3 caracteres
+              } @else if (username?.errors?.['maxlength']) {
+              El nombre de usuario no puede exceder 50 caracteres
+              }
+            </div>
+            }
+          </div>
+
+          <!-- Email -->
+          <div class="form-field">
+            <label for="email" class="form-label">Email *</label>
+            <input id="email" type="email" formControlName="email" class="form-input"
+              [class.error]="email?.invalid && email?.touched" placeholder="usuario@ejemplo.com"
+              aria-describedby="email-error">
+            @if (email?.invalid && email?.touched) {
+            <div id="email-error" class="error-message">
+              @if (email?.errors?.['required']) {
+              El email es requerido
+              } @else if (email?.errors?.['email']) {
+              Ingresa un email válido
+              }
+            </div>
+            }
+          </div>
+
+          <!-- Nombre -->
+          <div class="form-field">
+            <label for="firstName" class="form-label">Nombre *</label>
+            <input id="firstName" type="text" formControlName="firstName" class="form-input"
+              [class.error]="firstName?.invalid && firstName?.touched" placeholder="Ingresa el nombre"
+              aria-describedby="firstName-error">
+            @if (firstName?.invalid && firstName?.touched) {
+            <div id="firstName-error" class="error-message">
+              @if (firstName?.errors?.['required']) {
+              El nombre es requerido
+              } @else if (firstName?.errors?.['minlength']) {
+              El nombre debe tener al menos 2 caracteres
+              } @else if (firstName?.errors?.['maxlength']) {
+              El nombre no puede exceder 50 caracteres
+              }
+            </div>
+            }
+          </div>
+
+          <!-- Apellido -->
+          <div class="form-field">
+            <label for="lastName" class="form-label">Apellido *</label>
+            <input id="lastName" type="text" formControlName="lastName" class="form-input"
+              [class.error]="lastName?.invalid && lastName?.touched" placeholder="Ingresa el apellido"
+              aria-describedby="lastName-error">
+            @if (lastName?.invalid && lastName?.touched) {
+            <div id="lastName-error" class="error-message">
+              @if (lastName?.errors?.['required']) {
+              El apellido es requerido
+              } @else if (lastName?.errors?.['minlength']) {
+              El apellido debe tener al menos 2 caracteres
+              } @else if (lastName?.errors?.['maxlength']) {
+              El apellido no puede exceder 50 caracteres
+              }
+            </div>
+            }
+          </div>
+
+          <!-- Contraseña -->
+          <div class="form-field">
+            <label for="password" class="form-label">Contraseña *</label>
+            <input id="password" type="password" formControlName="password" class="form-input"
+              [class.error]="password?.invalid && password?.touched" placeholder="Mínimo 6 caracteres"
+              aria-describedby="password-error">
+            @if (password?.invalid && password?.touched) {
+            <div id="password-error" class="error-message">
+              @if (password?.errors?.['required']) {
+              La contraseña es requerida
+              } @else if (password?.errors?.['minlength']) {
+              La contraseña debe tener al menos 6 caracteres
+              }
+            </div>
+            }
+          </div>
+
+          <!-- Confirmar Contraseña -->
+          <div class="form-field">
+            <label for="confirmPassword" class="form-label">Confirmar Contraseña *</label>
+            <input id="confirmPassword" type="password" formControlName="confirmPassword" class="form-input"
+              [class.error]="confirmPassword?.invalid && confirmPassword?.touched" placeholder="Repite la contraseña"
+              aria-describedby="confirmPassword-error">
+            @if (confirmPassword?.invalid && confirmPassword?.touched) {
+            <div id="confirmPassword-error" class="error-message">
+              @if (confirmPassword?.errors?.['required']) {
+              Confirma la contraseña
+              }
+            </div>
+            }
+          </div>
+
+
+        </div>
+
+        <!-- Error de Contraseña No Coincidente -->
+        @if (password?.value && confirmPassword?.value && password?.value !== confirmPassword?.value) {
+        <div class="error-message global-error">
+          Las contraseñas no coinciden
+        </div>
+        }
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="cancel-btn" (click)="onCancel()" [disabled]="loading()" aria-label="Cancelar">
+          Cancelar
+        </button>
+        <button type="submit" class="confirm-btn btn-info" [disabled]="!isFormValid() || loading()"
+          aria-label="Crear usuario">
+          @if (loading()) {
+          <div class="loading-spinner"></div>
+          }
+          Crear Administrador
+        </button>
+      </div>
+
+
+    </form>
+  </div>
+</div>
+}

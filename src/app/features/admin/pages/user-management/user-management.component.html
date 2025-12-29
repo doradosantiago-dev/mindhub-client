@@ -1,0 +1,85 @@
+<!-- GESTIÓN DE USUARIOS: plantilla del componente -->
+
+<div class="user-management-container">
+  <!-- HEADER -->
+  <header class="management-header">
+    <div class="header-content">
+      <h1 class="page-title">Gestión de Usuarios</h1>
+      <p class="page-subtitle">Administra todos los usuarios de la plataforma</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-primary" (click)="openCreateModal()">
+        <mat-icon>person_add</mat-icon>
+        Crear Administrador
+      </button>
+    </div>
+  </header>
+
+  <!-- SECCIÓN DE BÚSQUEDA -->
+  <section class="search-section">
+    <div class="um-search-container">
+      <div class="um-search-input-wrapper">
+        <mat-icon class="um-search-icon">search</mat-icon>
+        <input type="text" class="um-search-input" placeholder="Buscar usuarios por nombre o apellidos..."
+          [value]="searchQuery()" (input)="searchUsers($any($event.target).value)" />
+      </div>
+      <!-- Botón fuera del input, a la derecha (siempre visible, sin icono) -->
+      <button class="clear-filters-btn" (click)="clearSearch()">Limpiar Filtros</button>
+    </div>
+  </section>
+
+  <!-- ESTADO DE ERROR -->
+  @if (error() && !loading()) {
+  <div class="error-section">
+    <div class="error-icon">⚠️</div>
+    <p class="error-text">{{ error() }}</p>
+    <button class="btn btn-secondary" (click)="loadUsers()">
+      Reintentar
+    </button>
+  </div>
+  }
+
+  <!-- ESTADO DE ÉXITO -->
+  @if (success()) {
+  <div class="success-section">
+    <div class="success-icon">✅</div>
+    <p class="success-text">{{ success() }}</p>
+  </div>
+  }
+
+  <!-- COMPONENTE DE LISTA DE USUARIOS -->
+  <app-user-list [users]="users()" [loading]="loading()" [currentPage]="currentPage()" [totalPages]="totalPages()"
+    [totalElements]="totalElements()" [isLoadingPage]="isLoadingPage()" [isTransitioning]="isTransitioning()"
+    [activeAdminCount]="adminCount()" [currentUserId]="currentUserId()" (userActivated)="onUserActivated($event)"
+    (userDeactivated)="onUserDeactivated($event)" (userDeleted)="onUserDeleted($event)"
+    (userEdited)="onUserEdited($event)">
+  </app-user-list>
+
+  <!-- PAGINACIÓN -->
+  @if (totalPages() > 1) {
+  <app-pagination [currentPage]="currentPage()" [totalPages]="totalPages()" [totalElements]="totalElements()"
+    [isLoading]="isLoadingPage()" [showInfo]="true" [showTotalElements]="false" (pageChange)="goToPage($event)"
+    (previous)="previousPage()" (next)="nextPage()">
+  </app-pagination>
+  }
+
+  <!-- MODALES -->
+
+  <!-- Modal de creación de usuario -->
+  <app-user-create-modal [isOpen]="showCreateModal()" [loading]="modalLoading()" (created)="onCreateUser($event)"
+    (cancelled)="closeCreateModal()">
+  </app-user-create-modal>
+
+  <!-- Modal de edición de usuario -->
+  <app-user-edit-modal [isOpen]="showEditModal()" [user]="editingUser()" [loading]="modalLoading()"
+    (updated)="onUpdateUser($event)" (cancelled)="closeEditModal()">
+  </app-user-edit-modal>
+
+  <!-- Modal de confirmación -->
+  <app-user-confirm-modal [isOpen]="showConfirmModal()" [data]="confirmModalData()!" [loading]="modalLoading()"
+    (confirmed)="onConfirmAction()" (cancelled)="closeConfirmModal()">
+  </app-user-confirm-modal>
+</div>
+
+<!-- FOOTER -->
+<app-footer></app-footer>
