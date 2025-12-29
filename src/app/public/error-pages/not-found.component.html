@@ -1,0 +1,40 @@
+<!-- Componente: Página 404 - No Encontrada -->
+<div class="not-found-container">
+    <!-- Tarjeta principal que contiene el contenido del error -->
+    <mat-card class="not-found-card">
+        <mat-card-content>
+            <!-- Contenedor del icono -->
+            <div class="icon-container">
+                <!-- Icono representativo del error -->
+                <mat-icon class="error-icon">search_off</mat-icon>
+            </div>
+
+            <!-- Código de error grande -->
+            <h1 class="error-code">404</h1>
+
+            <!-- Título descriptivo -->
+            <h2>Página No Encontrada</h2>
+
+            <!-- Mensaje principal -->
+            <p>Lo sentimos, la página que buscas no existe o ha sido movida.</p>
+
+            <!-- Texto secundario con indicaciones -->
+            <p class="secondary-text">Verifica la URL o regresa al inicio para continuar navegando.</p>
+
+            <!-- Botones de acción: ir al dashboard o volver -->
+            <div class="actions">
+                <!-- Botón para navegar al dashboard (método goToDashboard en el componente) -->
+                <button mat-raised-button color="primary" (click)="goToDashboard()">
+                    <mat-icon>home</mat-icon>
+                    Ir al Dashboard
+                </button>
+
+                <!-- Botón para regresar a la página anterior (método goBack en el componente) -->
+                <button mat-button (click)="goBack()">
+                    <mat-icon>arrow_back</mat-icon>
+                    Volver
+                </button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

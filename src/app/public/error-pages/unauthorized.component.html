@@ -1,0 +1,30 @@
+<!-- Contenedor principal de la vista de "No Autorizado" -->
+<div class="unauthorized-container">
+    <!-- Tarjeta que muestra el mensaje de acceso denegado -->
+    <mat-card class="unauthorized-card">
+        <mat-card-content>
+            <!-- Icono de error -->
+            <div class="icon-container">
+                <mat-icon class="error-icon">block</mat-icon>
+            </div>
+
+            <!-- Título principal -->
+            <h1>Acceso No Autorizado</h1>
+
+            <!-- Mensaje principal explicando la restricción -->
+            <p>Lo sentimos, no tienes permisos para acceder a este recurso.</p>
+
+            <!-- Texto secundario con indicación de contacto -->
+            <p class="secondary-text">Si crees que esto es un error, por favor contacta con el administrador.</p>
+
+            <!-- Acciones disponibles: ir al dashboard -->
+            <div class="actions">
+                <!-- Botón principal que redirige al dashboard -->
+                <button mat-raised-button color="primary" (click)="goToDashboard()">
+                    <mat-icon>home</mat-icon>
+                    Ir al Dashboard
+                </button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -1,0 +1,116 @@
+/* Contenedor principal centrado y fondo degradado */
+.unauthorized-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #2563eb 100%);
+}
+
+/* Tarjeta que contiene el mensaje de error */
+.unauthorized-card {
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+/* Contenedor del icono */
+.icon-container {
+    margin-bottom: 20px;
+}
+
+/* Estilo del icono de error */
+.error-icon {
+    font-size: 80px;
+    width: 80px;
+    height: 80px;
+    color: #f44336;
+}
+
+/* Título */
+h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #212121;
+    margin-bottom: 16px;
+}
+
+/* Párrafo descriptivo */
+p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 12px;
+    line-height: 1.6;
+}
+
+/* Texto secundario */
+.secondary-text {
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 32px;
+}
+
+/* Área de acciones (botones) */
+.actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Estilo general de botones */
+button {
+    min-width: 140px;
+}
+
+/* Separación del icono dentro del botón */
+button mat-icon {
+    margin-right: 8px;
+}
+
+/* Botón primario con degradado */
+.actions button[color="primary"] {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white !important;
+    transition: all 0.3s ease;
+}
+
+/* Icono dentro del botón primario */
+.actions button[color="primary"] mat-icon {
+    color: white !important;
+}
+
+/* Estado hover del botón primario */
+.actions button[color="primary"]:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+    transform: none !important;
+}
+
+/* Ajustes responsivos para pantallas pequeñas */
+@media (max-width: 768px) {
+    .unauthorized-card {
+        padding: 30px 20px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .error-icon {
+        font-size: 60px;
+        width: 60px;
+        height: 60px;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
+}

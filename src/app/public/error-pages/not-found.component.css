@@ -1,0 +1,138 @@
+/* Estilos para la página 404 / not-found */
+
+/* Contenedor principal: centra el contenido vertical y horizontalmente, con fondo degradado */
+.not-found-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #2563eb 100%);
+}
+
+/* Tarjeta con el contenido del error: ancho máximo, sombra y padding */
+.not-found-card {
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+/* Contenedor del icono (margen inferior) */
+.icon-container {
+    margin-bottom: 20px;
+}
+
+/* Icono de error: tamaño y color */
+.error-icon {
+    font-size: 80px;
+    width: 80px;
+    height: 80px;
+    color: #ff9800;
+}
+
+/* Código de error grande (p. ej. 404): tamaño, peso y color */
+.error-code {
+    font-size: 72px;
+    font-weight: 900;
+    color: #2563eb;
+    margin: 0;
+    line-height: 1;
+}
+
+/* Título principal de la página de error */
+h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #212121;
+    margin: 16px 0;
+}
+
+/* Texto descriptivo del error */
+p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 12px;
+    line-height: 1.6;
+}
+
+/* Texto secundario (mensaje adicional) */
+.secondary-text {
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 32px;
+}
+
+/* Acciones/botones: centrados y con separación, permiten wrapping en móvil */
+.actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Botones: ancho mínimo para mantener consistencia */
+button {
+    min-width: 140px;
+}
+
+/* Icono dentro del botón: espacio a la derecha */
+button mat-icon {
+    margin-right: 8px;
+}
+
+/* Estilo para botones primarios: degradado, texto blanco y transición */
+.actions button[color="primary"] {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white !important;
+    transition: all 0.3s ease;
+}
+
+/* Icono dentro del botón primario: color blanco */
+.actions button[color="primary"] mat-icon {
+    color: white !important;
+}
+
+/* Efecto hover para el botón primario: degradado invertido y sombra */
+.actions button[color="primary"]:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+    transform: none !important;
+}
+
+/* Ajustes responsivos para pantallas pequeñas */
+@media (max-width: 768px) {
+
+    /* Menos padding en la tarjeta */
+    .not-found-card {
+        padding: 30px 20px;
+    }
+
+    /* Código de error más pequeño en móvil */
+    .error-code {
+        font-size: 56px;
+    }
+
+    /* Título ligeramente más pequeño */
+    h2 {
+        font-size: 24px;
+    }
+
+    /* Icono reducido */
+    .error-icon {
+        font-size: 60px;
+        width: 60px;
+        height: 60px;
+    }
+
+    /* Botones apilados en columna */
+    .actions {
+        flex-direction: column;
+    }
+
+    /* Botones ocupan todo el ancho en móvil */
+    button {
+        width: 100%;
+    }
+}

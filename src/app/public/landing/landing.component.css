@@ -1,0 +1,1306 @@
+﻿/** Landing: estilos y tokens de diseño. */
+
+/* Variables y tokens de diseño: paleta, espaciados, tipografías y sombras. */
+
+:host {
+  /* Paleta esmeralda: tonos usados para fondos, botones y acentos */
+  --emerald-50: #ecfdf5;
+  --emerald-100: #d1fae5;
+  --emerald-300: #6ee7b7;
+  --emerald-400: #34d399;
+  --emerald-500: #10b981;
+  --emerald-600: #059669;
+  --emerald-800: #065f46;
+
+  /* Paleta azul: tonos base para CTA y gradientes */
+  --blue-50: #eff6ff;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+  --blue-700: #1d4ed8;
+
+  /* Grises: jerarquía de texto y bordes */
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+
+  /* Gradientes reutilizables para hero, fondos y CTA */
+  --gradient-primary: linear-gradient(135deg, var(--emerald-500) 0%, var(--blue-600) 100%);
+  --gradient-hero: linear-gradient(135deg, var(--emerald-600) 0%, var(--blue-700) 50%, var(--emerald-800) 100%);
+  --gradient-alternate: linear-gradient(135deg, var(--blue-600) 0%, var(--emerald-500) 100%);
+  --gradient-light: linear-gradient(135deg, var(--emerald-50) 0%, var(--blue-50) 100%);
+  --gradient-cta-blue: linear-gradient(135deg, #bfdbfe 0%, var(--blue-500) 100%);
+  --gradient-footer: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #2563eb 100%);
+  --gradient-cta-blue-hover: linear-gradient(135deg, #9fc9ff 0%, var(--blue-600) 100%);
+
+  /* Gradiente específico para CTA verde/esmeralda y su hover */
+  --gradient-cta-emerald: linear-gradient(135deg, var(--emerald-300) 0%, var(--emerald-500) 100%);
+  --gradient-cta-emerald-hover: linear-gradient(135deg, var(--emerald-400) 0%, var(--emerald-600) 100%);
+
+  /* Tipografías y colores puntuales */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --red-500: #ef4444;
+  --red-600: #dc2626;
+  --light-blue-500: #60a5fa;
+  --light-blue-600: #3b82f6;
+  --light-blue-300: #93c5fd;
+
+  /* Escala tipográfica (rem) usada en todo el landing */
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+  --font-size-6xl: 3.75rem;
+
+  /* Espaciado modular (scale) usado en paddings/margins */
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-10: 2.5rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+  --spacing-32: 8rem;
+
+  /* Sombras reutilizables para elevación de componentes */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+  /* Radios de borde usados en tarjetas, mockup y botones */
+  --border-radius: 0.5rem;
+  --border-radius-lg: 1rem;
+  --border-radius-xl: 1.5rem;
+}
+
+/* Host base: establece la tipografía por defecto, display y color
+  principal del componente. Afecta a todo el árbol del landing. */
+
+:host {
+  font-family: var(--font-family);
+  display: block;
+  line-height: 1.6;
+  color: var(--gray-800);
+}
+
+/* Responsive: ajustar paddings del contenedor en pantallas >= 768px */
+@media (min-width: 768px) {
+  .container {
+    padding: 0 var(--spacing-6);
+  }
+}
+
+/* Header fijo: fondo translúcido, borde inferior y sombra ligera */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--gray-200);
+  padding: var(--spacing-4) 0;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Navegación: contenedor que centra el contenido del nav */
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenedor de marca (logo + texto): alineación y espaciado */
+.nav-brand .logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.header-logo-icon {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  background-color: #1e40af;
+  /* color exacto de .logo-mind */
+  -webkit-mask: url('/mindhub-logo.png') no-repeat center / contain;
+  mask: url('/mindhub-logo.png') no-repeat center / contain;
+}
+
+/* Imagen del logo en header: usa el SVG con tamaño fijo (sin caja adicional) */
+.nav-brand .brand-logo {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  object-fit: contain;
+  display: inline-block;
+}
+
+/* Imagen del logo en footer: pequeño SVG centrado */
+.footer-brand .brand-logo {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  object-fit: contain;
+  display: inline-block;
+}
+
+
+/* Nombre de la marca: tamaño, peso y alineación */
+.nav-brand .brand-name,
+.footer-brand .brand-name {
+  font-size: var(--font-size-4xl);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  display: flex;
+  align-items: center;
+}
+
+/* Color para la porción 'MIND' del nombre de la marca */
+.logo-mind {
+  color: #1e40af;
+}
+
+/* Color para la porción 'HUB' del nombre de la marca */
+.logo-hub {
+  color: #3fca93;
+}
+
+/* Hero principal: área grande con gradiente y contenido destacado */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-top: 100px;
+  background: var(--gradient-footer);
+}
+
+/* Capa de fondo del hero: gradiente que ocupa todo el hero */
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gradient-footer);
+  z-index: -2;
+}
+
+/* Overlay adicional en el hero para matizar colores del fondo */
+.gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg,
+      rgba(16, 185, 129, 0.85) 0%,
+      rgba(37, 99, 235, 0.75) 50%,
+      rgba(6, 95, 70, 0.85) 100%);
+  z-index: -1;
+}
+
+/* Elementos flotantes decorativos situados por encima del fondo */
+.floating-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Tarjetas flotantes: pequeñas tarjetas translucidas con animación */
+.floating-card {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-4);
+  max-width: 250px;
+  animation: float 6s ease-in-out infinite;
+}
+
+.floating-card.card-1 {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.floating-card.card-2 {
+  top: 60%;
+  right: 15%;
+  animation-delay: 2s;
+}
+
+.floating-card.card-3 {
+  bottom: 20%;
+  left: 20%;
+  animation-delay: 4s;
+}
+
+/* Avatar dentro de las tarjetas flotantes: tamaño y margen */
+.card-avatar {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-2);
+}
+
+/* Imagen dentro del avatar de la tarjeta flotante */
+.card-avatar img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+
+.card-content p {
+  color: white;
+  font-size: var(--font-size-sm);
+  line-height: 1.4;
+}
+
+/* Animación 'float' usada por las tarjetas flotantes */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Layout del contenido del hero: columnas para texto y visual */
+.hero-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-16);
+  align-items: center;
+  color: white;
+  position: relative;
+  z-index: 1;
+}
+
+/* Bloque de texto del hero: título, descripción y acciones */
+.hero-text {
+  text-align: left;
+}
+
+/* Título grande del hero */
+.hero-title {
+  font-size: var(--font-size-6xl);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: var(--spacing-8);
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  letter-spacing: -0.025em;
+}
+
+.hero-title .highlight {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+}
+
+/* Descripción del hero: párrafo de apoyo con ancho controlado */
+.hero-description {
+  font-size: var(--font-size-xl);
+  opacity: 0.95;
+  line-height: 1.6;
+  margin-bottom: var(--spacing-10);
+  font-weight: 400;
+  max-width: 600px;
+}
+
+/* Estadísticas destacadas en el hero */
+.hero-stats {
+  display: flex;
+  gap: var(--spacing-12);
+  margin-bottom: var(--spacing-10);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: var(--font-size-4xl);
+  font-weight: 800;
+  color: #fbbf24;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: var(--spacing-1);
+}
+
+.stat-label {
+  font-size: var(--font-size-base);
+  opacity: 0.9;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Botones de acción principales en el hero (CTA) */
+.hero-actions {
+  display: flex;
+  gap: var(--spacing-12);
+  align-items: center;
+}
+
+/* Estilos base para botones CTA (shared) */
+.cta-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: var(--spacing-2) !important;
+  padding: 0.625rem 1.5rem !important;
+  border-radius: var(--border-radius-xl) !important;
+  font-size: 0.9375rem !important;
+  font-weight: 600 !important;
+  transition: all 0.4s ease !important;
+  position: relative !important;
+  overflow: hidden !important;
+  min-height: 44px !important;
+  letter-spacing: 0.02em !important;
+  margin-bottom: 16px;
+}
+
+/* Usar un gradiente azul claro para los botones de acción principales
+   (elimina el verde del gradiente original) */
+.cta-button.primary {
+  background: linear-gradient(135deg, var(--light-blue-500) 0%, var(--light-blue-600) 100%) !important;
+  color: white !important;
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.18) !important;
+}
+
+.cta-button.primary:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.22) !important;
+  background: linear-gradient(135deg, var(--light-blue-600) 0%, var(--light-blue-600) 100%) !important;
+}
+
+/* Usar un degradado esmeralda en lugar de un color sólido */
+.cta-button.secondary {
+  background: var(--gradient-cta-emerald) !important;
+  color: white !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.12) !important;
+}
+
+/* Hover: mantener el gradiente esmeralda pero suavizar elevación */
+.cta-button.secondary:hover {
+  background: var(--gradient-cta-emerald-hover) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 12px 30px rgba(16, 185, 129, 0.14) !important;
+}
+
+.cta-button mat-icon {
+  font-size: var(--font-size-xl) !important;
+  transition: transform 0.4s ease !important;
+}
+
+.cta-button:hover mat-icon {
+  transform: translateX(6px) !important;
+}
+
+/* Forzar iconos blancos en botones de la landing (hero y CTA) */
+.hero-actions .cta-button mat-icon,
+.cta-actions .cta-button mat-icon {
+  color: white !important;
+  fill: white !important;
+}
+
+/* Área visual del hero: mockup o imagen destacada */
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenedor 3D del mockup visual dentro del hero */
+.mockup-container {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  perspective: 1000px;
+}
+
+/* Estilo de la 'pantalla' dentro del mockup */
+.mockup-screen {
+  background: white;
+  border-radius: var(--border-radius-xl);
+  padding: var(--spacing-8);
+  box-shadow: var(--shadow-xl);
+  transform: rotateY(-15deg) rotateX(5deg);
+  transition: all 0.5s ease;
+  border: 1px solid var(--gray-200);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.mockup-screen:hover {
+  transform: rotateY(-10deg) rotateX(2deg) scale(1.02);
+  box-shadow: 0 35px 70px -15px rgb(0 0 0 / 0.3);
+}
+
+.mockup-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-4);
+  padding-bottom: var(--spacing-3);
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.mockup-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  /* Usar una imagen de Unsplash de persona como avatar del mockup */
+  background-image: url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=240&q=80');
+  background-size: cover;
+  background-position: center center;
+  display: block;
+  overflow: hidden;
+}
+
+.mockup-user-info {
+  flex: 1;
+}
+
+.mockup-name {
+  font-weight: 700;
+  color: var(--gray-900);
+  font-size: var(--font-size-lg);
+  margin-bottom: 2px;
+}
+
+.mockup-role {
+  color: var(--gray-600);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+}
+
+.mockup-content {
+  flex: 1;
+  margin-bottom: var(--spacing-4);
+}
+
+.mockup-content p {
+  color: var(--gray-800);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-3);
+  font-size: var(--font-size-base);
+  font-weight: 400;
+}
+
+.mockup-content p:first-child {
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.mockup-actions {
+  display: flex;
+  gap: var(--spacing-4);
+  padding-top: var(--spacing-3);
+  border-top: 1px solid var(--gray-100);
+  margin-top: auto;
+}
+
+.mockup-action {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  color: var(--gray-600);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--border-radius);
+}
+
+.mockup-action:hover {
+  background: var(--emerald-50);
+  color: var(--light-blue-600);
+}
+
+.mockup-action mat-icon {
+  font-size: var(--font-size-lg);
+  width: var(--font-size-lg);
+  height: var(--font-size-lg);
+  color: var(--light-blue-500) !important;
+}
+
+/* Icono de corazón */
+.mockup-action--heart .heart-icon {
+  color: var(--red-600) !important;
+  filter: drop-shadow(0 2px 6px rgba(220, 38, 38, 0.18));
+}
+
+.mockup-action:hover mat-icon {
+  color: var(--light-blue-600) !important;
+}
+
+/* Forzar desactivación de hover en todas las acciones del mockup */
+.mockup-actions .mockup-action,
+.mockup-actions .mockup-action * {
+  cursor: default !important;
+}
+
+.mockup-actions .mockup-action:hover,
+.mockup-actions .mockup-action:focus,
+.mockup-actions .mockup-action:active {
+  transform: none !important;
+  background: transparent !important;
+  color: var(--gray-600) !important;
+  box-shadow: none !important;
+}
+
+.mockup-actions .mockup-action:hover mat-icon,
+.mockup-actions .mockup-action:focus mat-icon {
+  color: var(--light-blue-500) !important;
+  filter: none !important;
+}
+
+/* Icono de compartir: amarillo fijo, sin hover */
+.mockup-action--share,
+.mockup-action--share * {
+  cursor: default !important;
+}
+
+.mockup-action--share .share-icon {
+  color: #f59e0b !important;
+  filter: drop-shadow(0 2px 6px rgba(245, 158, 11, 0.18));
+}
+
+.mockup-actions .mockup-action--share:hover,
+.mockup-actions .mockup-action--share:focus,
+.mockup-actions .mockup-action--share:active {
+  transform: none !important;
+  background: transparent !important;
+  color: var(--gray-600) !important;
+  box-shadow: none !important;
+}
+
+.mockup-actions .mockup-action--share:hover .share-icon,
+.mockup-actions .mockup-action--share:focus .share-icon,
+.mockup-actions .mockup-action--share:active .share-icon {
+  color: #f59e0b !important;
+  filter: drop-shadow(0 2px 6px rgba(245, 158, 11, 0.18)) !important;
+}
+
+
+
+/* Reglas consolidadas para mockup-action--heart: mantener corazón rojo sin hover */
+.mockup-actions .mockup-action--heart:hover,
+.mockup-actions .mockup-action--heart:focus,
+.mockup-actions .mockup-action--heart:active {
+  transform: none !important;
+  background: transparent !important;
+  color: var(--gray-600) !important;
+  box-shadow: none !important;
+}
+
+.mockup-actions .mockup-action--heart:hover mat-icon,
+.mockup-actions .mockup-action--heart:focus mat-icon,
+.mockup-actions .mockup-action--heart:active mat-icon {
+  color: var(--red-600) !important;
+  filter: drop-shadow(0 2px 6px rgba(220, 38, 38, 0.18)) !important;
+}
+
+.mockup-actions .mockup-action--heart:hover span,
+.mockup-actions .mockup-action--heart:focus span,
+.mockup-actions .mockup-action--heart:active span {
+  color: var(--gray-600) !important;
+}
+
+/* Desactivar hover/focus/active para las otras acciones (chat y share) */
+.mockup-actions .mockup-action:not(.mockup-action--heart):not(.mockup-action--share):hover,
+.mockup-actions .mockup-action:not(.mockup-action--heart):not(.mockup-action--share):focus,
+.mockup-actions .mockup-action:not(.mockup-action--heart):not(.mockup-action--share):active {
+  transform: none !important;
+  background: transparent !important;
+  color: var(--gray-600) !important;
+  box-shadow: none !important;
+}
+
+.mockup-actions .mockup-action:not(.mockup-action--heart):not(.mockup-action--share):hover mat-icon,
+.mockup-actions .mockup-action:not(.mockup-action--heart):not(.mockup-action--share):focus mat-icon,
+.mockup-actions .mockup-action:not(.mockup-action--heart):not(.mockup-action--share):active mat-icon {
+  color: var(--light-blue-500) !important;
+  filter: none !important;
+}
+
+.mockup-actions .mockup-action:not(.mockup-action--heart):hover span,
+.mockup-actions .mockup-action:not(.mockup-action--heart):focus span,
+.mockup-actions .mockup-action:not(.mockup-action--heart):active span {
+  color: var(--gray-600) !important;
+}
+
+.features {
+  padding: var(--spacing-32) 0;
+  background: var(--gradient-light);
+  position: relative;
+}
+
+.features::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to bottom, white, transparent);
+  z-index: 1;
+}
+
+/* Encabezado de sección: título y subtítulo centrados */
+.section-header {
+  text-align: center;
+  margin-bottom: var(--spacing-20);
+  position: relative;
+  z-index: 2;
+}
+
+.section-header h2 {
+  font-size: var(--font-size-5xl);
+  font-weight: 800;
+  color: var(--gray-900);
+  margin-bottom: var(--spacing-6);
+  letter-spacing: -0.025em;
+  background: var(--gradient-footer);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-header p {
+  font-size: var(--font-size-xl);
+  color: var(--gray-700);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: var(--spacing-8);
+  position: relative;
+  z-index: 2;
+}
+
+/* Grid responsivo para las tarjetas de features */
+
+/* Tarjeta de característica */
+.feature-card {
+  background: white !important;
+  border: 1px solid var(--gray-200) !important;
+  border-radius: var(--border-radius-xl) !important;
+  padding: var(--spacing-10) !important;
+  transition: all 0.4s ease !important;
+  box-shadow: var(--shadow-md) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-footer);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover::before {
+  transform: scaleX(1);
+}
+
+.feature-card:hover {
+  transform: translateY(-8px) !important;
+  box-shadow: var(--shadow-2xl) !important;
+  border-color: var(--blue-600) !important;
+}
+
+.feature-card mat-card-content {
+  text-align: center !important;
+  padding: 0 !important;
+}
+
+/* Contenedor del icono dentro de la tarjeta de feature */
+.feature-icon {
+  margin-bottom: var(--spacing-6);
+}
+
+.feature-icon mat-icon {
+  font-size: var(--font-size-5xl) !important;
+  width: var(--font-size-5xl) !important;
+  height: var(--font-size-5xl) !important;
+  background: var(--gradient-footer) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.feature-card h3 {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-4);
+  color: var(--gray-900);
+  letter-spacing: -0.025em;
+}
+
+.feature-card p {
+  font-size: var(--font-size-lg);
+  color: var(--gray-600);
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+/* Sección de testimonios / social-proof con fondo destacado */
+.social-proof {
+  padding: var(--spacing-32) 0;
+  background: var(--gradient-footer);
+  position: relative;
+}
+
+.social-proof::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
+  z-index: 1;
+}
+
+/* Encabezado dentro de social-proof: estilo del título de testimonios */
+.social-proof .section-header {
+  position: relative;
+  z-index: 2;
+}
+
+.social-proof .section-header h2 {
+  font-size: var(--font-size-6xl);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: var(--spacing-6);
+  letter-spacing: -0.025em;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+}
+
+.social-proof .section-header p {
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Grid de testimonios: tarjetas responsivas */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--spacing-8);
+  position: relative;
+  z-index: 2;
+}
+
+/* Tarjeta de testimonio */
+.testimonial-card {
+  background: white !important;
+  border: 1px solid var(--gray-200) !important;
+  border-radius: var(--border-radius-xl) !important;
+  padding: var(--spacing-8) !important;
+  transition: all 0.4s ease !important;
+  box-shadow: var(--shadow-lg) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Línea decorativa superior en la tarjeta de testimonio (gradiente) */
+.testimonial-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-footer);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.testimonial-card:hover::before {
+  transform: scaleX(1);
+}
+
+.testimonial-card:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.04) !important;
+  border-color: var(--light-blue-300) !important;
+}
+
+.testimonial-card mat-card-content {
+  padding: 0 !important;
+}
+
+/* Avatar del testimonio: tamaño grande y ligera sombra */
+.testimonial-avatar {
+  font-size: var(--font-size-4xl);
+  margin-bottom: var(--spacing-6);
+  text-align: center;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+/* Imagen avatar dentro de testimonio */
+.testimonial-avatar img {
+  width: 68px;
+  height: 68px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.testimonial-text {
+  font-size: var(--font-size-lg);
+  color: var(--gray-700);
+  line-height: 1.7;
+  margin-bottom: var(--spacing-6);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.testimonial-author {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.testimonial-author strong {
+  color: var(--gray-900);
+  font-weight: 700;
+  font-size: var(--font-size-lg);
+}
+
+.testimonial-author span {
+  font-size: var(--font-size-base);
+  color: var(--gray-600);
+  font-weight: 500;
+}
+
+/* Sección CTA: llamada a la acción con fondo claro y botones */
+.cta-section {
+  padding: var(--spacing-32) 0;
+  background: var(--gradient-light);
+  color: var(--gray-900);
+  position: relative;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to bottom, white, transparent);
+  z-index: 1;
+}
+
+.cta-content {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-content h2 {
+  font-size: var(--font-size-5xl);
+  font-weight: 800;
+  margin-bottom: var(--spacing-6);
+  letter-spacing: -0.025em;
+  background: var(--gradient-footer);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cta-content p {
+  font-size: var(--font-size-xl);
+  color: var(--gray-700);
+  margin-bottom: var(--spacing-10);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.cta-actions {
+  display: flex;
+  gap: var(--spacing-4);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Footer: fondo oscuro con gradiente, contiene marca y enlaces */
+.footer {
+  background: var(--gradient-footer);
+  color: white;
+  padding: var(--spacing-12) 0 var(--spacing-6);
+  position: relative;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to bottom, rgba(15, 23, 42, 0.6), transparent);
+  z-index: 1;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: var(--spacing-16);
+  margin-bottom: var(--spacing-8);
+  position: relative;
+  z-index: 2;
+}
+
+/* Contenedor de marca en el footer: logo + nombre alineados */
+.footer-brand .logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-4);
+}
+
+.footer-logo-icon {
+  width: 32px;
+  height: 32px;
+  filter: brightness(0) invert(1);
+}
+
+.footer-tagline {
+  font-size: 0.95rem;
+  opacity: 0.88;
+  margin-bottom: var(--spacing-6);
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+/* Enlaces a redes sociales: botones circulares */
+.social-links {
+  display: flex;
+  gap: var(--spacing-3);
+}
+
+.social-btn {
+  color: var(--gray-400) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border-radius: 50% !important;
+  width: 48px !important;
+  height: 48px !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.social-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.social-btn:hover {
+  transform: translateY(-4px) scale(1.05) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2) !important;
+}
+
+.social-btn:hover::before {
+  opacity: 1;
+}
+
+.social-btn mat-icon {
+  transition: all 0.3s ease !important;
+  position: relative;
+  z-index: 2;
+}
+
+/* Colores específicos de redes sociales */
+.social-btn.facebook:hover {
+  color: #ffffff !important;
+  background: #1877f2 !important;
+  box-shadow: 0 8px 25px rgba(24, 119, 242, 0.4) !important;
+}
+
+.social-btn.linkedin:hover {
+  color: #ffffff !important;
+  background: #0077b5 !important;
+  box-shadow: 0 8px 25px rgba(0, 119, 181, 0.4) !important;
+}
+
+.social-btn.github:hover {
+  color: #ffffff !important;
+  background: #333333 !important;
+  box-shadow: 0 8px 25px rgba(51, 51, 51, 0.4) !important;
+}
+
+/* Columnas de enlaces del footer */
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-8);
+}
+
+.footer-section h4 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  margin-bottom: var(--spacing-4);
+  color: var(--emerald-400);
+}
+
+.footer-section ul {
+  list-style: none;
+}
+
+.footer-section li {
+  margin-bottom: var(--spacing-2);
+}
+
+.footer-section a {
+  color: var(--gray-300);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+  color: var(--emerald-400);
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--gray-700);
+  padding-top: var(--spacing-6);
+  text-align: center;
+  color: white;
+  font-size: var(--font-size-sm);
+}
+
+.footer-bottom p {
+  margin-bottom: var(--spacing-1);
+}
+
+/* Animaciones reuseables: definiciones @keyframes para transiciones y aparición */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-text>* {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.hero-text>*:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.hero-text>*:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.hero-text>*:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.hero-text>*:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+/* Media queries responsive */
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: var(--font-size-5xl);
+  }
+
+  .section-header h2 {
+    font-size: var(--font-size-4xl);
+  }
+
+  .cta-content h2 {
+    font-size: var(--font-size-4xl);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-10);
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: var(--font-size-4xl);
+  }
+
+  .hero-description {
+    font-size: var(--font-size-lg);
+  }
+
+  .hero-stats {
+    justify-content: center;
+    gap: var(--spacing-8);
+  }
+
+  .stat-number {
+    font-size: var(--font-size-3xl);
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-4);
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-6);
+  }
+
+  .feature-card {
+    padding: var(--spacing-8) !important;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-6);
+  }
+
+  .cta-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-4);
+  }
+
+  .cta-button {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-8);
+  }
+
+  .footer-links {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-6);
+  }
+
+  .floating-card {
+    display: none;
+  }
+
+  .section-header h2,
+  .cta-content h2 {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .hero-stats {
+    flex-direction: column;
+    gap: var(--spacing-6);
+  }
+
+  .stat-number {
+    font-size: var(--font-size-2xl);
+  }
+
+  .nav-brand .brand-name {
+    font-size: var(--font-size-xl);
+  }
+
+  .section-header h2,
+  .cta-content h2 {
+    font-size: var(--font-size-2xl);
+  }
+
+  .feature-card h3 {
+    font-size: var(--font-size-xl);
+  }
+
+  .testimonial-text {
+    font-size: var(--font-size-base);
+  }
+
+  .footer-links {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-4);
+  }
+}

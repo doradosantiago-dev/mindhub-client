@@ -1,0 +1,345 @@
+<!-- Landing: plantilla — hero, features y CTA -->
+
+<!-- HEADER Y NAVEGACIÓN -->
+<header class="header" role="banner">
+  <div class="container">
+    <nav class="nav" role="navigation" aria-label="Navegación principal">
+      <div class="nav-brand">
+        <div class="logo">
+          <span class="brand-name">
+            <span class="logo-mind">MIND</span>
+            <span class="logo-hub">HUB</span>
+          </span>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- SECCIÓN HERO PRINCIPAL -->
+<section class="hero" role="banner" aria-labelledby="hero-title">
+  <!-- Fondo con elementos decorativos -->
+  <div class="hero-background">
+    <div class="gradient-overlay"></div>
+
+    <!-- Tarjetas flotantes con testimonios -->
+    <div class="floating-elements" aria-hidden="true">
+      <div class="floating-card card-1">
+        <div class="card-avatar" role="img" aria-label="Desarrollador">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=256&q=80"
+            alt="Avatar desarrollador">
+        </div>
+        <div class="card-content">
+          <p>"MindHub me ayudó a conectar con desarrolladores increíbles"</p>
+        </div>
+      </div>
+
+      <div class="floating-card card-2">
+        <div class="card-avatar" role="img" aria-label="Diseñador">
+          <img src="https://images.unsplash.com/photo-1531123414780-f93b28a8d911?auto=format&fit=crop&w=256&q=80"
+            alt="Avatar diseñador">
+        </div>
+        <div class="card-content">
+          <p>"Compartir mis diseños aquí fue un game-changer"</p>
+        </div>
+      </div>
+
+      <div class="floating-card card-3">
+        <div class="card-avatar" role="img" aria-label="Estudiante">
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=256&q=80"
+            alt="Avatar estudiante">
+        </div>
+        <div class="card-content">
+          <p>"Encontré mi próxima oportunidad laboral"</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenido principal del hero -->
+  <div class="container">
+    <div class="hero-content">
+      <!-- Texto y acciones del hero -->
+      <div class="hero-text">
+        <h1 id="hero-title" class="hero-title">
+          La comunidad donde <span class="highlight">desarrolladores y estudiantes</span>
+          <br>comparten ideas, resuelven problemas y encuentran oportunidades
+        </h1>
+
+        <p class="hero-description">
+          MindHub es la comunidad profesional donde desarrolladores y estudiantes
+          colaboran para compartir conocimiento, resolver desafíos de código y
+          transformar ideas en proyectos reales. Un espacio diseñado para impulsar
+          el aprendizaje, la innovación y la empleabilidad en el mundo tecnológico.
+        </p>
+
+
+        <!-- Estadísticas del hero -->
+        <div class="hero-stats" role="region" aria-label="Estadísticas de la plataforma">
+          <div class="stat">
+            <span class="stat-number">50K+</span>
+            <span class="stat-label">Profesionales</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">200K+</span>
+            <span class="stat-label">Proyectos</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">1M+</span>
+            <span class="stat-label">Conexiones</span>
+          </div>
+        </div>
+
+        <!-- Botones de acción principales -->
+        <div class="hero-actions">
+          <button mat-raised-button color="primary" class="cta-button primary" (click)="goToRegister()"
+            aria-label="Registrarse en MindHub">
+            <mat-icon aria-hidden="true">person_add</mat-icon>
+            Registrarse
+          </button>
+
+          <button mat-button class="cta-button secondary" (click)="goToLogin()" aria-label="Iniciar sesión en MindHub">
+            <mat-icon aria-hidden="true">login</mat-icon>
+            Iniciar Sesión
+          </button>
+        </div>
+      </div>
+
+      <!-- Mockup visual del hero -->
+      <div class="hero-visual" aria-hidden="true">
+        <div class="mockup-container">
+          <div class="mockup-screen">
+            <div class="mockup-header">
+              <div class="mockup-avatar" role="img" aria-label="Usuario de ejemplo"></div>
+              <div class="mockup-user-info">
+                <div class="mockup-name">Alexandra Rivera</div>
+                <div class="mockup-role">Senior AI Engineer • Google</div>
+              </div>
+            </div>
+
+            <div class="mockup-content">
+              <p>🔥 ¡INCREÍBLE! Acabo de conseguir mi trabajo soñado en Google gracias a las conexiones que hice aquí en
+                MindHub</p>
+              <p>Para todos los que están buscando oportunidades: ¡NUNCA se rindan! Esta comunidad es pura magia ✨
+                #DreamJob #AI #Google #MindHub #Networking</p>
+            </div>
+
+            <div class="mockup-actions">
+              <div class="mockup-action mockup-action--heart">
+                <mat-icon aria-hidden="true" class="heart-icon">favorite</mat-icon>
+                <span>2.1K</span>
+              </div>
+              <div class="mockup-action">
+                <mat-icon aria-hidden="true">chat</mat-icon>
+                <span>387</span>
+              </div>
+              <div class="mockup-action mockup-action--share">
+                <mat-icon aria-hidden="true" class="share-icon">share</mat-icon>
+                <span>156</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN DE CARACTERÍSTICAS -->
+<section class="features" role="region" aria-labelledby="features-title">
+  <div class="container">
+    <div class="section-header">
+      <h2 id="features-title">¿Por qué elegir MindHub?</h2>
+      <p>Descubre las características que hacen de MindHub la plataforma preferida por desarrolladores y estudiantes</p>
+    </div>
+
+    <div class="features-grid" role="list">
+      <!-- Característica: Comunidades -->
+      <mat-card class="feature-card" role="listitem">
+        <mat-card-content>
+          <div class="feature-icon">
+            <mat-icon aria-hidden="true">groups</mat-icon>
+          </div>
+          <h3>Resolución de Problemas</h3>
+          <p>
+            Plantea tus dudas de código y recibe soluciones de la comunidad.
+            Aprende colaborando y mejora tus habilidades técnicas.
+          </p>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Característica: Verificación -->
+      <mat-card class="feature-card" role="listitem">
+        <mat-card-content>
+          <div class="feature-icon">
+            <mat-icon aria-hidden="true">verified</mat-icon>
+          </div>
+          <h3>Perfiles Verificados</h3>
+          <p>
+            Conecta con profesionales y estudiantes auténticos. Nuestro sistema de verificación
+            asegura la credibilidad de cada perfil, para que construyas relaciones seguras
+            y confiables dentro de la comunidad.
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Característica: Oportunidades -->
+      <mat-card class="feature-card" role="listitem">
+        <mat-card-content>
+          <div class="feature-icon">
+            <mat-icon aria-hidden="true">work</mat-icon>
+          </div>
+          <h3>Oportunidades Laborales</h3>
+          <p>
+            Explora ofertas de empleo, proyectos freelance y colaboraciones académicas
+            que se ajustan a tu perfil profesional y a tus intereses.
+            Da visibilidad a tus habilidades y conecta con empresas y equipos
+            que buscan talento en el mundo tecnológico.
+          </p>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Característica: Aprendizaje -->
+      <mat-card class="feature-card" role="listitem">
+        <mat-card-content>
+          <div class="feature-icon">
+            <mat-icon aria-hidden="true">school</mat-icon>
+          </div>
+          <h3>Proyectos Colaborativos</h3>
+          <p>
+            Comparte tus ideas y únete a iniciativas de otros miembros.
+            Trabaja en equipo para transformar conceptos en proyectos reales,
+            ganar experiencia práctica y ampliar tu portafolio profesional.
+          </p>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Característica: Seguridad -->
+      <mat-card class="feature-card" role="listitem">
+        <mat-card-content>
+          <div class="feature-icon">
+            <mat-icon aria-hidden="true">security</mat-icon>
+          </div>
+          <h3>Privacidad Garantizada</h3>
+          <p>
+            Tu información personal está protegida bajo los más altos estándares de seguridad digital.
+            En MindHub tú decides qué compartir, con quién y en qué momento, asegurando una experiencia
+            transparente y confiable dentro de la comunidad.
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN DE TESTIMONIOS -->
+<section class="social-proof" role="region" aria-labelledby="testimonials-title">
+  <div class="container">
+    <div class="section-header">
+      <h2 id="testimonials-title">Lo que dicen nuestros usuarios</h2>
+      <p>Descubre cómo MindHub está transformando carreras y creando conexiones</p>
+    </div>
+
+    <div class="testimonials-grid" role="list">
+      <!-- Testimonio 1: Empleo -->
+      <mat-card class="testimonial-card" role="listitem">
+        <mat-card-content>
+          <div class="testimonial-avatar" role="img" aria-label="Desarrollador testimonial">
+            <img src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?auto=format&fit=crop&w=200&q=80"
+              alt="Carlos Rodriguez avatar">
+          </div>
+          <blockquote class="testimonial-text">
+            "MindHub me ayudó a encontrar mi trabajo actual. La comunidad de desarrolladores
+            es increíble y siempre están dispuestos a ayudar."
+          </blockquote>
+          <div class="testimonial-author">
+            <strong>Carlos Rodríguez</strong>
+            <span>Senior Developer en Accenture</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Testimonio 2: Portafolio -->
+      <mat-card class="testimonial-card" role="listitem">
+        <mat-card-content>
+          <div class="testimonial-avatar" role="img" aria-label="Diseñadora testimonial">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80"
+              alt="Maria Lopez avatar">
+          </div>
+          <blockquote class="testimonial-text">
+            "Como diseñadora, MindHub me ha permitido mostrar mi portafolio a miles de
+            personas y conseguir proyectos increíbles."
+          </blockquote>
+          <div class="testimonial-author">
+            <strong>María López</strong>
+            <span>UX Designer Freelance</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Testimonio 3: Contratación -->
+      <mat-card class="testimonial-card" role="listitem">
+        <mat-card-content>
+          <div class="testimonial-avatar" role="img" aria-label="Ejecutivo testimonial">
+            <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?auto=format&fit=crop&w=200&q=80"
+              alt="David Martinez avatar">
+          </div>
+          <blockquote class="testimonial-text">
+            "He contratado a varios desarrolladores talentosos a través de MindHub.
+            La calidad de los profesionales es excepcional."
+          </blockquote>
+          <div class="testimonial-author">
+            <strong>David Martínez</strong>
+            <span>CTO en Startup Deloitte</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Testimonio 4: Aprendizaje -->
+      <mat-card class="testimonial-card" role="listitem">
+        <mat-card-content>
+          <div class="testimonial-avatar" role="img" aria-label="Estudiante testimonial">
+            <img src="https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?auto=format&fit=crop&w=200&q=80"
+              alt="Laura Sanchez avatar">
+          </div>
+          <blockquote class="testimonial-text">
+            "Gracias a los recursos educativos y mentorías en MindHub he mejorado mis
+            habilidades de programación y ampliado mi red de contactos. Es el lugar
+            perfecto para crecer como estudiante."
+          </blockquote>
+          <div class="testimonial-author">
+            <strong>Laura Sánchez</strong>
+            <span>Estudiante de Ingeniería Informática en UNIR</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</section>
+
+
+<!-- SECCIÓN CTA (CALL TO ACTION) -->
+<section class="cta-section" role="region" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta-content">
+      <h2 id="cta-title">¿Listo para conectar con tu próxima oportunidad?</h2>
+      <p>MindHub es la comunidad donde el conocimiento conecta, las ideas se convierten en proyectos y las carreras
+        alcanzan nuevas metas</p>
+
+      <div class="cta-actions">
+        <button mat-raised-button color="primary" class="cta-button primary" (click)="goToRegister()"
+          aria-label="Crear cuenta gratuita en MindHub">
+          <mat-icon aria-hidden="true">person_add</mat-icon>
+          Crear Cuenta Gratis
+        </button>
+
+        <button mat-button class="cta-button secondary" (click)="goToLogin()" aria-label="Acceder a cuenta existente">
+          <mat-icon aria-hidden="true">login</mat-icon>
+          Ya tengo cuenta
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<app-footer></app-footer>
