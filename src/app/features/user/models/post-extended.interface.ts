@@ -1,8 +1,8 @@
 // MODELO: Post - Extended interfaces (PostWithInteractions)
 
 import { PostResponse } from './post-response.interface';
-import { CommentResponse } from '../comment/comment-response.interface';
-import { ReactionResponse } from '../reaction/reaction-response.interface';
+import { CommentResponse } from './comment-response.interface';
+import { ReactionResponse } from './reaction-response.interface';
 
 export interface PostWithInteractions extends PostResponse {
   likeCount?: number;

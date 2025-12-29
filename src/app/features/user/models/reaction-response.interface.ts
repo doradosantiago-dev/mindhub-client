@@ -1,7 +1,7 @@
 // MODELO: Reaction - ReactionResponse (interface)
 
-import { ReactionType } from '../enums';
-import { User } from '../user/user-response.interface';
+import { ReactionType } from '../../../shared/models/enums/enums';
+import { User } from './user-response.interface';
 
 /**
  * Interfaz que representa una reacción de usuario a un post o comentario.

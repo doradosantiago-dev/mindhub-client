@@ -1,14 +1,9 @@
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../services';
+import { AuthService } from '../../features/auth';
 
 /**
  * GUEST GUARD: Protege rutas que solo usuarios NO autenticados deben ver
- * 
- * Casos de uso:
- * - Login: usuarios autenticados no deben ver login
- * - Register: usuarios autenticados no deben registrarse de nuevo
- * - Landing: redirige a dashboard si ya está autenticado
  * 
  * @returns true si usuario NO está autenticado, false y redirige si lo está
  */

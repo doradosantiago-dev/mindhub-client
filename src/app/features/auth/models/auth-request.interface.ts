@@ -1,7 +1,7 @@
 // MODELO: Auth - request interfaces (login/register)
 
-import { PrivacyType } from '../enums';
-import { Role } from '../user/user-response.interface';
+import { PrivacyType } from '../../../shared/models/enums/enums';
+import { Role } from '../../user/models/user-response.interface';
 
 /**
  * Interfaz para solicitud de login.

@@ -4,12 +4,15 @@ import { Component, computed, effect, inject, Injector, OnDestroy, OnInit, signa
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, interval, Subject, switchMap, takeUntil } from 'rxjs';
-import { AuthService, ChatBotService, NotificationService, UserService } from '@core/services';
-import { NotificationResponse, User } from '@core/models';
-import { UserSearchResultsComponent } from '@features/user-search-results';
-import { ChatbotComponent } from '@features/chatbot';
-import { NotificationsComponent } from '@features/notifications';
-import { SearchUser } from '@core/models';
+import { AuthService } from '../../../../features/auth';
+import { ChatBotService } from '../../../../features/chatbot/data-access/chatbot.service';
+import { NotificationService } from '../../../../features/notification/data-access/notification.service';
+import { UserService } from '../../../../features/user/data-access/user.service';
+import { NotificationResponse } from '../../../../features/notification/data-access/notification-response.interface';
+import { User } from '../../../../features/user/models';
+import { UserSearchResultsComponent } from './components/user-search.component';
+import { ChatbotComponent } from '../../../../features/chatbot/chatbot.component';
+import { NotificationsComponent } from '../../../../features/notification/notifications.component';
 
 /* Interfaces y tipos */
 /** Estado de notificaciones */
@@ -180,7 +183,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
    * 
    * @param user - Usuario seleccionado
    */
-  onUserSelected(user: SearchUser): void {
+  onUserSelected(user: User): void {
     this.router.navigate(['/dashboard/user', user.id]);
     this.clearSearchResults();
   }

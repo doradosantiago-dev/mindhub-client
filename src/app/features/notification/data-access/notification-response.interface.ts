@@ -1,6 +1,6 @@
 // MODELO: Notification - NotificationResponse (interface)
 
-import { NotificationType } from '../enums';
+import { NotificationType } from '../../../shared/models/enums/enums';
 
 export interface NotificationResponse {
   id: number;

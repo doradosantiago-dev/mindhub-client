@@ -6,8 +6,9 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validatio
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, finalize, tap, throwError } from 'rxjs';
-import { AuthService, ErrorHandlerService } from '@core/services';
-import { UserRegisterRequest } from '@core/models';
+import { AuthService } from '../../data-access/auth.service';
+import { ErrorHandlerService } from '../../../../core/services';
+import { UserRegisterRequest } from '../../models';
 
 @Component({
   selector: 'app-register',

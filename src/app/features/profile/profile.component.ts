@@ -5,13 +5,15 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthService, UserService, ErrorHandlerService } from '@core/services';
+import { AuthService } from '../auth';
+import { UserService } from '../user/data-access/user.service';
+import { ErrorHandlerService } from '../../core/services';
 import { HeaderComponent } from '@shared/components';
 import { SidebarComponent } from '@shared/components';
 import { FooterComponent } from '@shared/components';
 import { DateFormatPipe } from '@shared/pipes/date-format.pipe';
 import { catchError, finalize, tap, throwError, switchMap, EMPTY } from 'rxjs';
-import { User } from '@core/models';
+import { User } from '../user/models';
 
 // INTERFACES
 

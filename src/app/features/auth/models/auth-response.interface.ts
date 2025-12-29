@@ -1,6 +1,6 @@
 // MODELO: Auth - AuthResponse / TokenValidationResponse (interfaces)
 
-import { User } from '../user/user-response.interface';
+import { User } from '../../user/models/user-response.interface';
 
 /**
  * Interfaz para respuesta de autenticación exitosa.

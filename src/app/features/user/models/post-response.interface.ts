@@ -1,7 +1,7 @@
 // MODELO: Post - PostResponse / PostSummaryResponse (interfaces)
 
-import { PrivacyType } from '../enums';
-import { User } from '../user/user-response.interface';
+import { PrivacyType } from '../../../shared/models/enums/enums';
+import { User } from './user-response.interface';
 
 /**
  * Interfaz que representa el resumen de un post.

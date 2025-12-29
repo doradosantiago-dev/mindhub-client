@@ -4,8 +4,9 @@ import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
-import { AuthService, NotificationService } from '@core/services';
-import { environment } from 'src/environments/environment';
+import { AuthService } from '../../features/auth';
+import { NotificationService } from '../../features/notification/data-access/notification.service';
+import { environment } from '../../../environments/environment';
 
 // Error interceptor funcional: captura y maneja errores HTTP
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {

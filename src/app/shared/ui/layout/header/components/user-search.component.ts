@@ -4,7 +4,7 @@ import { Component, computed, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { User } from '@core/models';
+import { User } from '../../../../../features/user/models';
 
 /** Componente standalone: visualización y selección de usuarios. */
 @Component({

@@ -5,8 +5,10 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { catchError, finalize, of } from 'rxjs';
-import { AdminService, ReportService, AdminListParams } from '@core/services';
-import { ReportResponse as Report } from '@core/models';
+import { AdminService } from '../../data-access/admin.service';
+import { ReportService } from '../../data-access/report.service';
+import { AdminListParams } from '../../data-access/admin.service';
+import { ReportResponse as Report } from '../../models';
 import { ReportActionsComponent } from './components/report-actions/report-actions.component';
 import { ReportDetailModalComponent } from './components/report-detail-modal/report-detail-modal.component';
 import { FooterComponent } from '@shared/components';
@@ -40,8 +42,8 @@ interface StatusOption {
     ReportDetailModalComponent,
     FooterComponent
   ],
-  templateUrl: './content-management.component.html',
-  styleUrls: ['./content-management.component.css']
+  templateUrl: './report-management.component.html',
+  styleUrls: ['./report-management.component.css']
 })
 export class ContentManagementComponent implements OnInit, OnDestroy {
   // INYECCIÓN DE SERVICIOS

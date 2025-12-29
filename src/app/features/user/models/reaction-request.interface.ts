@@ -1,6 +1,6 @@
 // MODELO: Reaction - ReactionRequest (interface)
 
-import { ReactionType } from '../enums';
+import { ReactionType } from '../../../shared/models/enums/enums';
 
 /**
  * Interfaz para crear una reacción.

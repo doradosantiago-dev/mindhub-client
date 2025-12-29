@@ -8,7 +8,7 @@ export const AUTH_ROUTES: Routes = [
   // RUTA DE LOGIN (SOLO NO AUTENTICADOS)
   {
     path: 'login',
-    loadComponent: () => import('./components/login/login.component').then(m => m.LoginComponent),
+    loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent),
     title: 'Iniciar Sesión - MindHub',
     canActivate: [guestGuard]
   },
@@ -16,7 +16,7 @@ export const AUTH_ROUTES: Routes = [
   // RUTA DE REGISTRO (SOLO NO AUTENTICADOS)
   {
     path: 'register',
-    loadComponent: () => import('./components/register/register.component').then(m => m.RegisterComponent),
+    loadComponent: () => import('./pages/register/register.component').then(m => m.RegisterComponent),
     title: 'Registro - MindHub',
     canActivate: [guestGuard]
   },

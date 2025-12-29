@@ -4,8 +4,11 @@ import { Component, computed, effect, inject, OnDestroy, signal, runInInjectionC
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { catchError, finalize, of, Subject, takeUntil } from 'rxjs';
-import { AuthService, ChatBotService } from '@core/services';
-import { ChatBotMessageResponse as ChatBotMessage, MessageType, User } from '@core/models';
+import { AuthService } from '../auth';
+import { ChatBotService } from './data-access/chatbot.service';
+import { ChatBotMessageResponse as ChatBotMessage } from './data-access/chatbot-message-response.interface';
+import { MessageType } from '../../shared/models/enums/enums';
+import { User } from '../user/models';
 import { DateFormatPipe } from '@shared/pipes/date-format.pipe';
 
 // Interfaces y tipos

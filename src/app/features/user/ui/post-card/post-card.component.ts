@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { PostResponse as Post } from '@core/models';
+import { PostResponse as Post } from '../../models';
 import { DateFormatPipe } from '@shared/pipes/date-format.pipe';
 import { ChangeDetectionStrategy } from '@angular/core';
 
@@ -21,8 +21,8 @@ import { ChangeDetectionStrategy } from '@angular/core';
     MatIconModule,
     DateFormatPipe
   ],
-  templateUrl: './my-post-card.component.html',
-  styleUrls: ['./my-post-card.component.css'],
+  templateUrl: './post-card.component.html',
+  styleUrls: ['./post-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MyPostCardComponent {

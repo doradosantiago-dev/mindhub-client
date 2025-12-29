@@ -3,31 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap, catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
-  User,
   UserLoginRequest,
   UserRegisterRequest,
-  UserUpdateRequest,
-  UserProfileRequest,
-  AdminUserUpdateRequest
+  AuthResponse,
+  TokenValidationResponse
 } from '../models';
-
-/**
- * Respuesta de autenticación del backend.
- * Alineada con la respuesta real del endpoint de login.
- */
-export interface AuthResponse {
-  token: string;
-  user: User;
-  message: string;
-}
-
-/**
- * Respuesta de validación de token del backend.
- */
-export interface TokenValidationResponse {
-  valid: boolean;
-  user: User;
-}
+import { User, UserUpdateRequest, UserProfileRequest, AdminUserUpdateRequest } from '../../user/models';
 
 // AUTH SERVICE: gestión de autenticación y sesión (TS)
 @Injectable({

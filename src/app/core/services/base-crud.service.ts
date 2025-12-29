@@ -1,7 +1,7 @@
 import { Injectable, signal, inject, computed } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError, throwError, tap } from 'rxjs';
-import { ApiResponse, PaginatedResponse, SortableListParams } from '../models/common';
+import { ApiResponse, PaginatedResponse, SortableListParams } from '../../shared/common';
 
 /**
  * Parámetros base para listados con paginación y ordenamiento.

@@ -1,6 +1,6 @@
 // MODELO: User - response interfaces (User, Role)
 
-import { PrivacyType } from '../enums';
+import { PrivacyType } from '../../../shared/models/enums/enums';
 
 export interface Role {
   id: number;

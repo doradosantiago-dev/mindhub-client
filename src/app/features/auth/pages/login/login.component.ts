@@ -6,8 +6,9 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, finalize, tap, throwError } from 'rxjs';
-import { AuthService, ErrorHandlerService } from '@core/services';
-import { UserLoginRequest } from '@core/models';
+import { AuthService } from '../../data-access/auth.service';
+import { ErrorHandlerService } from '../../../../core/services';
+import { UserLoginRequest } from '../../models';
 
 @Component({
   selector: 'app-login',

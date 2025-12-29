@@ -2,8 +2,8 @@
 
 import { Component, input, output, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PostResponse as Post } from '@core/models';
-import { MyPostCardComponent } from '../my-post-card/my-post-card.component';
+import { PostResponse as Post } from '../../models';
+import { MyPostCardComponent } from '../post-card/post-card.component';
 import { PaginationComponent } from '@shared/components';
 import { ChangeDetectionStrategy } from '@angular/core';
 
@@ -11,8 +11,8 @@ import { ChangeDetectionStrategy } from '@angular/core';
   selector: 'app-my-posts-list',
   standalone: true,
   imports: [CommonModule, MyPostCardComponent, PaginationComponent],
-  templateUrl: './my-posts-list.component.html',
-  styleUrls: ['./my-posts-list.component.css'],
+  templateUrl: './post-list.component.html',
+  styleUrls: ['./post-list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MyPostsListComponent {

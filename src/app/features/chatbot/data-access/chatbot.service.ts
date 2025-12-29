@@ -2,7 +2,7 @@ import { Injectable, signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ChatBotMessageResponse } from '../models';
+import { ChatBotMessageResponse } from './chatbot-message-response.interface';
 
 /**
  * Solicitud de mensaje para el chatbot.

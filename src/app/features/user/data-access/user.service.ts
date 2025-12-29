@@ -7,16 +7,16 @@ import {
   UserUpdateRequest,
   AdminUserUpdateRequest,
   UserProfileRequest,
-  UserRegisterRequest,
   PrivacyType
 } from '../models';
+import { UserRegisterRequest } from '../../auth/models';
 import {
   PaginatedResponse,
   ApiResponse,
   SortableListParams,
   SearchableListParams
-} from '../models/common';
-import { AuthService } from './auth.service';
+} from '../../../shared/common';
+import { AuthService } from '../../auth';
 
 /**
  * Parámetros para búsqueda de usuarios.

@@ -5,9 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PostResponse as Post, PrivacyType } from '@core/models';
-import { PostService } from '@core/services';
-import { PostCreateRequest } from '@core/models';
+import { PostResponse as Post, PrivacyType, PostCreateRequest } from '../../../models';
+import { PostService } from '../../../data-access/post.service';
 
 // INTERFACES Y TIPOS
 
@@ -27,8 +26,8 @@ interface PrivacyOption {
   selector: 'app-my-post-edit-modal',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, MatIconModule],
-  templateUrl: './my-post-edit-modal.component.html',
-  styleUrls: ['./my-post-edit-modal.component.css']
+  templateUrl: './post-edit-modal.component.html',
+  styleUrls: ['./post-edit-modal.component.css']
 })
 export class MyPostEditModalComponent implements OnInit {
   // INYECCIONES DE DEPENDENCIAS

@@ -4,9 +4,10 @@ import { Component, input, output, signal, inject, effect, OnDestroy, HostListen
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { Subject } from 'rxjs';
-import { AuthService, ErrorHandlerService } from '@core/services';
-import { NotificationService } from '@core/services';
-import { NotificationResponse } from '@core/models';
+import { AuthService } from '../auth';
+import { ErrorHandlerService } from '../../core/services';
+import { NotificationService } from './data-access/notification.service';
+import { NotificationResponse } from './data-access/notification-response.interface';
 import { DateFormatPipe } from '@shared/pipes';
 
 // Interfaces y tipos

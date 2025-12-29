@@ -6,8 +6,8 @@ import { CommentRequest, CommentResponse } from '../models';
 import {
   PaginatedResponse,
   ApiResponse,
-} from '../models/common';
-import { BaseCrudService, BaseListParams } from './base-crud.service';
+} from '../../../shared/common';
+import { BaseCrudService, BaseListParams } from '../../../core/services';
 
 /**
  * Parámetros para listas de comentarios paginadas.

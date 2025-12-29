@@ -2,12 +2,18 @@
 
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdminService, AuthService, FollowService, NotificationService, PostService } from '@core/services';
+import { AdminService } from '../../../admin/data-access/admin.service';
+import { AuthService } from '../../../auth';
+import { FollowService } from '../../../user/data-access/follow.service';
+import { NotificationService } from '../../../notification/data-access/notification.service';
+import { PostService } from '../../../user/data-access/post.service';
 import { FooterComponent, PaginationComponent } from '@shared/components';
 import { DateFormatPipe } from '@shared/pipes/date-format.pipe';
 import { MatIconModule } from '@angular/material/icon';
 import { catchError, finalize, forkJoin, of } from 'rxjs';
-import { NotificationResponse, NotificationType, PostResponse } from '@core/models';
+import { NotificationResponse } from '../../../notification/data-access/notification-response.interface';
+import { NotificationType } from '../../../../shared/models/enums/enums';
+import { PostResponse } from '../../../user/models';
 
 // INTERFACES
 

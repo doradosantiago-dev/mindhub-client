@@ -4,7 +4,7 @@ import { Component, computed, input, output, Input, ChangeDetectionStrategy, inj
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { User } from '@core/models';
+import { User } from '../../../../../user/models';
 import { DateFormatPipe } from '@shared/pipes';
 
 @Component({

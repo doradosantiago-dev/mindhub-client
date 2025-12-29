@@ -3,8 +3,8 @@
 import { Component, input, output, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { PostResponse as Post } from '@core/models';
-import { PostService } from '@core/services';
+import { PostResponse as Post } from '../../../models';
+import { PostService } from '../../../data-access/post.service';
 import { DateFormatPipe } from '@shared/pipes/date-format.pipe';
 
 // INTERFACES Y TIPOS
@@ -29,8 +29,8 @@ interface DeleteConfirmationOptions {
   selector: 'app-my-post-delete-modal',
   standalone: true,
   imports: [CommonModule, DateFormatPipe, MatIconModule],
-  templateUrl: './my-post-delete-modal.component.html',
-  styleUrls: ['./my-post-delete-modal.component.css']
+  templateUrl: './post-delete-modal.component.html',
+  styleUrls: ['./post-delete-modal.component.css']
 })
 export class MyPostDeleteModalComponent {
 

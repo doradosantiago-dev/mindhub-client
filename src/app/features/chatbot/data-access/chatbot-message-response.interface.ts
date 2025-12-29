@@ -1,7 +1,7 @@
 // MODELO: Chatbot - ChatBotMessageResponse (interface)
 
-import { User } from '../user/user-response.interface';
-import { MessageType } from '../enums';
+import { User } from '../../user/models/user-response.interface';
+import { MessageType } from '../../../shared/models/enums/enums';
 
 /**
  * Interfaz que representa un mensaje del chatbot/usuario.

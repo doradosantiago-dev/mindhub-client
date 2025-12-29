@@ -11,7 +11,7 @@ import {
 import {
   PaginatedResponse,
   SearchableListParams
-} from '../models/common';
+} from '../../../shared/common';
 
 /**
  * Parámetros para listas administrativas paginadas.

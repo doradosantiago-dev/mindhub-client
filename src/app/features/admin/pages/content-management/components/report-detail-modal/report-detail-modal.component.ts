@@ -3,7 +3,7 @@
 import { Component, computed, input, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { ReportResponse as Report, ReportStatus } from '@core/models';
+import { ReportResponse as Report, ReportStatus } from '../../../../models';
 import { DateFormatPipe } from '@shared/pipes/date-format.pipe';
 
 @Component({

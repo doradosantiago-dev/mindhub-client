@@ -2,12 +2,12 @@ import { Injectable, signal, computed } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable, catchError, throwError, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { NotificationResponse } from '../models';
+import { NotificationResponse } from './notification-response.interface';
 import {
   PaginatedResponse,
   ApiResponse
-} from '../models/common';
-import { BaseCrudService, BaseListParams } from './base-crud.service';
+} from '../../../shared/common';
+import { BaseCrudService, BaseListParams } from '../../../core/services';
 
 /**
  * Parámetros para listas de notificaciones paginadas.

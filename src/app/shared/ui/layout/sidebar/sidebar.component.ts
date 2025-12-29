@@ -2,8 +2,8 @@
 import { Component, computed, inject, signal, type OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { AuthService } from '@core/services';
-import { UserConfirmModalComponent, type ConfirmModalData } from '@features/admin/user-management/components/user-confirm-modal/user-confirm-modal.component';
+import { AuthService } from '../../../../features/auth';
+import { UserConfirmModalComponent, type ConfirmModalData } from '../../../../features/admin/pages/user-management/components/user-confirm-modal/user-confirm-modal.component';
 
 // Tipos
 /** Interfaz para elementos del menú del sidebar */

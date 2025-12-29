@@ -3,7 +3,7 @@
 import { Component, input, output, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { ReportResponse as Report } from '@core/models';
+import { ReportResponse as Report } from '../../../../models';
 
 @Component({
   selector: 'app-report-actions',

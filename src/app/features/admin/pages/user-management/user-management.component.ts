@@ -3,8 +3,12 @@
 import { Component, computed, inject, OnDestroy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { finalize, Subject, of, catchError, debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs';
-import { AuthService, UserService, ErrorHandlerService, type UserListParams } from '@core/services';
-import { AdminUserUpdateRequest, PrivacyType, User, UserRegisterRequest } from '@core/models';
+import { AuthService } from '../../../auth';
+import { UserService } from '../../../user/data-access/user.service';
+import { ErrorHandlerService } from '../../../../core/services';
+import { UserListParams } from '../../../user/data-access/user.service';
+import { AdminUserUpdateRequest, PrivacyType, User } from '../../../user/models';
+import { UserRegisterRequest } from '../../../auth/models';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FooterComponent, PaginationComponent } from '@shared/components';
 import { MatIconModule } from '@angular/material/icon';

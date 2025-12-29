@@ -11,7 +11,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { PostService, AuthService, CommentService, ReactionService, ReportService } from '@core/services';
+import { PostService } from '../../data-access/post.service';
+import { AuthService } from '../../../auth';
+import { CommentService } from '../../data-access/comment.service';
+import { ReactionService, ReactionApiResponse } from '../../data-access/reaction.service';
+import { ReportService } from '../../../admin/data-access/report.service';
 import {
   User,
   PostResponse as Post,
@@ -20,12 +24,11 @@ import {
   ReactionType,
   PostWithInteractions,
   PrivacyType
-} from '@core/models';
-import { ReactionApiResponse } from '@core/services';
-import { CreatePostModalComponent } from '../create-post-modal/create-post-modal.component';
-import { MyPostEditModalComponent } from '../my-post-edit-modal/my-post-edit-modal.component';
-import { MyPostDeleteModalComponent } from '../my-post-delete-modal/my-post-delete-modal.component';
-import { ReportModalComponent, ReportModalResult } from '../report-modal/report-modal.component';
+} from '../../models';
+import { CreatePostModalComponent } from '../post-creator/create-modal.component';
+import { MyPostEditModalComponent } from '../post-editor/post-edit-modal/post-edit-modal.component';
+import { MyPostDeleteModalComponent } from '../post-editor/post-delete-modal/post-delete-modal.component';
+import { ReportModalComponent, ReportModalResult } from '../post-report/report-modal.component';
 import { FooterComponent } from '@shared/components';
 import { DateFormatPipe } from '@shared/pipes';
 

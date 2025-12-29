@@ -8,8 +8,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { FollowService } from '@core/services';
-import { FollowResponse as Follow, UserWithFollow } from '@core/models';
+import { FollowService } from '../../data-access/follow.service';
+import { FollowResponse as Follow, UserWithFollow } from '../../models';
 import { FooterComponent } from '@shared/components';
 import { Router } from '@angular/router';
 

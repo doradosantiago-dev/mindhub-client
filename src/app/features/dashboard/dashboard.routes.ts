@@ -8,13 +8,13 @@ export const DASHBOARD_ROUTES: Routes = [
   // LAYOUT DEL DASHBOARD
   {
     path: '',
-    loadComponent: () => import('./components/dashboard/dashboard.component').then(m => m.DashboardComponent),
+    loadComponent: () => import('./dashboard.component').then(m => m.DashboardComponent),
     children: [
 
       // RUTA PRINCIPAL DEL DASHBOARD
       {
         path: '',
-        loadComponent: () => import('./components/home/home.component').then(m => m.HomeComponent),
+        loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent),
         title: 'Dashboard - MindHub',
         canActivate: [authGuard]
       },
@@ -22,26 +22,26 @@ export const DASHBOARD_ROUTES: Routes = [
       // RUTAS DE USUARIO
       {
         path: 'feed',
-        loadComponent: () => import('../user/components/feed/feed.component').then(m => m.FeedComponent),
+        loadComponent: () => import('../user/ui/feed/feed.component').then(m => m.FeedComponent),
         title: 'Feed - MindHub',
         canActivate: [authGuard]
       },
       {
         path: 'followers',
-        loadComponent: () => import('../user/components/followers/followers.component').then(m => m.FollowersComponent),
+        loadComponent: () => import('../user/ui/followers/followers.component').then(m => m.FollowersComponent),
         title: 'Seguidores - MindHub',
         canActivate: [authGuard]
       },
       {
         path: 'user/:id',
-        loadComponent: () => import('../user/components/user-feed/user-feed.component').then(m => m.UserFeedComponent),
+        loadComponent: () => import('../user/ui/user-search/user-search.component').then(m => m.UserFeedComponent),
         title: 'Perfil de Usuario - MindHub',
         canActivate: [authGuard]
       },
       // La sección de 'Mis Posts' se ha eliminado (routes limpiadas)
       {
         path: 'profile',
-        loadComponent: () => import('../profile/components/profile.component').then(m => m.ProfileComponent),
+        loadComponent: () => import('../profile/profile.component').then(m => m.ProfileComponent),
         title: 'Configuración - MindHub',
         canActivate: [authGuard]
       },
@@ -49,13 +49,13 @@ export const DASHBOARD_ROUTES: Routes = [
       // RUTAS DE ADMINISTRACIÓN
       {
         path: 'admin/users',
-        loadComponent: () => import('../admin/user-management/user-management.component').then(m => m.UserManagementComponent),
+        loadComponent: () => import('../admin/pages/user-management/user-management.component').then(m => m.UserManagementComponent),
         title: 'Gestión de Usuarios - MindHub',
         canActivate: [adminGuard]
       },
       {
         path: 'admin/content',
-        loadComponent: () => import('../admin/content-management/content-management.component').then(m => m.ContentManagementComponent),
+        loadComponent: () => import('../admin/pages/content-management/report-management.component').then(m => m.ContentManagementComponent),
         title: 'Gestión de Contenido - MindHub',
         canActivate: [adminGuard]
       }

@@ -1,6 +1,6 @@
 // MODELO: User - request interfaces (UserUpdateRequest, AdminUserUpdateRequest)
 
-import { PrivacyType } from '../enums';
+import { PrivacyType } from '../../../shared/models/enums/enums';
 
 export interface UserUpdateRequest {
   firstName?: string;

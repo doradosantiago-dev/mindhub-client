@@ -1,6 +1,6 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthService } from '@core/services';
+import { AuthService } from '../../features/auth';
 
 // AUTH INTERCEPTOR: añade token Authorization a peticiones HTTP
 export const authInterceptor: HttpInterceptorFn = (req, next) => {

@@ -6,7 +6,7 @@ export const routes: Routes = [
     // Ruta principal (landing)
     {
         path: '',
-        loadComponent: () => import('./public/components/landing.component').then(m => m.LandingComponent),
+        loadComponent: () => import('./public').then(m => m.LandingComponent),
         title: 'MindHub - Tu Red Social Inteligente'
     },
 
@@ -43,16 +43,14 @@ export const routes: Routes = [
     // Ruta de acceso no autorizado
     {
         path: 'unauthorized',
-        loadComponent: () => import('./public/components/index').then(m => m.UnauthorizedComponent),
+        loadComponent: () => import('./public').then(m => m.UnauthorizedComponent),
         title: 'Acceso No Autorizado - MindHub'
     },
 
     // Ruta para página no encontrada
     {
         path: '**',
-        loadComponent: () => import('./public/components/index').then(m => m.NotFoundComponent),
+        loadComponent: () => import('./public').then(m => m.NotFoundComponent),
         title: 'Página No Encontrada - MindHub'
     }
-];
-
 ];

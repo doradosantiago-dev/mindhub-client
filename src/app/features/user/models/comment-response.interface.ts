@@ -1,6 +1,6 @@
 // MODELO: Comment - CommentResponse (interface)
 
-import { User } from '../user/user-response.interface';
+import { User } from './user-response.interface';
 
 /**
  * Interfaz que representa un comentario de usuario.

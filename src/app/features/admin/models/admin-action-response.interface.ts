@@ -1,6 +1,6 @@
 // MODELO: Admin - AdminActionResponse (interface)
 
-import { ActionType } from '../enums';
+import { ActionType } from '../../../shared/models/enums/enums';
 
 /**
  * Interfaz que representa una acción administrativa registrada.

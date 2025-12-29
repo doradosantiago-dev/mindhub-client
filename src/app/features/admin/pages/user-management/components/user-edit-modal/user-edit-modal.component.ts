@@ -4,7 +4,7 @@ import { Component, computed, effect, inject, input, model, output, signal } fro
 import { CommonModule } from '@angular/common';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { User } from '@core/models';
+import { User } from '../../../../../user/models';
 
 // INTERFACES
 export interface EditUserData {

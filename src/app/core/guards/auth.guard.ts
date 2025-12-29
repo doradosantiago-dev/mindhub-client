@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../services';
+import { AuthService } from '../../features/auth/data-access/auth.service';
 
 // AUTH GUARD: protege rutas que requieren autenticación
 export const authGuard = () => {

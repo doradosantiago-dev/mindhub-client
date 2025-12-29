@@ -12,12 +12,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { UserService } from '@core/services';
-import { PostService } from '@core/services';
-import { FollowService } from '@core/services';
-import { CommentService } from '@core/services';
-import { ReactionApiResponse, ReactionService } from '@core/services';
-import { ReportService } from '@core/services';
+import { UserService } from '../../data-access/user.service';
+import { PostService } from '../../data-access/post.service';
+import { FollowService } from '../../data-access/follow.service';
+import { CommentService } from '../../data-access/comment.service';
+import { ReactionService, ReactionApiResponse } from '../../data-access/reaction.service';
+import { ReportService } from '../../../admin/data-access/report.service';
 import {
   PostResponse as Post,
   CommentResponse as Comment,
@@ -26,9 +26,9 @@ import {
   ReactionResponse,
   UserWithFollow,
   PostWithInteractions
-} from '@core/models';
+} from '../../models';
 import { DateFormatPipe } from '@shared/pipes';
-import { ReportModalComponent, ReportModalResult } from '../report-modal/report-modal.component';
+import { ReportModalComponent, ReportModalResult } from '../post-report/report-modal.component';
 
 // COMPONENTE PRINCIPAL
 
@@ -46,8 +46,8 @@ import { ReportModalComponent, ReportModalResult } from '../report-modal/report-
     FormsModule,
     DateFormatPipe
   ],
-  templateUrl: './user-feed.component.html',
-  styleUrls: ['./user-feed.component.css']
+  templateUrl: './user-search.component.html',
+  styleUrls: ['./user-search.component.css']
 })
 export class UserFeedComponent implements OnDestroy {
   // INYECCIONES DE DEPENDENCIAS

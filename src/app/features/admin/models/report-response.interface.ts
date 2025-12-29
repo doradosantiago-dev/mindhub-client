@@ -1,8 +1,8 @@
 // MODELO: Report - ReportResponse (interface)
 
-import { User } from '../user/user-response.interface';
-import { ReportStatus } from '../enums';
-import { PostSummaryResponse } from '../post/post-response.interface';
+import { User } from '../../user/models/user-response.interface';
+import { ReportStatus } from '../../../shared/models/enums/enums';
+import { PostSummaryResponse } from '../../user/models/post-response.interface';
 
 /**
  * Interfaz que representa un reporte de un post.

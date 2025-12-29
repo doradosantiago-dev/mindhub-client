@@ -9,10 +9,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Subject, takeUntil } from 'rxjs';
-import { PostService, ErrorHandlerService } from '@core/services';
-import { PrivacyType } from '@core/models';
+import { PostService } from '../../data-access/post.service';
+import { ErrorHandlerService } from '@core/services';
+import { PrivacyType } from '../../models';
 
 // INTERFACES
 interface CreatePostData {
@@ -46,8 +46,8 @@ const CONTENT_MIN_LENGTH = 1;
     MatIconModule,
     MatProgressSpinnerModule
   ],
-  templateUrl: './create-post-modal.component.html',
-  styleUrls: ['./create-post-modal.component.css']
+  templateUrl: './create-modal.component.html',
+  styleUrls: ['./create-modal.component.css']
 })
 export class CreatePostModalComponent implements OnDestroy {
   // INYECCIÓN DE SERVICIOS

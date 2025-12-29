@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
-import { FooterComponent } from '../../shared/components/layout/footer/footer.component';
+import { FooterComponent } from '../../shared/ui/layout/footer/footer.component';
 
 /** Componente standalone: imports y configuración. */
 @Component({
