@@ -1,0 +1,201 @@
+<!-- Register component template -->
+
+<!-- HEADER CON LOGO -->
+<header class="auth-header" role="banner">
+  <div class="auth-header-container">
+    <div class="auth-logo">
+      <span class="header-logo-icon" role="img" aria-label="MindHub Logo"></span>
+      <span class="brand-name">
+        <span class="logo-mind">MIND</span>
+        <span class="logo-hub">HUB</span>
+      </span>
+    </div>
+  </div>
+</header>
+
+<div class="register-container">
+  <div class="register-card">
+
+    <!-- HEADER -->
+    <header class="register-header">
+      <h1 class="register-title">Únete a MindHub</h1>
+      <p class="register-subtitle">Crea tu cuenta para comenzar</p>
+    </header>
+
+    <!-- FORMULARIO DE REGISTRO -->
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form" novalidate>
+
+      <!-- Fila 1: Usuario y Email -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="username" class="form-label">Usuario</label>
+          <input id="username" type="text" formControlName="username" class="form-input"
+            [class.error]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
+            placeholder="Ingresa tu nombre de usuario" autocomplete="username" aria-describedby="username-error" />
+
+          @if (registerForm.get('username')?.invalid && registerForm.get('username')?.touched) {
+          <div class="error-message" id="username-error" role="alert">
+            @if (registerForm.get('username')?.errors?.['required']) {
+            <span>El usuario es requerido</span>
+            }
+            @if (registerForm.get('username')?.errors?.['minlength']) {
+            <span>El usuario debe tener al menos 3 caracteres</span>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="form-label">Email</label>
+          <input id="email" type="email" formControlName="email" class="form-input"
+            [class.error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+            placeholder="Ingresa tu email" autocomplete="email" aria-describedby="email-error" />
+
+          @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+          <div class="error-message" id="email-error" role="alert">
+            @if (registerForm.get('email')?.errors?.['required']) {
+            <span>El email es requerido</span>
+            }
+            @if (registerForm.get('email')?.errors?.['email']) {
+            <span>Ingresa un email válido</span>
+            }
+          </div>
+          }
+        </div>
+      </div>
+
+      <!-- Fila 2: Nombre y Apellido -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName" class="form-label">Nombre</label>
+          <input id="firstName" type="text" formControlName="firstName" class="form-input"
+            [class.error]="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched"
+            placeholder="Ingresa tu nombre" autocomplete="given-name" aria-describedby="firstName-error" />
+
+          @if (registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched) {
+          <div class="error-message" id="firstName-error" role="alert">
+            @if (registerForm.get('firstName')?.errors?.['required']) {
+            <span>El nombre es requerido</span>
+            }
+            @if (registerForm.get('firstName')?.errors?.['minlength']) {
+            <span>El nombre debe tener al menos 2 caracteres</span>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="lastName" class="form-label">Apellido</label>
+          <input id="lastName" type="text" formControlName="lastName" class="form-input"
+            [class.error]="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched"
+            placeholder="Ingresa tu apellido" autocomplete="family-name" aria-describedby="lastName-error" />
+
+          @if (registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched) {
+          <div class="error-message" id="lastName-error" role="alert">
+            @if (registerForm.get('lastName')?.errors?.['required']) {
+            <span>El apellido es requerido</span>
+            }
+            @if (registerForm.get('lastName')?.errors?.['minlength']) {
+            <span>El apellido debe tener al menos 2 caracteres</span>
+            }
+          </div>
+          }
+        </div>
+      </div>
+
+      <!-- Fila 3: Contraseña y Confirmar Contraseña -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="password" class="form-label">Contraseña</label>
+          <input id="password" type="password" formControlName="password" class="form-input"
+            [class.error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+            placeholder="Ingresa tu contraseña" autocomplete="new-password" aria-describedby="password-error" />
+
+          @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+          <div class="error-message" id="password-error" role="alert">
+            @if (registerForm.get('password')?.errors?.['required']) {
+            <span>La contraseña es requerida</span>
+            }
+            @if (registerForm.get('password')?.errors?.['minlength']) {
+            <span>La contraseña debe tener al menos 6 caracteres</span>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+          <input id="confirmPassword" type="password" formControlName="confirmPassword" class="form-input"
+            [class.error]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched"
+            placeholder="Confirma tu contraseña" autocomplete="new-password" aria-describedby="confirmPassword-error" />
+
+          @if (registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched) {
+          <div class="error-message" id="confirmPassword-error" role="alert">
+            @if (registerForm.get('confirmPassword')?.errors?.['required']) {
+            <span>Confirma tu contraseña</span>
+            }
+          </div>
+          }
+        </div>
+      </div>
+
+      <!-- Error de contraseñas no coinciden -->
+      @if (registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched) {
+      <div class="global-error" role="alert" aria-live="polite">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          aria-hidden="true">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="15" y1="9" x2="9" y2="15" />
+          <line x1="9" y1="9" x2="15" y2="15" />
+        </svg>
+        <span>Las contraseñas no coinciden</span>
+      </div>
+      }
+
+      <!-- Mensaje de Error Global -->
+      @if (errorMessage()) {
+      <div class="global-error" role="alert" aria-live="polite">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          aria-hidden="true">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="15" y1="9" x2="9" y2="15" />
+          <line x1="9" y1="9" x2="15" y2="15" />
+        </svg>
+        <span>{{ errorMessage() }}</span>
+      </div>
+      }
+
+      <!-- Botón de Envío -->
+      <button type="submit" class="submit-button" [disabled]="registerForm.invalid || isLoading()"
+        [class.loading]="isLoading()" [attr.aria-busy]="isLoading()">
+
+        @if (isLoading()) {
+        <div class="spinner" aria-hidden="true"></div>
+        <span>Creando cuenta...</span>
+        } @else {
+        <span>Crear Cuenta</span>
+        }
+      </button>
+    </form>
+
+    <!-- FOOTER -->
+    <footer class="register-footer">
+      <p class="login-text">
+        ¿Ya tienes una cuenta?
+        <button type="button" class="link-button" (click)="goToLogin()">
+          Inicia sesión aquí
+        </button>
+      </p>
+
+      <div class="back-to-landing">
+        <a class="back-link" (click)="goToLanding()" role="button" tabindex="0">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            aria-hidden="true">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          Volver al Inicio
+        </a>
+      </div>
+    </footer>
+  </div>
+</div>

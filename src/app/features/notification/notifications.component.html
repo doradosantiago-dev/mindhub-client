@@ -1,0 +1,66 @@
+<!-- Notifications: plantilla — header, lista, estados y acciones -->
+
+<div class="notifications-panel" [class.show]="isOpen()" role="dialog" aria-label="Panel de notificaciones"
+  [attr.aria-hidden]="!isOpen()" [attr.aria-modal]="isOpen()">
+
+  <!-- Header del panel -->
+  <div class="notifications-header" role="banner" aria-label="Encabezado de notificaciones">
+    <h3 id="notifications-title">Notificaciones</h3>
+
+    <div class="header-actions" role="toolbar" aria-label="Acciones de notificaciones">
+      @if (unreadCount() > 0) {
+      <button class="mark-all-read" (click)="markAllAsRead()" type="button"
+        aria-label="Marcar todas las notificaciones como leídas" title="Marcar todas como leídas">
+        Marcar todas como leídas
+      </button>
+      }
+
+      <button class="close-btn" (click)="closePanel()" type="button" aria-label="Cerrar panel de notificaciones"
+        title="Cerrar">
+        <mat-icon aria-hidden="true">close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Lista de notificaciones -->
+  <div class="notifications-list" role="list" aria-labelledby="notifications-title"
+    aria-label="Lista de notificaciones">
+
+    @if (notifications().length > 0) {
+    @for (notification of notifications(); track notification.id) {
+    <div class="notification-item" [class.unread]="!notification.read" (click)="markAsRead(notification.id)"
+      role="listitem"
+      [attr.aria-label]="'Notificación: ' + notification.message + '. ' + (notification.read ? 'Leída' : 'No leída') + '. Clic para marcar como leída'"
+      tabindex="0" (keydown.enter)="markAsRead(notification.id)" (keydown.space)="markAsRead(notification.id)">
+
+      <!-- ===== ICONO DE LA NOTIFICACIÓN ===== -->
+      <div class="notification-icon" [ngClass]="getNotificationClass(notification.notificationType, notification.title)"
+        aria-hidden="true">
+        <mat-icon>{{ getNotificationIcon(notification.notificationType, notification.title) }}</mat-icon>
+      </div>
+
+      <!-- ===== CONTENIDO DE LA NOTIFICACIÓN ===== -->
+      <div class="notification-content">
+        <p class="notification-text">{{ notification.message }}</p>
+        <time class="notification-time" [attr.datetime]="notification.creationDate"
+          aria-label="Fecha de creación: {{ notification.creationDate | dateFormat }}">
+          {{ notification.creationDate | dateFormat:'short' }}
+        </time>
+      </div>
+
+      <!-- ===== INDICADOR DE NO LEÍDA ===== -->
+      @if (!notification.read) {
+      <div class="unread-indicator" aria-hidden="true" role="status" aria-label="Notificación no leída">
+      </div>
+      }
+    </div>
+    }
+    } @else {
+    <!-- ===== ESTADO VACÍO ===== -->
+    <div class="no-notifications" role="status" aria-live="polite" aria-label="No hay notificaciones disponibles">
+      <mat-icon aria-hidden="true">notifications_none</mat-icon>
+      <p>No tienes notificaciones</p>
+    </div>
+    }
+  </div>
+</div>

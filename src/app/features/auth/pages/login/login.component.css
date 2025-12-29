@@ -1,0 +1,651 @@
+﻿/* Login component styles */
+
+/* VARIABLES CSS DEL COMPONENTE */
+
+:host {
+  /* PALETA DE COLORES */
+  --primary-color: #10b981;
+  --primary-dark: #059669;
+  --secondary-color: #2563eb;
+  --secondary-dark: #1d4ed8;
+  --error-color: #dc2626;
+  --success-color: #16a34a;
+  --warning-color: #d97706;
+
+  /*  ESCALA DE GRISES  */
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+
+  /*  SISTEMA DE DISEÑO  */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --border-radius: 1rem;
+  --border-radius-lg: 1.5rem;
+  --border-radius-sm: 0.5rem;
+  --transition: all 0.3s ease;
+  --transition-fast: all 0.2s ease;
+  --shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 10px 10px -5px rgb(0 0 0 / 0.04);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px 0 rgb(0 0 0 / 0.06);
+
+  /* Gradiente del footer del landing */
+  --gradient-footer: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #2563eb 100%);
+
+  /*  ESTILOS BASE  */
+  font-family: var(--font-family);
+  display: block;
+  line-height: 1.6;
+  color: var(--gray-800);
+}
+
+/* 
+   HEADER CON LOGO
+    */
+
+.auth-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--gray-200);
+  padding: 1rem 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.auth-header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header-logo-icon {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  background-color: #1e40af;
+  -webkit-mask: url('/mindhub-logo.png') no-repeat center / contain;
+  mask: url('/mindhub-logo.png') no-repeat center / contain;
+}
+
+.brand-name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  display: flex;
+  align-items: center;
+}
+
+/* 
+   LAYOUT PRINCIPAL
+    */
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  padding-top: 5rem;
+  background: var(--gradient-footer);
+  position: relative;
+}
+
+/* 
+   TARJETA DE LOGIN
+    */
+
+.login-card {
+  width: 100%;
+  max-width: 850px;
+  background: white;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  animation: slideUp 0.6s ease-out;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  min-height: 580px;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 
+   COLUMNAS
+    */
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 1.5rem 0 0 1.5rem;
+  overflow: hidden;
+}
+
+.right-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+  padding: 3rem 2.5rem;
+}
+
+.brand-section {
+  text-align: center;
+  color: white;
+  transform: translateY(-22px);
+}
+
+.brand-logo {
+  width: 180px;
+  height: 180px;
+  margin-bottom: 2rem;
+  filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.25));
+  transform: translateY(-4px);
+}
+
+.brand-logo-icon {
+  width: 180px;
+  height: 180px;
+  display: block;
+  margin: 0 auto 2rem;
+  background-image: url('/mindhub-logo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.18));
+}
+
+.gemini-logo {
+  width: 200px;
+  height: auto;
+  display: block;
+  margin: 0 auto 0;
+  transform: scale(2) translateY(20px);
+}
+
+.brand-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin: -5rem 0 1.5rem;
+  letter-spacing: 0.06em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.logo-mind {
+  color: #1e40af;
+}
+
+.logo-hub {
+  color: #3fca93;
+}
+
+.brand-description {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  opacity: 0.95;
+  margin: 0;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+/* Responsive adjustments for Gemini logo */
+@media (max-width: 600px) {
+  .gemini-logo {
+    width: 110px;
+  }
+}
+
+
+/* 
+   HEADER
+    */
+
+.login-header {
+  text-align: center;
+  padding: 2.5rem 2rem 2rem;
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+  color: white;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(30, 64, 175, 0.3);
+}
+
+.login-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: white;
+}
+
+.login-subtitle {
+  margin: 0;
+  font-size: 0.95rem;
+  color: white;
+  opacity: 0.95;
+  font-weight: 400;
+}
+
+/* 
+   FORMULARIO
+    */
+
+.login-form {
+  padding: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  min-height: 85px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  font-size: 0.875rem;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--gray-200);
+  border-radius: var(--border-radius-sm);
+  font-size: 1rem;
+  transition: var(--transition-fast);
+  background-color: white;
+  color: var(--gray-900);
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: var(--gray-300);
+}
+
+.form-input.error {
+  background-color: #fef2f2;
+}
+
+.form-input.error:focus {
+  border-color: var(--gray-300);
+}
+
+.form-input::placeholder {
+  color: var(--gray-400);
+}
+
+/* 
+   ICONOS DE ERROR
+    */
+
+.error-icon {
+  position: absolute;
+  right: 1rem;
+  color: var(--error-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 
+   MENSAJES DE ERROR
+    */
+
+.error-message {
+  margin-top: 0.5rem;
+  color: var(--error-color);
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.error-message span {
+  line-height: 1.4;
+}
+
+/* 
+   CONTROL DE CONTRASEÑA
+    */
+
+.password-toggle {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: var(--gray-500);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: var(--border-radius-sm);
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-toggle:hover {
+  color: var(--gray-700);
+  background-color: var(--gray-100);
+}
+
+.password-toggle:focus {
+  outline: none;
+}
+
+/* 
+   ERROR GLOBAL
+    */
+
+.global-error {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--border-radius-sm);
+  color: var(--error-color);
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.global-error svg {
+  flex-shrink: 0;
+  color: var(--error-color);
+}
+
+/* 
+   BOTÓN DE ENVÍO
+    */
+
+.submit-button {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.submit-button:focus {
+  outline: none;
+}
+
+.submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.submit-button.loading {
+  background: linear-gradient(135deg, var(--gray-500) 0%, var(--gray-600) 100%);
+}
+
+/* 
+   SPINNER DE CARGA
+    */
+
+.spinner {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid transparent;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 
+   FOOTER
+    */
+
+.login-footer {
+  padding: 1.5rem 2rem 2rem;
+  text-align: center;
+  background-color: var(--gray-50);
+  border-top: 1px solid var(--gray-200);
+}
+
+.register-text {
+  margin: 0 0 1rem;
+  color: var(--gray-600);
+  font-size: 0.875rem;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition-fast);
+}
+
+.link-button:hover {
+  color: var(--primary-dark);
+}
+
+.back-to-landing {
+  display: flex;
+  justify-content: center;
+}
+
+.back-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--gray-500);
+  text-decoration: none;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  padding: 0.5rem;
+  border-radius: var(--border-radius-sm);
+}
+
+.back-link:hover {
+  color: var(--gray-700);
+  background-color: var(--gray-100);
+}
+
+.back-link:focus {
+  outline: none;
+}
+
+.link-button:focus-visible {
+  outline: none;
+}
+
+.back-link svg {
+  flex-shrink: 0;
+}
+
+/* 
+   DISEÑO RESPONSIVO
+    */
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 0.5rem;
+  }
+
+  .login-card {
+    max-width: 100%;
+    border-radius: var(--border-radius);
+  }
+
+  .login-header {
+    padding: 2rem 1.5rem 1.5rem;
+  }
+
+  .login-title {
+    font-size: 1.5rem;
+  }
+
+  .login-subtitle {
+    font-size: 1rem;
+  }
+
+  .login-form {
+    padding: 1.5rem;
+  }
+
+  .login-footer {
+    padding: 1rem 1.5rem 1.5rem;
+  }
+
+  .gemini-logo {
+    width: 110px;
+  }
+}
+
+@media (max-width: 360px) {
+  .login-header {
+    padding: 1.5rem 1rem 1rem;
+  }
+
+  .login-form {
+    padding: 1rem;
+  }
+
+  .login-footer {
+    padding: 1rem;
+  }
+}
+
+/* 
+   ACCESIBILIDAD
+    */
+
+@media (prefers-reduced-motion: reduce) {
+  .login-card {
+    animation: none;
+  }
+
+  .submit-button:hover {
+    transform: none;
+  }
+
+  .spinner {
+    animation: none;
+  }
+}
+
+/* 
+   ESTADOS DE FOCO
+    */
+
+.form-input:focus-visible {
+  outline: none;
+}
+
+.submit-button:focus-visible {
+  outline: none;
+}
+
+.password-toggle:focus-visible {
+  outline: none;
+}
+
+/* Clase para inputs válidos - solo fondo verde muy suave */
+.form-input.valid {
+  background-color: #f0fdf4;
+}
+
+/* 
+   RESPONSIVE DESIGN
+    */
+
+@media (max-width: 768px) {
+  .login-card {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+  }
+
+  .right-column {
+    display: none;
+  }
+
+  .left-column {
+    border-right: none;
+  }
+
+  .login-header {
+    padding: 2.5rem 2rem 2rem;
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+    color: white;
+  }
+
+  .login-title {
+    color: white;
+    font-size: 1.875rem;
+    font-weight: 800;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .login-subtitle {
+    color: white;
+    opacity: 0.95;
+    font-size: 1.125rem;
+  }
+}
