@@ -371,6 +371,8 @@ export class FeedComponent implements OnInit, OnDestroy {
 
         this.newCommentText[postId] = '';
         post.isAddingComment = false;
+        // Forzar actualización del state
+        this._state.update(s => ({ ...s, posts: [...s.posts] }));
       },
       error: () => {
         post.isAddingComment = false;
@@ -397,6 +399,8 @@ export class FeedComponent implements OnInit, OnDestroy {
         post.comments = post.comments!.filter(c => c.id !== commentId);
         // Decrementar el contador de comentarios
         post.commentCount = Math.max(0, (post.commentCount || 1) - 1);
+        // Forzar actualización del state
+        this._state.update(s => ({ ...s, posts: [...s.posts] }));
       },
       error: (error) => {
         console.error('Error al eliminar comentario:', error);
@@ -431,6 +435,8 @@ export class FeedComponent implements OnInit, OnDestroy {
           post.userReaction = undefined;
           post.likeCount = Math.max(0, (post.likeCount || 1) - 1);
           post.isProcessingLike = false;
+          // Forzar actualización del state
+          this._state.update(s => ({ ...s, posts: [...s.posts] }));
         },
         error: () => {
           post.isProcessingLike = false;
@@ -446,6 +452,8 @@ export class FeedComponent implements OnInit, OnDestroy {
             post.likeCount = (post.likeCount || 0) + 1;
           }
           post.isProcessingLike = false;
+          // Forzar actualización del state
+          this._state.update(s => ({ ...s, posts: [...s.posts] }));
         },
         error: () => {
           post.isProcessingLike = false;
@@ -619,6 +627,8 @@ export class FeedComponent implements OnInit, OnDestroy {
       ).subscribe({
         next: (response) => {
           post.comments = response.content || [];
+          // Forzar actualización del state para detectar cambios
+          this._state.update(s => ({ ...s, posts: [...s.posts] }));
         },
         error: (error) => {
           console.error('Error al cargar comentarios:', error);
@@ -626,6 +636,8 @@ export class FeedComponent implements OnInit, OnDestroy {
           if (!post.comments) {
             post.comments = [];
           }
+          // Forzar actualización incluso en error
+          this._state.update(s => ({ ...s, posts: [...s.posts] }));
         }
       });
     }

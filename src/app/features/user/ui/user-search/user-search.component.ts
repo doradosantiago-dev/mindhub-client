@@ -273,6 +273,8 @@ export class UserFeedComponent implements OnDestroy {
         }
 
         this.newCommentText[postId] = '';
+        // Forzar actualización del state
+        this._state.update(s => ({ ...s, posts: [...s.posts] }));
       },
       error: (error) => {
 
@@ -297,6 +299,8 @@ export class UserFeedComponent implements OnDestroy {
         post.comments = post.comments!.filter(c => c.id !== commentId);
         // Decrementar el contador de comentarios
         post.commentCount = Math.max(0, (post.commentCount || 1) - 1);
+        // Forzar actualización del state
+        this._state.update(s => ({ ...s, posts: [...s.posts] }));
       },
       error: (error) => {
         console.error('Error al eliminar comentario:', error);
@@ -332,6 +336,8 @@ export class UserFeedComponent implements OnDestroy {
           post.userReaction = undefined;
           post.likeCount = Math.max(0, (post.likeCount || 1) - 1);
           post.isProcessingLike = false;
+          // Forzar actualización del state
+          this._state.update(s => ({ ...s, posts: [...s.posts] }));
         },
         error: () => {
           post.isProcessingLike = false;
@@ -348,6 +354,8 @@ export class UserFeedComponent implements OnDestroy {
           } else if ('message' in response && response.message) {
           }
           post.isProcessingLike = false;
+          // Forzar actualización del state
+          this._state.update(s => ({ ...s, posts: [...s.posts] }));
         },
         error: () => {
           post.isProcessingLike = false;
@@ -555,17 +563,23 @@ export class UserFeedComponent implements OnDestroy {
   private loadComments(postId: number): void {
     const post = this.posts().find(p => p.id === postId);
     if (post && !post.comments) {
+      // Siempre cargar comentarios, aunque ya existan (para refrescar)
       this.commentService.getPostComments(postId).pipe(
         takeUntil(this.destroy$)
       ).subscribe({
         next: (response) => {
           post.comments = response.content || [];
+          // Forzar actualización del state para detectar cambios
+          this._state.update(s => ({ ...s, posts: [...s.posts] }));
         },
         error: (error) => {
           console.error('Error al cargar comentarios:', error);
-          post.comments = [];
-          // Si hay un error, cerrar la sección de comentarios
-          this.expandedComments.delete(postId);
+          // No cerrar la sección, solo inicializar vacío si es necesario
+          if (!post.comments) {
+            post.comments = [];
+          }
+          // Forzar actualización incluso en error
+          this._state.update(s => ({ ...s, posts: [...s.posts] }));
         }
       });
     }
